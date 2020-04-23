@@ -2,98 +2,86 @@ import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
-import { addGroup } from '../../../../redux/actions/newTask';
+import { addGroup, deleteGroup } from '../../../../redux/actions/newTask';
 
-const AddGroups = ({variables, content, addGroup}) => {
-  const [group, setGroup] = useState([]);
-  const [noVars, setNoVarsError] = useState(false);
-  const [noValues, setNoValuesError] = useState(false);
-
+const AddGroups = ({variables, content, addGroup, deleteGroup, groups}) => {
   useEffect(()=>{
-    setGroup([]);
+
   },[variables,content]);
 
   const mockVars = {};
-
   variables.forEach(({variable},index) => {
-    mockVars[variable] = null;
+    mockVars[variable] = '';
   });
 
-
-  const addNewGroup = () => {
-    if(variables.length){
-      setNoVarsError(false);
-      let allValuesAdded = false;
-      group.forEach((item, i) => {
-        allValuesAdded = variables.some(({variable}) => item[variable] == null);
-        if(item.answer == null) allValuesAdded = true;
-      });
-
-      if(!allValuesAdded){
-        setNoValuesError(false);
-        setGroup(
-          [...group,
-            { id: uuidv4(),
-              answer: null,
-              ...mockVars
-            }
-          ]
-        );
-      }
-      else setNoValuesError(true);
-    }
-    else setNoVarsError(true);
+  const [formData, setFormData] = useState({...mockVars,answer:''});
+  const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
+  const onSubmit = e => {
+    e.preventDefault();
+    addGroup({...formData, id: uuidv4()});
+    setFormData({...mockVars, answer:''});
   };
+  const displayGroup = (item) => {
+    const listItems = [];
+    for(let i in item){
+      if(i != 'id') {
+        listItems.push(<li styles='display: block'>
+        <span>{i == 'answer' ? 'Odpowiedz:  ' : `${i}:  `}</span>
+        <span>{item[i]}</span>
+        </li>)
+      }
+    }
+    const list = <ul>{listItems}</ul>;
 
-  const addValues = (e, id, variable) =>{
-    setNoValuesError(false);
-    setGroup([...group.map( subitem => {
-      if(id == subitem.id) return {...subitem, [variable]: e.target.value }
-      else return {...subitem}
-    })]);
-  }
-
-  const deleteItem = (id) =>{
-    setGroup([...group.filter(removeItem => removeItem.id !== id )]);
-  }
-  const addGroupsToState = () =>{
-    let allValuesAdded = false;
-    group.forEach((item, i) => {
-      allValuesAdded = variables.some(({variable}) => item[variable] == null);
-      if(item.answer == null) allValuesAdded = true;
-    });
-    if(!allValuesAdded) addGroup(group);
-    else setNoValuesError(true);
+    return list;
   }
   return(
-    <div>
-      <h3>Dodaj grupy</h3>
-      <button onClick={e => addNewGroup()}>Dodaj grupę</button>
-      { noVars && <h4>Nie podano zmiennych</h4>}
+    <>
+      {variables.length > 0 &&
+        <form onSubmit={e => onSubmit(e)}>
+          <h5>Zdefinuj zmienne dla grup</h5>
+          {variables.map(({variable})=>
+            <div>
+              <h5>{variable+'  =  '}</h5>
+              <input
+                placeholder="Wartość"
+                name={variable}
+                value={formData[variable]}
+                onChange={e => onChange(e)}
+                required
+              />
+            </div>
+          )
+          }
+          <div>
+            <h5>Dodaj odpowiedz:</h5>
+            <input
+              placeholder="Odpowiedz"
+              name="answer"
+              value={formData.answer}
+              onChange={e => onChange(e)}
+              required
+            />
+          </div>
+          { <input type="submit" value="Dodaj" />}
+        </form>
+      }
       <ul>
-        { group.length > 0 && group.map( (item, index) => (
-          <li>
-            <div>{`Grupa ${index+1}`}</div>
-            {variables.map(({variable}) =>
-              (<div>{variable}{' = '}
-                 <input onChange={e => addValues(e,item.id, variable)} required></input>
-               </div>
-              )
-            )}
-            <div>Odpowiedz</div><input onChange={e => addValues(e,item.id, 'answer')} required></input>
-            <span onClick={() => deleteItem(item.id)}>Delete</span>
+        {groups.length > 0 && groups.map((item, index)=>
+          <li styles='display: block'>
+            {`Grupa ${index+1}`}{displayGroup(item)}
+            <button onClick={()=>deleteGroup(item.id)}>Usun grupe</button>
           </li>
-        ))}
+        )}
       </ul>
-      {noValues && <h4>Uzupełnij wszystkie wartości w grupach</h4>}
-      {group.length > 0 && <button onClick={()=>addGroupsToState()}>Potwierdź grupy</button>}
-    </div>
+    </>
   )
 }
 
 const mapStateToProps = state =>({
   variables: state.newTask.data.variables,
-  content: state.newTask.data.content
+  content: state.newTask.data.content,
+  groups: state.newTask.data.groups
 })
 
-export default connect(mapStateToProps,{addGroup})(AddGroups);
+export default connect(mapStateToProps,{addGroup,deleteGroup})(AddGroups);

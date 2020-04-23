@@ -15,10 +15,7 @@ import {Link} from 'react-router-dom';
 const OpenTask = ({clearTask, clearTasks, success}) => {
   const { taskType, _id, name } = success;
   useEffect(()=>{
-      return () =>{
-         clearTask({});
-         clearTasks();
-       };
+      return () => clearTask({})
   },[]);
 
   return <>
@@ -32,7 +29,7 @@ const OpenTask = ({clearTask, clearTasks, success}) => {
     {Object.keys(success).length > 0 &&
       <>
         <h5>Dodano zadanie! Zobacz jak wygląda:</h5>
-        <Link to={`/display/${taskType}/${_id}`}>
+        <Link onClick={()=>clearTasks()} to={`/display/${taskType}/${_id}`}>
           {name}
         </Link>
       </>

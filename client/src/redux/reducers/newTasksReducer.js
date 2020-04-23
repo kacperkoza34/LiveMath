@@ -10,7 +10,8 @@ import {
   ADD_SECTION,
   ADD_NAME,
   NEW_TASK_ERROR,
-  CLEAR_NEW_TASK
+  CLEAR_NEW_TASK,
+  DELETE_GROUP
 } from '../actions/newTask';
 
 export default function reducer(statePart = [], action = {}) {
@@ -72,6 +73,7 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         data:{
           ...statePart.data,
+          groups: [],
           additionalVariables: [...statePart.data.additionalVariables, action.payload]
         }
       };
@@ -88,7 +90,15 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         data:{
           ...statePart.data,
-          groups: action.payload
+          groups: [...statePart.data.groups, action.payload]
+        }
+      };
+    case DELETE_GROUP:
+      return {
+        ...statePart,
+        data:{
+          ...statePart.data,
+          groups: statePart.data.groups.filter(({id})=>id != action.payload)
         }
       };
     case ADD_CLASS:

@@ -3,6 +3,7 @@ export const ADD_TASK_VARIABELS = '[task] ADD_TASK_VARIABELS';
 export const ADD_TASK_MODEL = '[task] ADD_TASK_MODEL';
 export const ADD_VAR_DESCRIPTION = '[task] ADD_VAR_DESCRIPTION';
 export const ADD_GROUP = '[task] ADD_GROUP';
+export const DELETE_GROUP = '[task] DELETE_GROUP';
 export const ADD_ADDITIONAL_VARIABLE = '[task] ADD_ADDITIONAL_VARIABLE';
 export const REMOVE_ADDITIONAL_VARIABLE = '[task] REMOVE_ADDITIONAL_VARIABLE';
 export const ADD_CLASS = '[task] ADD_CLASS';
@@ -39,6 +40,11 @@ export const addVarDescription = (value, variable) => ({
 
 export const addGroup = (payload) => ({
   type: ADD_GROUP,
+  payload
+});
+
+export const deleteGroup = (payload) => ({
+  type: DELETE_GROUP,
   payload
 });
 
