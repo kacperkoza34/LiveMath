@@ -48,7 +48,7 @@ const CloseTask = ({
         <>
           {taskStatus === null && prepareState()}
           <h4>{data.name}</h4>
-          <p>{data.description}</p>
+          <p>{data.content}</p>
           {taskStatus &&
             <ul>{data.data.map(({content,answer},i)=>
                   <li>{`${i+1}). `}

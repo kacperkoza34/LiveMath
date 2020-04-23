@@ -12,20 +12,20 @@ const Model = ({addTaskModel, variabels, modelFromState}) => {
       <h5>Wzór</h5>
       <TextareaAutosize
         placeholder='Podaj wzór'
-        value={model}
+        value={modelFromState}
         onChange={e =>{
           addTaskModel(e.target.value);
           setModel(e.target.value);
         }}
       />
-      <MathJax content={model}/>
+      <MathJax content={modelFromState}/>
     </div>
   );
 }
 
 const mapStateToProps = state =>({
-  modelFromState: state.newTask.model,
-  variables: state.newTask.variables
+  modelFromState: state.newTask.data.model,
+  variables: state.newTask.data.variables
 })
 
 export default connect(mapStateToProps,{addTaskModel})(Model);

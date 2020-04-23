@@ -5,18 +5,12 @@ import { addClass } from '../../redux/actions/classes';
 import Errors from '../layout/Errors';
 
 const AddClass = ({addClass, errors})=>{
-  const [formData, setFormData] = useState({
-      title: ''
-  });
+  const [formData, setFormData] = useState('');
 
-  const { title, maxStudentsAmount } = formData;
-  const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
   const onSubmit = (e) =>{
     e.preventDefault();
-    addClass({title});
-    setFormData({
-        title: ''
-    });
+    addClass({title: formData});
+    setFormData('');
   };
   return (
     <>
@@ -26,8 +20,8 @@ const AddClass = ({addClass, errors})=>{
           <input
             placeholder="Nazwa klasy"
             name="title"
-            value={title}
-            onChange={e => onChange(e)}
+            value={formData}
+            onChange={e => setFormData(e.target.value)}
             required
           />
         </div>

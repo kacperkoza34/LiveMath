@@ -79,8 +79,8 @@ AdditionalVariables.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  additionalVariables: state.newTask.additionalVariables,
-  variables: state.newTask.variables
+  additionalVariables: state.newTask.data.additionalVariables,
+  variables: state.newTask.data.variables
 });
 
 export default connect(mapStateToProps,{addAddVariable, removeAddVariable})(AdditionalVariables);

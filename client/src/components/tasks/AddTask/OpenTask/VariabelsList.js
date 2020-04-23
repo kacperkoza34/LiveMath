@@ -93,8 +93,8 @@ class VariabelsList extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  taskContent: state.newTask.content,
-  taskData: state.newTask.variables
+  taskContent: state.newTask.data.content,
+  taskData: state.newTask.data.variables
 });
 
 export default connect(

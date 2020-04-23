@@ -5,7 +5,16 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { connect } from 'react-redux';
 import { getTasks, clearTasks } from '../../redux/actions/tasks';
 
-const TasksList = ({classId,sectionId, getTasks, clearTasks, tasks:{ data, isFetching, errors }}) =>{
+const TasksList = ({
+  classId,
+  sectionId,
+  getTasks,
+  clearTasks,
+  tasks:{
+    data,
+    isFetching,
+    errors
+  }}) =>{
 
   useEffect(()=>{
     if(classId && sectionId){

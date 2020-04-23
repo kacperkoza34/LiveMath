@@ -18,6 +18,7 @@ import DisplayOpenTask from './components/tasks/DisplayTask/OpenTask/OpenTask';
 import DisplayCloseTask from './components/tasks/DisplayTask/CloseTask/CloseTask';
 import DisplayBooleanTask from './components/tasks/DisplayTask/BooleanTask/BooleanTask';
 import AddOpenTask from './components/tasks/AddTask/OpenTask/OpenTask';
+import AddCloseTask from './components/tasks/AddTask/CloseTask/CloseTask';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -44,7 +45,7 @@ const App = () => {
             <PrivateRoute exact path='/display/closeTask/:id' component={DisplayCloseTask}/>
             <PrivateRoute exact path='/display/booleanTask/:id' component={DisplayBooleanTask}/>
             <TeacherRoute exact path='/add/openTask' component={AddOpenTask}/>
-            <TeacherRoute exact path='/add/closeTask' component={AddOpenTask}/>
+            <TeacherRoute exact path='/add/closeTask' component={AddCloseTask}/>
             <TeacherRoute exact path='/add/booleanTask' component={AddOpenTask}/>
 
           </Switch>

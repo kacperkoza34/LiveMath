@@ -26,6 +26,7 @@ import teacher from './middleware/teacher';
 import classes from './middleware/classes';
 import student from './middleware/student';
 import tasks from './middleware/tasks';
+import newTask from './middleware/newTask';
 import apiRequest from './middleware/apiRequest';
 
 
@@ -69,11 +70,19 @@ const initialState ={
     errors: false,
   },
   newTask: {
-    content: '',
-    variables: [],
-    additionalVariables: [],
-    model: '',
-    groups: []
+    data:{
+      content: '',
+      name: '',
+      variables: [],
+      additionalVariables: [],
+      model: '',
+      groups: [],
+      class: '',
+      section: ''
+    },
+    isFetching: false,
+    errors: {},
+    success: {},
   }
 };
 
@@ -107,6 +116,7 @@ const store = createStore(
       classes,
       student,
       tasks,
+      newTask,
       apiRequest
     ),
   )

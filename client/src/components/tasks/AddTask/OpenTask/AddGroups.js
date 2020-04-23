@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { addGroup } from '../../../../redux/actions/newTask';
 
-const AddGroups = ({variables, addGroupRedux}) => {
+const AddGroups = ({variables, content, addGroup}) => {
   const [group, setGroup] = useState([]);
   const [noVars, setNoVarsError] = useState(false);
   const [noValues, setNoValuesError] = useState(false);
+
+  useEffect(()=>{
+    setGroup([]);
+  },[variables,content]);
 
   const mockVars = {};
 
@@ -50,15 +54,22 @@ const AddGroups = ({variables, addGroupRedux}) => {
   }
 
   const deleteItem = (id) =>{
-    console.log()
     setGroup([...group.filter(removeItem => removeItem.id !== id )]);
+  }
+  const addGroupsToState = () =>{
+    let allValuesAdded = false;
+    group.forEach((item, i) => {
+      allValuesAdded = variables.some(({variable}) => item[variable] == null);
+      if(item.answer == null) allValuesAdded = true;
+    });
+    if(!allValuesAdded) addGroup(group);
+    else setNoValuesError(true);
   }
   return(
     <div>
       <h3>Dodaj grupy</h3>
       <button onClick={e => addNewGroup()}>Dodaj grupę</button>
       { noVars && <h4>Nie podano zmiennych</h4>}
-      { noValues && <h4>Dodaj zmienne do porzedniej grupy</h4>}
       <ul>
         { group.length > 0 && group.map( (item, index) => (
           <li>
@@ -74,12 +85,15 @@ const AddGroups = ({variables, addGroupRedux}) => {
           </li>
         ))}
       </ul>
+      {noValues && <h4>Uzupełnij wszystkie wartości w grupach</h4>}
+      {group.length > 0 && <button onClick={()=>addGroupsToState()}>Potwierdź grupy</button>}
     </div>
   )
 }
 
 const mapStateToProps = state =>({
-  variables: state.newTask.variables
+  variables: state.newTask.data.variables,
+  content: state.newTask.data.content
 })
 
 export default connect(mapStateToProps,{addGroup})(AddGroups);

@@ -18,9 +18,6 @@ router.post('/open', [authTeacher, [
   check('name', 'Podaj zadania')
     .not()
     .isEmpty(),
-  check('points', 'Podaj liczbe punktów')
-    .not()
-    .isEmpty(),
   check('class', 'Podaj klase od 1 do 8')
     .not()
     .isEmpty()
@@ -60,7 +57,7 @@ router.post('/open', [authTeacher, [
       }
     });
     task.save();
-    res.json(task);
+    res.json({_id:task._id, taskType:'openTask', name: task.name});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -69,9 +66,6 @@ router.post('/open', [authTeacher, [
 
 router.post('/close', [authTeacher, [
   check('name', 'Podaj zadania')
-    .not()
-    .isEmpty(),
-  check('points', 'Podaj liczbe punktów')
     .not()
     .isEmpty(),
   check('class', 'Podaj klase od 1 do 8')
@@ -100,17 +94,15 @@ router.post('/close', [authTeacher, [
 
     let task = new TaskClose({
       name: req.body.name,
-      points: req.body.points,
+      content: req.body.content,
+      points: req.body.data.length,
       class: req.body.class,
       section: req.body.section,
       author: req.user.id,
-      data: {
-        content: req.body.content,
-        answer: req.body.answer
-      }
+      data: req.body.data
     });
     task.save();
-    res.json(task);
+    res.json({_id:task._id, taskType:'closeTask', name: task.name});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

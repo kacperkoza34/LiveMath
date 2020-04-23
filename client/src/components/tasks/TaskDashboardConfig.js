@@ -20,11 +20,7 @@ export const availableClasses = [
       { name: 'Liczby i działania', id: 1 },
       { name: 'Procenty', id: 2 },
       { name: 'Figury geometryczne', id: 3 },
-      { name: 'Wyrażenia algebraiczne', id: 4 },
-      { name: 'Równania', id: 5 },
-      { name: 'Potęgi i pierwiastki', id: 6 },
-      { name: 'Graniastosłupy', id: 7 },
-      { name: 'Statystyka', id: 8 }
+      { name: 'Wyrażenia algebraiczne', id: 4 }
     ]
   },
   {
@@ -35,10 +31,7 @@ export const availableClasses = [
       { name: 'Procenty', id: 2 },
       { name: 'Figury geometryczne', id: 3 },
       { name: 'Wyrażenia algebraiczne', id: 4 },
-      { name: 'Równania', id: 5 },
-      { name: 'Potęgi i pierwiastki', id: 6 },
-      { name: 'Graniastosłupy', id: 7 },
-      { name: 'Statystyka', id: 8 }
+      { name: 'Równania', id: 5 }
     ]
   },
   {
@@ -61,26 +54,14 @@ export const availableClasses = [
     sections: [
       { name: 'Liczby i działania', id: 1 },
       { name: 'Procenty', id: 2 },
-      { name: 'Figury geometryczne', id: 3 },
-      { name: 'Wyrażenia algebraiczne', id: 4 },
-      { name: 'Równania', id: 5 },
-      { name: 'Potęgi i pierwiastki', id: 6 },
-      { name: 'Graniastosłupy', id: 7 },
-      { name: 'Statystyka', id: 8 }
+      { name: 'Figury geometryczne', id: 3 }
     ]
   },
   {
     name: 'Klasy 6',
     id: 6,
     sections: [
-      { name: 'Liczby i działania', id: 1 },
-      { name: 'Procenty', id: 2 },
-      { name: 'Figury geometryczne', id: 3 },
-      { name: 'Wyrażenia algebraiczne', id: 4 },
-      { name: 'Równania', id: 5 },
-      { name: 'Potęgi i pierwiastki', id: 6 },
-      { name: 'Graniastosłupy', id: 7 },
-      { name: 'Statystyka', id: 8 }
+      { name: 'Liczby i działania', id: 1 }
     ]
   },
   {

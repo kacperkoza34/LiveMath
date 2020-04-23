@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TasksList from './TasksList';
 import NewTask from './NewTask';
 import './TaskDashboard.css';
 import { availableClasses } from './TaskDashboardConfig.js';
+import { taskSuccess } from '../../redux/actions/tasks';
+import { connect } from 'react-redux';
 
-const TaskDashboard = () =>{
+const TaskDashboard = ({taskSuccess}) =>{
+
+  useEffect(()=>{
+    taskSuccess({});
+  },[]);
+
   const [activeList, setActiveList] = useState(null);
   const [title, setTitle] = useState('Wybierz klase');
   const [activeSection, setActiveSection] = useState(null);
@@ -46,4 +53,4 @@ const TaskDashboard = () =>{
   )
 }
 
-export default TaskDashboard;
+export default connect(null,{taskSuccess})(TaskDashboard);
