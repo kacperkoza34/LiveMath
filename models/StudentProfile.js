@@ -24,6 +24,10 @@ const StudentProfileSchema = new Schema({
   },
   tasksOpen: [
     {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
       deadLine: {
         type: Date
       },
@@ -33,6 +37,7 @@ const StudentProfileSchema = new Schema({
       },
       usedPrompts: {
         type: Number,
+        default: 0,
         max:2
       },
       descriptionRequired: {
@@ -48,7 +53,8 @@ const StudentProfileSchema = new Schema({
         default: false
       },
       resolvedInTime: {
-        type: Boolean
+        type: Boolean,
+        default: true
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
@@ -58,6 +64,10 @@ const StudentProfileSchema = new Schema({
   ],
   tasksClose: [
     {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
       deadLine: {
         type: Date
       },
@@ -66,11 +76,8 @@ const StudentProfileSchema = new Schema({
         default: false
       },
       resolvedInTime: {
-        type: Boolean
-      },
-      result: {
-        type: String,
-        default: false
+        type: Boolean,
+        default: true
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
@@ -80,6 +87,10 @@ const StudentProfileSchema = new Schema({
   ],
   tasksBoolean: [
     {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
       deadLine: {
         type: Date
       },
@@ -88,11 +99,8 @@ const StudentProfileSchema = new Schema({
         default: false
       },
       resolvedInTime: {
-        type: Boolean
-      },
-      result: {
-        type: String,
-        default: false
+        type: Boolean,
+        default: true
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,

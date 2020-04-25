@@ -4,6 +4,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from './DisplayContent';
 import DisplayPrompts from './DisplayPrompts';
 import MathJax from '../../MathJax';
+import AddTaskToClass from '../../AddTaskToClass/AddTaskToClass';
 import { connect } from 'react-redux';
 import { getOpenTask } from '../../../../redux/actions/tasks';
 
@@ -80,6 +81,7 @@ const OpenTask = ({
           (correctAnswer == answer ? 'Brawo!' : 'Pomyśl o tym jeszcze raz') :
           <button onClick={()=>check(true)}>Dodaj odpowiedz!</button>
         }
+        { accountType == 'teacher' && <AddTaskToClass />}
       </>
     }
     </>

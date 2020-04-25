@@ -10,7 +10,60 @@ const ClassSchema = new Schema({
     type: String,
     required: true
   },
-  task : [],
+  tasksOpen: [
+    {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
+      deadLine: {
+        type: Date,
+        required: true
+      },
+      promptsAllowed: {
+        type: Boolean,
+        default: true
+      },
+      descriptionRequired: {
+        type: Boolean,
+        default: true
+      },
+      task: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'taskOpen'
+      }
+    }
+  ],
+  tasksClose: [
+    {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
+      deadLine: {
+        type: Date
+      },
+      task: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tasksClose'
+      }
+    }
+  ],
+  tasksBoolean: [
+    {
+      date: {
+        type: Date,
+        default: Date.now()
+      },
+      deadLine: {
+        type: Date
+      },
+      task: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tasksBoolean'
+      }
+    }
+  ],
   maxStudentsAmount: {
     type: Number,
     default: 35
@@ -22,8 +75,8 @@ const ClassSchema = new Schema({
   students:[
     {
       student:  {
-          type: Schema.Types.ObjectId,
-          ref: 'student'
+        type: Schema.Types.ObjectId,
+        ref: 'student'
       }
     }
   ]

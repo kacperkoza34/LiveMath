@@ -67,7 +67,7 @@ const AddGroups = ({variables, content, addGroup, deleteGroup, groups}) => {
         </form>
       }
       <ul>
-        {groups.length > 0 && groups.map((item, index)=>
+        {groups.map((item, index)=>
           <li styles='display: block'>
             {`Grupa ${index+1}`}{displayGroup(item)}
             <button onClick={()=>deleteGroup(item.id)}>Usun grupe</button>

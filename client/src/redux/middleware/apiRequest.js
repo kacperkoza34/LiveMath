@@ -12,7 +12,6 @@ const apiRequest = ({dispatch}) => next => action => {
       config: config
     })
       .then( ({data}) =>{
-        console.log(data);
         dispatch(onSucces(data));
       }
       )

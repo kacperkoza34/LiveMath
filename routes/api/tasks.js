@@ -9,6 +9,8 @@ const TeacherProfile = require('../../models/TeacherProfile');
 const TaskOpen = require('../../models/TaskOpen');
 const TaskClose = require('../../models/TaskClose');
 const TaskBoolean = require('../../models/TaskBoolean');
+const Class = require('../../models/Class');
+const StudentProfile = require('../../models/StudentProfile');
 
 const authStudent = require('../../middleware/authStudent');
 const authTeacher = require('../../middleware/authTeacher');
@@ -74,12 +76,6 @@ router.post('/close', [authTeacher, [
     .isInt({ min: 1, max: 8 }),
   check('section', 'Podaj dział')
     .not()
-    .isEmpty(),
-  check('content', 'Podaj treść zadania')
-    .not()
-    .isEmpty(),
-  check('answer', 'Podaj odpowiedź')
-    .not()
     .isEmpty()
 ]] , async (req,res) =>{
 
@@ -114,9 +110,6 @@ router.post('/boolean', [authTeacher, [
   check('name', 'Podaj zadania')
     .not()
     .isEmpty(),
-  check('points', 'Podaj liczbe punktów')
-    .not()
-    .isEmpty(),
   check('class', 'Podaj klase od 1 do 8')
     .not()
     .isEmpty()
@@ -125,9 +118,6 @@ router.post('/boolean', [authTeacher, [
     .not()
     .isEmpty(),
   check('content', 'Podaj treść zadania')
-    .not()
-    .isEmpty(),
-  check('answer', 'Podaj odpowiedź')
     .not()
     .isEmpty()
 ]] , async (req,res) =>{
@@ -143,17 +133,15 @@ router.post('/boolean', [authTeacher, [
 
     let task = new TaskBoolean({
       name: req.body.name,
-      points: req.body.points,
+      content: req.body.content,
+      points: req.body.data.length,
       class: req.body.class,
       section: req.body.section,
       author: req.user.id,
-      data: {
-        content: req.body.content,
-        answer: req.body.answer
-      }
+      data: req.body.data
     });
     task.save();
-    res.json(task);
+    res.json({_id:task._id, taskType:'booleanTask', name: task.name});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -204,8 +192,69 @@ router.get('/search/:class/:section', authTeacher, async (req,res) =>{
       .select("-data");
     let taskBoolean = await TaskBoolean.find({ class: req.params.class, section: req.params.section })
       .select("-data");
-    const response = [...taskClose,...taskOpen,...taskBoolean];
+
+    function compare(a,b){
+      return a.date.getTime() - b.date.getTime();
+    }
+
+    const response = [...taskClose,...taskOpen,...taskBoolean].sort(compare);
     res.json(response);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+
+router.post('/addOpenTask', [authTeacher, [
+  check('classes', 'Nie wybrano klas!')
+    .not()
+    .isEmpty(),
+  check('taskId', 'Nie wybrano zadania!')
+    .not()
+    .isEmpty(),
+  check('deadLine', 'Nie wybrano daty!')
+    .not()
+    .isEmpty(),
+  check('promptsAllowed', 'Ustal status podpowiedzi!')
+    .not()
+    .isEmpty(),
+  check('descriptionRequired', 'Ustal status opisu!!')
+    .not()
+    .isEmpty(),
+]] , async (req,res) =>{
+
+  const erros = validationResult(req);
+  if(!erros.isEmpty()) {
+    return res.status(400).json({errors: erros.array()});
+  }
+
+  try {
+
+    req.body.classes.forEach( async (item, i) => {
+      let currentClass = await Class.findOne({_id: item});
+      currentClass.tasksOpen.push({
+        deadLine: Date.now(),
+        promptsAllowed: req.body.prompts,
+        descriptionRequired: req.body.descriptionRequired,
+        task: req.body.taskId
+      });
+
+      currentClass.students.forEach( async ({student}, i) => {
+        let profile = await StudentProfile.findOne({user: student});
+        profile.tasksOpen.push({
+          deadLine: req.body.deadLine,
+          promptsAllowed: req.body.prompts,
+          descriptionRequired: req.body.descriptionRequired,
+          task: req.body.taskId
+        })
+        await profile.save();
+      });
+      await currentClass.save();
+    });
+
+
+    res.json('success');
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

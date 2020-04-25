@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import SelectSection from '../SelectSection.js';
 import TaskContent from '../TaskContent.js';
 import AddQuestion from './AddQuestion.js';
+import SendTask from '../SendTask.js';
 import { connect } from 'react-redux';
-import { clearTask } from '../../../../redux/actions/newTask';
+import { clearTask, sendCloseTask } from '../../../../redux/actions/newTask';
 import { clearTasks } from '../../../../redux/actions/tasks';
 import {Link} from 'react-router-dom';
 
-const CloseTask = ({clearTask, clearTasks, success}) => {
+const CloseTask = ({clearTask, clearTasks, success, sendCloseTask}) => {
   const { taskType, _id, name } = success;
   useEffect(()=>{
-      return () =>clearTask({}) 
+      return () =>clearTask({})
   },[]);
 
   return <>
     <TaskContent />
     <AddQuestion />
     <SelectSection />
+    <SendTask send={sendCloseTask} />
     {Object.keys(success).length > 0 &&
       <>
         <h5>Dodano zadanie! Zobacz jak wygląda:</h5>
@@ -35,4 +37,4 @@ const mapStateToProps = state =>({
 })
 
 
-export default connect(mapStateToProps,{clearTask,clearTasks})(CloseTask);
+export default connect(mapStateToProps,{clearTask, clearTasks, sendCloseTask})(CloseTask);

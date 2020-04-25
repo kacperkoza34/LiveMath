@@ -10,6 +10,8 @@ export const ADD_CLASS = '[task] ADD_CLASS';
 export const ADD_SECTION = '[task] ADD_SECTION';
 export const ADD_NAME = '[task] ADD_NAME';
 export const SEND_OPEN_TASK = '[task] SEND_OPEN_TASK';
+export const SEND_CLOSE_TASK = '[task] SEND_CLOSE_TASK';
+export const SEND_BOOLEAN_TASK = '[task] SEND_BOOLEAN_TASK';
 export const NEW_TASK_ERROR = '[task] NEW_TASK_ERROR';
 export const CLEAR_NEW_TASK= '[task] CLEAR_NEW_TASK';
 
@@ -70,6 +72,16 @@ export const addSection = (payload) => ({
 
 export const sendOpenTask = (payload) => ({
   type: SEND_OPEN_TASK,
+  payload
+});
+
+export const sendCloseTask = (payload) => ({
+  type: SEND_CLOSE_TASK,
+  payload
+});
+
+export const sendBooleanTask = (payload) => ({
+  type: SEND_BOOLEAN_TASK,
   payload
 });
 

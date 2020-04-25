@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from '../../MathJax';
+import AddTaskToClass from '../../AddTaskToClass/AddTaskToClass';
 import { connect } from 'react-redux';
 import { getCloseTask } from '../../../../redux/actions/tasks';
 
@@ -66,7 +67,8 @@ const CloseTask = ({
             </ul>
           }
           <button onClick={()=>setChekAnswers(true)}>Sprawdź odpowiedzi</button>
-          {checkAnswers && displayResult()}
+          { checkAnswers && displayResult() }
+          { accountType == 'teacher' && <AddTaskToClass />}
         </>
       }
     </>

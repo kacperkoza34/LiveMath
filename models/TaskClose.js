@@ -30,6 +30,10 @@ const TaskSchema = new Schema({
     type: String,
     default: 'closeTask'
   },
+  date: {
+    type: Date,
+    default: Date.now()
+  },
   data: [
     {
       content: {

@@ -15,6 +15,7 @@ const Classes = ({ fetching, getClasses, classes: { isFetching, data: classes },
   },[]);
 
   const [activeClass, setActiveClass] = useState(null);
+  const [activePage, setActivePage] = useState(1);
 
   return(
       <>
@@ -30,21 +31,26 @@ const Classes = ({ fetching, getClasses, classes: { isFetching, data: classes },
             <AddClass />
           </div>
           <div className='students-view bg-dark'>
-            <h2>Uczniowie</h2>
+            <div>
+              <span onClick={()=>setActivePage(1)}>Uczniowie</span>
+              <span onClick={()=>setActivePage(2)}>Zadania</span>
+            </div>
             <ul>
               { activeClass == null ? <h5>Wybierz klase</h5> :
                 <>
-                  {classes.map(({_id,students,open, title, maxStudentsAmount})=>(
-                    _id == activeClass ? (
-                    <>
-                      <h2>{title}</h2>
-                      {students.length === maxStudentsAmount ? <h5>Klasa jest pełna</h5> :
-                        <ClassStatus myId={myId} classId={_id} open={open}/>}
-                      <StudentsList students={students} />
-                    </>
-                    ) : ''
-                  ))
-                  }
+                  {activePage === 1 ? <>
+                    {classes.map(({_id,students, tasks, open, title, maxStudentsAmount})=>(
+                      _id == activeClass ? (
+                      <>
+                        <h2>{title}</h2>
+                        {students.length === maxStudentsAmount ? <h5>Klasa jest pełna</h5> :
+                          <ClassStatus myId={myId} classId={_id} open={open}/>}
+                        <StudentsList students={students} />
+                      </>
+                      ) : ''
+                    ))
+                  }</>
+                    : <>zadania</>}
                 </>
               }
             </ul>

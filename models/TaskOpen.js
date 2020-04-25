@@ -26,6 +26,10 @@ const TaskSchema = new Schema({
     type: String,
     default: 'openTask'
   },
+  date: {
+    type: Date,
+    default: Date.now()
+  },
   data: {
     content: {
       type: String,

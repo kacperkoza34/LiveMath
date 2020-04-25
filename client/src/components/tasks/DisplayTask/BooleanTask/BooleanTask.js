@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from '../../MathJax';
+import AddTaskToClass from '../../AddTaskToClass/AddTaskToClass';
 import { connect } from 'react-redux';
 import { getBooleanTask } from '../../../../redux/actions/tasks';
 
@@ -34,12 +35,13 @@ const BooleanTask = ({
 
   const onChange = (e) => {
     setChekAnswers(false);
-    setTaskStatus({...taskStatus, [e.target.name]: parseInt(e.target.value)});
+    if(e.target.value === '') setTaskStatus({...taskStatus, [e.target.name]: ''});
+    else setTaskStatus({...taskStatus, [e.target.name]: e.target.value === 'true'? true : false});
   };
 
   const displayResult = () => {
     let result = 0;
-    data.data.forEach(({answer}, i) => answer == taskStatus[i] && result++  );
+    data.data.forEach(({answer}, i) => answer === taskStatus[i] && result++  );
     return `${result}/${Object.keys(taskStatus).length}`
   };
   return (
@@ -58,9 +60,9 @@ const BooleanTask = ({
                       value={taskStatus[`${i}`]}
                       onChange={(e)=>onChange(e)}
                     >
-                      <option value={NaN}>Wybierz odpowiedz</option>
-                      <option value={1}>Prawda</option>
-                      <option value={0}>Fałsz</option>
+                      <option value={''}>Wybierz odpowiedz</option>
+                      <option value={true}>Prawda</option>
+                      <option value={false}>Fałsz</option>
                   </select>
                   </li>
                   )
@@ -68,7 +70,8 @@ const BooleanTask = ({
             </ul>
           }
           <button onClick={()=>setChekAnswers(true)}>Sprawdź odpowiedzi</button>
-          {checkAnswers && displayResult()}
+          { checkAnswers && displayResult() }
+          { accountType == 'teacher' && <AddTaskToClass />}
         </>
       }
     </>

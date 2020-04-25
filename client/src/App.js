@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.css';
+//import './App.css';
 import Nav from './components/layout/Nav';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
@@ -19,6 +19,7 @@ import DisplayCloseTask from './components/tasks/DisplayTask/CloseTask/CloseTask
 import DisplayBooleanTask from './components/tasks/DisplayTask/BooleanTask/BooleanTask';
 import AddOpenTask from './components/tasks/AddTask/OpenTask/OpenTask';
 import AddCloseTask from './components/tasks/AddTask/CloseTask/CloseTask';
+import AddBooleanTask from './components/tasks/AddTask/BooleanTask/BooleanTask';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -46,8 +47,7 @@ const App = () => {
             <PrivateRoute exact path='/display/booleanTask/:id' component={DisplayBooleanTask}/>
             <TeacherRoute exact path='/add/openTask' component={AddOpenTask}/>
             <TeacherRoute exact path='/add/closeTask' component={AddCloseTask}/>
-            <TeacherRoute exact path='/add/booleanTask' component={AddOpenTask}/>
-
+            <TeacherRoute exact path='/add/booleanTask' component={AddBooleanTask}/>
           </Switch>
         </section>
       </>

@@ -6,7 +6,7 @@ import Model from './Model.js';
 import AdditionalVariables from './AdditionalVariables.js';
 import AddGroups from './AddGroups.js';
 import SelectSection from '../SelectSection.js';
-import SendTask from './SendTask.js';
+import SendOpenTask from './SendOpenTask.js';
 import { clearTask } from '../../../../redux/actions/newTask';
 import { clearTasks } from '../../../../redux/actions/tasks';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ const OpenTask = ({clearTask, clearTasks, success}) => {
     <Model />
     <AddGroups />
     <SelectSection />
-    <SendTask />
+    <SendOpenTask />
     {Object.keys(success).length > 0 &&
       <>
         <h5>Dodano zadanie! Zobacz jak wygląda:</h5>

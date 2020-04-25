@@ -9,6 +9,8 @@
     "axios": "^0.19.2",
     "moment": "^2.24.0",
     "react": "^16.13.1",
+    "react-datepicker": "^2.14.1",
+    "react-datetime-picker": "^3.0.1",
     "react-dom": "^16.13.1",
     "react-mathjax-preview": "^1.2.4",
     "react-moment": "^0.9.7",
