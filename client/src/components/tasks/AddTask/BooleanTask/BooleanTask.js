@@ -4,10 +4,10 @@ import SelectSection from '../SelectSection.js';
 import TaskContent from '../TaskContent.js';
 import AddQuestion from './AddQuestion.js';
 import SendTask from '../SendTask.js';
+import Success from '../Success.js';
 import { connect } from 'react-redux';
 import { clearTask, sendBooleanTask } from '../../../../redux/actions/newTask';
 import { clearTasks } from '../../../../redux/actions/tasks';
-import {Link} from 'react-router-dom';
 
 const CloseTask = ({clearTask, clearTasks, success,sendBooleanTask}) => {
   const { taskType, _id, name } = success;
@@ -16,16 +16,13 @@ const CloseTask = ({clearTask, clearTasks, success,sendBooleanTask}) => {
   },[]);
 
   return <>
-    <TaskContent />
-    <AddQuestion />
-    <SelectSection />
-    <SendTask send={sendBooleanTask} />
-    {Object.keys(success).length > 0 &&
+    {Object.keys(success).length > 0 ?
+      <Success success={success} clearTasks={clearTasks} /> :
       <>
-        <h5>Dodano zadanie! Zobacz jak wygląda:</h5>
-        <Link onClick={()=>clearTasks()} to={`/display/${taskType}/${_id}`}>
-          {name}
-        </Link>
+        <TaskContent />
+        <AddQuestion />
+        <SelectSection />
+        <SendTask send={sendBooleanTask} />
       </>
     }
   </>

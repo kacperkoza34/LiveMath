@@ -6,11 +6,11 @@ import Model from './Model.js';
 import AdditionalVariables from './AdditionalVariables.js';
 import AddGroups from './AddGroups.js';
 import SelectSection from '../SelectSection.js';
+import Success from '../Success.js';
 import SendOpenTask from './SendOpenTask.js';
 import { clearTask } from '../../../../redux/actions/newTask';
 import { clearTasks } from '../../../../redux/actions/tasks';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
 
 const OpenTask = ({clearTask, clearTasks, success}) => {
   const { taskType, _id, name } = success;
@@ -19,19 +19,16 @@ const OpenTask = ({clearTask, clearTasks, success}) => {
   },[]);
 
   return <>
-    <TaskContent />
-    <VariabelsList />
-    <AdditionalVariables />
-    <Model />
-    <AddGroups />
-    <SelectSection />
-    <SendOpenTask />
-    {Object.keys(success).length > 0 &&
+    {Object.keys(success).length > 0 ?
+      <Success success={success} clearTasks={clearTasks} /> :
       <>
-        <h5>Dodano zadanie! Zobacz jak wygląda:</h5>
-        <Link onClick={()=>clearTasks()} to={`/display/${taskType}/${_id}`}>
-          {name}
-        </Link>
+        <TaskContent />
+        <VariabelsList />
+        <AdditionalVariables />
+        <Model />
+        <AddGroups />
+        <SelectSection />
+        <SendOpenTask />
       </>
     }
   </>
