@@ -1,0 +1,32 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: $color-background;
+
+  .wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    margin: 60px;
+  }
+  .btnLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 18px;
+    transition: 0.4s;
+    box-shadow: 10px 4px 59px -22px rgba(0, 0, 0, 0.75);
+    background-color: $color-secondary;
+  }
+  .btnLogin:hover {
+    background-color: $color-primary;
+  }
+}

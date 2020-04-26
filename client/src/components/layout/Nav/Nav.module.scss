@@ -1,0 +1,23 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  height: 80px;
+  background: $color-primary;
+  padding: 0 30px 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .navLinks {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    font-size: 20px;
+
+    li {
+      margin: 0 20px 0 20px;
+    }
+  }
+}
