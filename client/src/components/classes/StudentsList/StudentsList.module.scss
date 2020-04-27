@@ -1,16 +1,7 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
 
 .root {
   display: flex;
   flex-direction: column;
-
-  .btnClass {
-    padding: 6px;
-    margin: 2px;
-  }
-
-  .btnClass:hover {
-    cursor: pointer;
-    background-color: $color-background;
-  }
 }

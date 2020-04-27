@@ -1,69 +1,66 @@
-import {combineReducers, createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-
-import { createLogger } from 'redux-logger'
-import { createPromise } from 'redux-promise-middleware'
-
+import { createLogger } from "redux-logger";
+import { createPromise } from "redux-promise-middleware";
 
 // reducers
-import authReducer from './reducers/authReducer';
-import userReducer from './reducers/userReducer';
-import profileReducer from './reducers/profileReducer';
-import teacherReducer from './reducers/teacherReducer';
-import classesReducer from './reducers/classesReducer';
-import smallLoadingReducer from './reducers/smallLoadingReducer';
-import studentReducer from './reducers/studentReducer';
-import tasksReducer from './reducers/tasksReducer';
-import newTasksReducer from './reducers/newTasksReducer';
-import taskToClassReducer from './reducers/taskToClassReducer';
+import authReducer from "./reducers/authReducer";
+import userReducer from "./reducers/userReducer";
+import profileReducer from "./reducers/profileReducer";
+import teacherReducer from "./reducers/teacherReducer";
+import classesReducer from "./reducers/classesReducer";
+import smallLoadingReducer from "./reducers/smallLoadingReducer";
+import studentReducer from "./reducers/studentReducer";
+import tasksReducer from "./reducers/tasksReducer";
+import newTasksReducer from "./reducers/newTasksReducer";
+import taskToClassReducer from "./reducers/taskToClassReducer";
 
 /// applyMiddleware
-import auth from './middleware/auth';
-import user from './middleware/user';
-import profile from './middleware/profile';
-import teacher from './middleware/teacher';
-import classes from './middleware/classes';
-import student from './middleware/student';
-import tasks from './middleware/tasks';
-import newTask from './middleware/newTask';
-import taskToClass from './middleware/taskToClass';
-import apiRequest from './middleware/apiRequest';
+import auth from "./middleware/auth";
+import user from "./middleware/user";
+import profile from "./middleware/profile";
+import teacher from "./middleware/teacher";
+import classes from "./middleware/classes";
+import student from "./middleware/student";
+import tasks from "./middleware/tasks";
+import newTask from "./middleware/newTask";
+import taskToClass from "./middleware/taskToClass";
+import apiRequest from "./middleware/apiRequest";
 
-
-const initialState ={
+const initialState = {
   auth: {
     token: null,
     isAuthenticated: false,
     isFetching: false,
-    errors: false
+    errors: false,
   },
   user: {
     data: {},
     isFetching: true,
-    errors: false
+    errors: false,
   },
   profile: {
     data: {},
     isFetching: true,
-    errors: false
+    errors: false,
   },
   teacher: {
     data: {},
     isFetching: true,
-    errors: false
+    errors: false,
   },
   classes: {
     data: [],
     isFetching: true,
-    errors: false
+    errors: false,
   },
   smallLoading: false,
   student: {
     data: [],
     isFetching: true,
-    errors: false
+    errors: false,
   },
   tasks: {
     data: [],
@@ -72,15 +69,15 @@ const initialState ={
     errors: false,
   },
   newTask: {
-    data:{
-      content: '',
-      name: '',
+    data: {
+      content: "",
+      name: "",
       variables: [],
       additionalVariables: [],
-      model: '',
+      model: "",
       groups: [],
-      class: '',
-      section: ''
+      class: "",
+      section: "",
     },
     isFetching: false,
     errors: {},
@@ -89,13 +86,14 @@ const initialState ={
   addTaskToClass: {
     data: {
       classes: [],
-      deadLine: '',
+      deadLine: "",
       promptsAllowed: false,
-      descriptionRequired: false
+      descriptionRequired: false,
     },
     isFetching: false,
-    errors: false
-  }
+    errors: false,
+    success: false,
+  },
 };
 
 const reducers = {
@@ -108,11 +106,10 @@ const reducers = {
   student: studentReducer,
   tasks: tasksReducer,
   newTask: newTasksReducer,
-  addTaskToClass: taskToClassReducer
+  addTaskToClass: taskToClassReducer,
 };
 
 const combinedReducers = combineReducers(reducers);
-
 
 const store = createStore(
   combinedReducers,
@@ -121,7 +118,7 @@ const store = createStore(
     applyMiddleware(
       //createPromise(),
       thunk,
-     //createLogger(),
+      //createLogger(),
       auth,
       user,
       profile,
@@ -132,7 +129,7 @@ const store = createStore(
       newTask,
       taskToClass,
       apiRequest
-    ),
+    )
   )
 );
 

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import SelectSection from "../SelectSection.js";
-import TaskContent from "../TaskContent.js";
+
+import SelectSection from "../AddTaskCommon/SelectSection/SelectSection.js";
+import SendTask from "../AddTaskCommon/SendTask/SendTask.js";
+import Success from "../AddTaskCommon/Success/Success.js";
+import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
+
 import AddQuestion from "./AddQuestion.js";
-import SendTask from "../SendTask.js";
-import Success from "../Success.js";
 import { connect } from "react-redux";
 import { clearTask, sendBooleanTask } from "../../../../redux/actions/newTask";
 import { clearTasks } from "../../../../redux/actions/tasks";

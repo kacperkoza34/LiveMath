@@ -1,42 +1,9 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
 
 .root {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-
-  .classesWrapper {
-    width: 200px;
-    background: #fff;
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid;
-  }
-
-  .contentWrapper {
-    width: 600px;
-    min-height: 500px;
-    background: #fff;
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid;
-  }
-
-  .btnClass {
-    padding: 6px;
-    margin: 2px;
-  }
-
-  .btnClass:hover {
-    cursor: pointer;
-    background-color: $color-background;
-  }
-
-  .btnClassActive {
-    padding: 6px;
-    margin: 2px;
-    cursor: pointer;
-    background-color: $color-background;
-  }
 }

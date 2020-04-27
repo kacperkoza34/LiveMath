@@ -7,7 +7,7 @@ const StudentsList = ({ students }) => {
   return (
     <div className={styles.root}>
       {students.map(({ student }, index) => (
-        <Link className={styles.btnClass} to={`/student/${student._id}`}>{`${
+        <Link className={styles.btnList} to={`/student/${student._id}`}>{`${
           index + 1
         }. ${student.name}`}</Link>
       ))}

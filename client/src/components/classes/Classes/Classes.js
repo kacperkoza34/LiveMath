@@ -4,7 +4,10 @@ import styles from "./Classes.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddClass from "../AddClass/AddClass.js";
 import StudentsList from "../StudentsList/StudentsList.js";
+import TasksList from "../TasksList/TasksList.js";
 import ClassStatus from "../ClassStatus/ClassStatus.js";
+import SelectSection from "../SelectSection/SelectSection.js";
+import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getClasses } from "../../../redux/actions/classes";
@@ -28,13 +31,13 @@ const Classes = ({
         <BeatLoader />
       ) : (
         <div className={styles.root}>
-          <div className={styles.classesWrapper}>
+          <div className={styles.asideWrapper}>
             <h2>Klasy</h2>
             <ul>
               {classes.map(({ title, _id }) => (
                 <li
                   className={
-                    activeClass == _id ? styles.btnClassActive : styles.btnClass
+                    activeClass == _id ? styles.btnListActive : styles.btnList
                   }
                   onClick={() => {
                     setActiveClass(_id);
@@ -48,60 +51,53 @@ const Classes = ({
           </div>
           <div className={styles.contentWrapper}>
             <div>
-              <span
-                className={
-                  activePage == 1 ? styles.btnClassActive : styles.btnClass
-                }
-                onClick={() => setActivePage(1)}
-              >
-                Uczniowie
-              </span>
-              <span
-                className={
-                  activePage == 2 ? styles.btnClassActive : styles.btnClass
-                }
-                onClick={() => setActivePage(2)}
-              >
-                Zadania
-              </span>
-            </div>
-            <div>
               {activeClass == null ? (
-                <h5>Wybierz klase</h5>
+                <h5>Wybierz klase...</h5>
               ) : (
                 <>
-                  {activePage === 1 ? (
-                    <>
-                      {classes.map(
-                        ({
-                          _id,
-                          students,
-                          tasks,
-                          open,
-                          title,
-                          maxStudentsAmount,
-                        }) =>
-                          _id == activeClass ? (
-                            <>
-                              <h3>{title}</h3>
-                              {students.length === maxStudentsAmount ? (
-                                <h5>Klasa jest pełna</h5>
-                              ) : (
-                                <ClassStatus
-                                  myId={myId}
-                                  classId={_id}
-                                  open={open}
-                                />
-                              )}
-                              <StudentsList students={students} />
-                            </>
+                  {classes.map(
+                    ({
+                      _id,
+                      students,
+                      tasksOpen,
+                      tasksClose,
+                      tasksBoolean,
+                      open,
+                      title,
+                      maxStudentsAmount,
+                    }) =>
+                      _id == activeClass && (
+                        <>
+                          <h3>{title}</h3>
+                          {students.length === maxStudentsAmount ? (
+                            <h5>Klasa jest pełna</h5>
                           ) : (
-                            ""
-                          )
-                      )}
-                    </>
-                  ) : (
-                    <>zadania</>
+                            <ClassStatus
+                              myId={myId}
+                              classId={_id}
+                              open={open}
+                            />
+                          )}
+                          <SelectSection
+                            activePage={activePage}
+                            setActivePage={setActivePage}
+                          />
+                          {activePage === 1 ? (
+                            <StudentsList students={students} />
+                          ) : (
+                            <>
+                              <TaskTypeBox />
+                              <TasksList
+                                tasks={[
+                                  ...tasksOpen,
+                                  ...tasksClose,
+                                  ...tasksBoolean,
+                                ]}
+                              />
+                            </>
+                          )}
+                        </>
+                      )
                   )}
                 </>
               )}

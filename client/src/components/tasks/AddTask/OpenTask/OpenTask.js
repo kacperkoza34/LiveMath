@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import TaskContent from "../TaskContent.js";
-import VariabelsList from "./VariabelsList.js";
-import Model from "./Model.js";
-import AdditionalVariables from "./AdditionalVariables.js";
-import AddGroups from "./AddGroups.js";
-import SelectSection from "../SelectSection.js";
-import Success from "../Success.js";
-import SendOpenTask from "./SendOpenTask.js";
+
+import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
+import SelectSection from "../AddTaskCommon/SelectSection/SelectSection.js";
+import Success from "../AddTaskCommon/Success/Success.js";
+
+import VariabelsList from "./Features/VariabelsList/VariabelsList.js";
+import Model from "./Features/Model/Model.js";
+import AdditionalVariables from "./Features/AdditionalVariables/AdditionalVariables.js";
+import AddGroups from "./Features/AddGroups/AddGroups.js";
+import SendOpenTask from "./Features/SendOpenTask/SendOpenTask.js";
+
 import { clearTask } from "../../../../redux/actions/newTask";
 import { clearTasks } from "../../../../redux/actions/tasks";
 import { connect } from "react-redux";

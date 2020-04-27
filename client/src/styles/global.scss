@@ -25,4 +25,56 @@ a:visited {
   color: inherit;
 }
 
+.btnList {
+  padding: 6px;
+  margin: 2px;
+}
+.btnList:hover {
+  cursor: pointer;
+  background: $color-background;
+}
+
+.btnListActive {
+  padding: 6px;
+  margin: 2px;
+  cursor: pointer;
+  background: $color-background;
+}
+
+.asideWrapper {
+  width: 200px;
+  background: #fff;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.contentWrapper {
+  width: 600px;
+  min-height: 500px;
+  background: #fff;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.openTask {
+  width: 100%;
+  background-color: $color-open-task;
+  padding: 5px;
+  margin: 5px;
+}
+.closeTask {
+  width: 100%;
+  background-color: $color-close-task;
+  padding: 5px;
+  margin: 5px;
+}
+.booleanTask {
+  width: 100%;
+  background-color: $color-boolean-task;
+  padding: 5px;
+  margin: 5px;
+}
+
 @import "./typography.scss";

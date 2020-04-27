@@ -1,0 +1,29 @@
+import React from "react";
+import PropTypes from "prop-types";
+import styles from "./SelectSection.module.scss";
+
+const SelectSection = ({ activePage, setActivePage }) => {
+  return (
+    <div className={styles.root}>
+      <span
+        className={activePage === 1 ? styles.btnListActive : styles.btnList}
+        onClick={() => setActivePage(1)}
+      >
+        Uczniowie
+      </span>
+      <span
+        className={activePage === 2 ? styles.btnListActive : styles.btnList}
+        onClick={() => setActivePage(2)}
+      >
+        Zadania
+      </span>
+    </div>
+  );
+};
+
+SelectSection.propTypes = {
+  activePage: PropTypes.number.isRequired,
+  setActivePage: PropTypes.func.isRequired,
+};
+
+export default SelectSection;

@@ -37,7 +37,6 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       setNoAnswer(false);
     } else setNoAnswer(true);
   };
-  console.log(formData);
   return (
     <>
       <form onSubmit={(e) => onSubmit(e)}>
