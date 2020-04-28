@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./Model.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 import MathJax from "../../../../MathJax";
 import { addTaskModel } from "../../../../../../redux/actions/newTask";
@@ -8,9 +9,9 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
   const [model, setModel] = useState("");
 
   return (
-    <div>
-      <h5>Wzór</h5>
-      <TextareaAutosize
+    <div className={styles.root}>
+      <h3>Wzór</h3>
+      <input
         placeholder="Podaj wzór"
         value={modelFromState}
         onChange={(e) => {
@@ -18,7 +19,11 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
           setModel(e.target.value);
         }}
       />
-      <MathJax content={modelFromState} />
+      {modelFromState.length > 0 && (
+        <div className={styles.model}>
+          <MathJax content={"`" + modelFromState + "`"} />
+        </div>
+      )}
     </div>
   );
 };

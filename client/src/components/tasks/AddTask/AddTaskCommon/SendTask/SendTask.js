@@ -1,33 +1,35 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./SendTask.module.scss";
 import { connect } from "react-redux";
 
 const SendTask = ({ newTask, send }) => {
   const { content, name, groups, section, class: classNew } = newTask;
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
+
   const sendTask = () => {
-    if (
-      content.trim().length &&
-      name.trim().length &&
-      groups.length &&
-      section.length &&
-      classNew.length
-    ) {
-      setError("");
-      send({
-        content,
-        name,
-        class: classNew,
-        section,
-        data: groups,
-      });
-    } else setError("Nie uzupełniono wszystkich danych");
+    const errors = [];
+    if (!content.trim().length) errors.push("Nie podano treści");
+    if (!name.trim().length) errors.push("Nie podano nazwy zadania");
+    if (!groups.length) errors.push("Nie podano grup");
+    if (!section.length || !classNew.length) errors.push("Nie wybrano działu");
+    if (!errors.length) {
+      setErrors([]);
+      send(newTask);
+    } else setErrors(errors);
   };
+
   return (
-    <>
-      {error.length > 0 && error}
+    <div className={styles.root}>
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((item) => (
+            <li className={styles.error}>{item}</li>
+          ))}
+        </ul>
+      )}
       <button onClick={() => sendTask()}>Zapisz zadanie</button>
-    </>
+    </div>
   );
 };
 

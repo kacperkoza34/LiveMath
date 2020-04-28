@@ -24,7 +24,7 @@ const DisplayPrompts = ({ usedPrompts, model, variables }) => {
           ))}
         </ul>
       )}
-      {prompts == 2 && <MathJax content={model} />}
+      {prompts == 2 && <MathJax content={"`" + model + "`"} />}
     </>
   );
 };

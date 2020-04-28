@@ -25,7 +25,7 @@ const AddClass = ({ addClass }) => {
             required
           />
         </div>
-        <input type="submit" className="btn-primary" value="Dodaj" />
+        <button>Dodaj</button>
       </form>
     </>
   );

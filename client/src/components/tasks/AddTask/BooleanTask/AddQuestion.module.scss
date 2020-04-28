@@ -1,0 +1,24 @@
+@import "../../../../styles/settings.scss";
+@import "../../../../styles/global.scss";
+
+.root {
+  padding: 10px;
+  margin: 10px;
+
+  .groupList {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+    background: $color-light;
+    border: 1px solid;
+  }
+
+  .listElement {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid;
+  }
+  button {
+    width: 100px;
+  }
+}

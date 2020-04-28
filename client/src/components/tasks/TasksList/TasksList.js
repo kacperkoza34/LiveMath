@@ -37,7 +37,7 @@ const TasksList = ({
                           onClick={() => clearTasks()}
                           to={`/display/${taskType}/${_id}`}
                         >
-                          {name}
+                          <span className={styles.name}>{name}</span>
                         </Link>
                       </li>
                     ))

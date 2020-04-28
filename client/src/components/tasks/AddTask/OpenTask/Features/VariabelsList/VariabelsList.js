@@ -65,7 +65,7 @@ class VariabelsList extends React.Component {
           Ustal zmienne
         </button>
         {this.state.varsExist && (
-          <h4 className={styles.warning}>Nie podałeś zmiennych</h4>
+          <h4 className={styles.warning}>Nie podano zmiennych</h4>
         )}
         {this.state.varsOneLetter && (
           <h4 className={styles.warning}>
@@ -73,27 +73,38 @@ class VariabelsList extends React.Component {
           </h4>
         )}
 
-        <ul>
-          {Array.from(taskData).length > 0 && (
-            <li>
-              <span>Nazwa</span>
-              <span>Opis</span>
-            </li>
-          )}
-          {Array.from(taskData).map(({ variable, description }) => (
-            <li key={variable}>
-              <span>{variable}</span>
-              <span>
-                <TextareaAutosize
-                  value={description}
-                  placeholder="Opis"
-                  onChange={(e) => this.addDescription(e, variable)}
-                  name="title"
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
+        {Array.from(taskData).length > 0 && (
+          <div className={styles.varList}>
+            <h3>Zmienne zdefiniowane w treści</h3>
+            <ul>
+              <li>
+                <table>
+                  <tr>
+                    <td className={styles.variable}>Nazwa</td>
+                    <td>Opis</td>
+                  </tr>
+                </table>
+              </li>
+              {Array.from(taskData).map(({ variable, description }) => (
+                <li key={variable}>
+                  <table>
+                    <tr>
+                      <td className={styles.variable}>{variable}</td>
+                      <td>
+                        <TextareaAutosize
+                          value={description}
+                          placeholder="Opis"
+                          onChange={(e) => this.addDescription(e, variable)}
+                          name="title"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   }

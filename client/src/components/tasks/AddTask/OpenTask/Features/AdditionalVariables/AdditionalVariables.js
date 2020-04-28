@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./AdditionalVariables.module.scss";
 import { connect } from "react-redux";
 import {
   addAddVariable,
@@ -48,39 +49,76 @@ const AdditionalVariables = ({
   };
   return (
     variables.length > 0 && (
-      <>
-        <h5>Dodaj pomocnicze zmienne</h5>
-        <form onSubmit={(e) => onSubmit(e)}>
-          <h6>Nazwa</h6>
-          <input
-            name={"variable"}
-            placeholder="Zmienna"
-            value={formData.variable}
-            onChange={(e) => onChange(e)}
-            required
-          />
-          <h6>Opis</h6>
-          <input
-            name={"description"}
-            placeholder="Opis"
-            value={formData.description}
-            onChange={(e) => onChange(e)}
-            required
-          />
-          <input type="submit" value="Dodaj" />
+      <div className={styles.root}>
+        <h3>Dodaj pomocnicze zmienne</h3>
+        <form className={styles.addFrom} onSubmit={(e) => onSubmit(e)}>
+          <table>
+            <tr>
+              <td className={styles.variable}>Nazwa</td>
+              <td>Opis</td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td className={styles.variable}>
+                <input
+                  className={styles.variable}
+                  name={"variable"}
+                  placeholder="Zmienna"
+                  value={formData.variable}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </td>
+              <td>
+                {" "}
+                <input
+                  name={"description"}
+                  placeholder="Opis"
+                  value={formData.description}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </td>
+            </tr>
+          </table>
+          <button>Dodaj</button>
         </form>
         {error.length > 0 && error}
-        <ul>
-          {additionalVariables.length > 0 &&
-            additionalVariables.map(({ variable, description }) => (
-              <li>
-                {variable + "          "}
-                {description}
-                <button onClick={() => remove(variable)}>Usuń</button>
-              </li>
+        {additionalVariables.length > 0 && (
+          <ul className={styles.varList}>
+            <h3>Pomocnicze zmienne</h3>
+            <table>
+              <tr>
+                <td className={styles.variable}>Nazwa</td>
+                <td>Opis</td>
+              </tr>
+            </table>
+            {additionalVariables.map(({ variable, description }) => (
+              <>
+                <div>
+                  <li className={styles.listElement}>
+                    <table>
+                      <tr>
+                        <td className={styles.variable}>{variable}</td>
+                        <td className={styles.description}>{description}</td>
+                      </tr>
+                      <tr>
+                        <button
+                          className={styles.delete}
+                          onClick={() => remove(variable)}
+                        >
+                          Usuń
+                        </button>
+                      </tr>
+                    </table>
+                  </li>
+                </div>
+              </>
             ))}
-        </ul>
-      </>
+          </ul>
+        )}
+      </div>
     )
   );
 };

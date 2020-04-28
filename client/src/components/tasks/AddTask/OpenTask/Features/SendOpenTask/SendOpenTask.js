@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./SendOpenTask.module.scss";
 import { connect } from "react-redux";
 import { sendOpenTask } from "../../../../../../redux/actions/newTask";
 
@@ -13,26 +14,31 @@ const SendOpenTask = ({ newTask, sendOpenTask }) => {
     section,
     class: classNew,
   } = newTask;
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
   const sendTask = () => {
-    if (
-      content.trim().length &&
-      name.trim().length &&
-      variables.length &&
-      model.trim().length &&
-      groups.length &&
-      section.length &&
-      classNew.length
-    ) {
-      setError("");
+    const errors = [];
+    if (!content.trim().length) errors.push("Nie podano treści");
+    if (!name.trim().length) errors.push("Nie podano nazwy zadania");
+    if (!variables.length) errors.push("Nie podano zmiennych");
+    if (!model.trim().length) errors.push("Nie podano wzoru");
+    if (!groups.length) errors.push("Nie podano grup");
+    if (!section.length || !classNew.length) errors.push("Nie wybrano działu");
+    if (!errors.length) {
+      setErrors([]);
       sendOpenTask(newTask);
-    } else setError("Nie uzupełniono wszystkich danych");
+    } else setErrors(errors);
   };
   return (
-    <>
-      {error.length > 0 && error}
+    <div className={styles.root}>
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((item) => (
+            <li className={styles.error}>{item}</li>
+          ))}
+        </ul>
+      )}
       <button onClick={() => sendTask()}>Zapisz zadanie</button>
-    </>
+    </div>
   );
 };
 

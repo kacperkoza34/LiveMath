@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./SelectSection.module.scss";
 import { connect } from "react-redux";
 import { availableClasses } from "../../../../../data/TaskDashboardConfig.js";
 import { addClass, addSection } from "../../../../../redux/actions/newTask";
@@ -21,7 +22,7 @@ const SelectSection = ({ addClass, addSection }) => {
   };
 
   return (
-    <>
+    <div className={styles.root}>
       <h5>Wybierz klase i dział</h5>
       <select
         value={currentClass}
@@ -47,7 +48,7 @@ const SelectSection = ({ addClass, addSection }) => {
             <option value={id}>{name}</option>
           ))}
       </select>
-    </>
+    </div>
   );
 };
 

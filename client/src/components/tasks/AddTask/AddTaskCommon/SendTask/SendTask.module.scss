@@ -1,0 +1,17 @@
+@import "../../../../../styles/settings.scss";
+@import "../../../../../styles/global.scss";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+
+  .error {
+    color: $color-alert;
+  }
+
+  button {
+    width: 150px;
+  }
+}

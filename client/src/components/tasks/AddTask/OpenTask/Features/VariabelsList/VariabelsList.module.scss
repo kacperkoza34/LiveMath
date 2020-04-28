@@ -2,8 +2,7 @@
 @import "../../../../../../styles/global.scss";
 
 .root {
-  display: flex;
-  flex-direction: column;
+  margin: 10px;
 
   textarea {
     resize: none;
@@ -11,7 +10,24 @@
     font-size: 18px;
   }
 
+  table {
+    width: 100%;
+  }
+
+  .variable {
+    width: 65px;
+  }
+  button {
+    margin: 10px;
+  }
+  .varList {
+    padding: 10px;
+    margin: 10px;
+    background-color: $color-light;
+    border: solid 1px;
+  }
+
   .warning {
-    color: red;
+    color: $color-alert;
   }
 }

@@ -76,8 +76,9 @@ const OpenTask = ({
             value={answerDescription}
             onChange={(e) => setAnswerDescription(e.target.value)}
           ></textarea>
-          <MathJax content={answerDescription} />
+          <MathJax content={"`" + answerDescription + "`"} />
           <input value={answer} onChange={(e) => addAnswer(e)}></input>
+          <MathJax content={"`" + answer + "`"} />
           {checkAnswer ? (
             correctAnswer == answer ? (
               "Brawo!"

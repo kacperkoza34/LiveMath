@@ -1,0 +1,21 @@
+@import "../../../../../../styles/settings.scss";
+@import "../../../../../../styles/global.scss";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+
+  .model {
+    background: $color-light;
+    border: 1px solid;
+    padding: 10px;
+    margin: 10px 0 10px 0;
+  }
+
+  input {
+    font-size: 20px;
+  }
+}

@@ -16,7 +16,6 @@ class SelectDeadLine extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <DateTimePicker onChange={this.onChange} value={this.state.date} />

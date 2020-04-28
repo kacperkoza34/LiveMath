@@ -1,0 +1,49 @@
+@import "../../../../../../styles/settings.scss";
+@import "../../../../../../styles/global.scss";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+
+  .addFrom {
+    margin: 10px 0 10px 0;
+  }
+
+  .varList {
+    background: $color-light;
+    border: 1px solid;
+  }
+
+  input {
+    resize: none;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .variable {
+    width: 65px;
+  }
+
+  .description {
+    border-bottom: 1px solid;
+  }
+
+  .varList {
+    padding: 10px;
+  }
+
+  .listElement {
+    position: relative;
+  }
+  .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

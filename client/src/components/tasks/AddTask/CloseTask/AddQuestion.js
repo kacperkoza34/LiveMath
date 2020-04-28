@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../MathJax";
+//import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
 import { v4 as uuidv4 } from "uuid";
@@ -23,7 +24,6 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       id: uuidv4(),
     });
   };
-  console.log(groups);
   return (
     <>
       <form onSubmit={(e) => onSubmit(e)}>
@@ -37,7 +37,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
             required
           />
         </div>
-        <MathJax content={formData.content} />
+        <MathJax content={"`" + formData.content + "`"} />
         <div>
           <h5>Dodaj odpowiedz:</h5>
           <input
@@ -47,13 +47,15 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
             onChange={(e) => onChange(e)}
             required
           />
+          <MathJax content={"`" + formData.answer + "`"} />
         </div>
-        {<input type="submit" value="Dodaj" />}
+        <button>Dodaj</button>
         {groups.map(({ content, answer, id }, index) => (
           <li styles="display: block">
             <span>{`${index + 1}). `}</span>
-            <MathJax content={content} />
-            <span>{`Odpowiedź: ${answer}`}</span>
+            <MathJax content={"`" + content + "`"} />
+            <span>{`Odpowiedź: `}</span>
+            <MathJax content={"`" + answer + "`"} />
             <button onClick={() => deleteGroup(id)}>Usun grupe</button>
           </li>
         ))}

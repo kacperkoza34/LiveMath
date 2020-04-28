@@ -2,4 +2,11 @@
 @import "../../../styles/global.scss";
 
 .root {
+  .name {
+    text-decoration: underline;
+  }
+  .name:hover {
+    cursor: pointer;
+    font-weight: 600;
+  }
 }

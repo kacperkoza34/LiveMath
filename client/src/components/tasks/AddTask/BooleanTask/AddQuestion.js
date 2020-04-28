@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../MathJax";
+import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
 import { v4 as uuidv4 } from "uuid";
@@ -38,10 +39,10 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
     } else setNoAnswer(true);
   };
   return (
-    <>
+    <div className={styles.root}>
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
-          <h5>Podaj teze</h5>
+          <h3>Podaj teze</h3>
           <input
             placeholder="Teza"
             name="content"
@@ -51,7 +52,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
           />
         </div>
         <div>
-          <h5>Dodaj odpowiedz:</h5>
+          <h3>Dodaj odpowiedz:</h3>
           <select
             name="answer"
             value={formData.answer}
@@ -63,17 +64,20 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
           </select>
         </div>
         {noAnswer && <h5>Podaj odpowiedz</h5>}
-        {<input type="submit" value="Dodaj" />}
-        {groups.map(({ content, answer, id }, index) => (
-          <li styles="display: block">
-            <span>{`${index + 1}). `}</span>
-            <span>{content}</span>
-            <span>{`Odpowiedź: ${answer ? "Prawda" : "Fałsz"}`}</span>
-            <button onClick={() => deleteGroup(id)}>Usun grupe</button>
-          </li>
-        ))}
+        <button>Dodaj</button>
+        {groups.length > 0 && (
+          <ul className={styles.groupList}>
+            {groups.map(({ content, answer, id }, index) => (
+              <li className={styles.listElement}>
+                <span>{`${index + 1}). ${content}`}</span>
+                <span>{`Odpowiedź: ${answer ? "Prawda" : "Fałsz"}`}</span>
+                <button onClick={() => deleteGroup(id)}>Usun grupe</button>
+              </li>
+            ))}
+          </ul>
+        )}
       </form>
-    </>
+    </div>
   );
 };
 

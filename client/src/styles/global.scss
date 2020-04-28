@@ -25,6 +25,14 @@ a:visited {
   color: inherit;
 }
 
+input,
+textarea {
+  outline: none;
+  background: inherit;
+  border-width: 0;
+  border-bottom: 1px solid;
+}
+
 .btnList {
   padding: 6px;
   margin: 2px;
