@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../MathJax";
-//import styles from "./AddQuestion.module.scss";
+import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
 import { v4 as uuidv4 } from "uuid";
@@ -25,11 +25,12 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
     });
   };
   return (
-    <>
+    <div className={styles.root}>
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
           <h5>Wprowadz równanie</h5>
           <input
+            autocomplete="off"
             placeholder="Równanie"
             name="content"
             value={formData.content}
@@ -41,6 +42,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h5>Dodaj odpowiedz:</h5>
           <input
+            autocomplete="off"
             placeholder="Odpowiedz"
             name="answer"
             value={formData.answer}
@@ -50,17 +52,29 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
           <MathJax content={"`" + formData.answer + "`"} />
         </div>
         <button>Dodaj</button>
-        {groups.map(({ content, answer, id }, index) => (
-          <li styles="display: block">
-            <span>{`${index + 1}). `}</span>
-            <MathJax content={"`" + content + "`"} />
-            <span>{`Odpowiedź: `}</span>
-            <MathJax content={"`" + answer + "`"} />
-            <button onClick={() => deleteGroup(id)}>Usun grupe</button>
-          </li>
-        ))}
+        {groups.length > 0 && (
+          <ul className={styles.groupList}>
+            {groups.map(({ content, answer, id }, index) => (
+              <li className={styles.listElement}>
+                <span className={styles.order}>
+                  <div>{`${index + 1}).   `}</div>
+                  <div>
+                    <MathJax content={"`" + content + "`"} />
+                  </div>
+                </span>
+                <span className={styles.order}>
+                  <div>{`Odpowiedź: `}</div>
+                  <div>
+                    <MathJax content={"`" + answer + "`"} />
+                  </div>
+                </span>
+                <button onClick={() => deleteGroup(id)}>Usun grupe</button>
+              </li>
+            ))}
+          </ul>
+        )}
       </form>
-    </>
+    </div>
   );
 };
 

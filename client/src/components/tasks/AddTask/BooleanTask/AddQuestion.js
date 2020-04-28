@@ -44,6 +44,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h3>Podaj teze</h3>
           <input
+            autocomplete="off"
             placeholder="Teza"
             name="content"
             value={formData.content}

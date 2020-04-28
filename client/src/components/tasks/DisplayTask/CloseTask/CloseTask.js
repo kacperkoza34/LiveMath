@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./CloseTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass";
@@ -35,10 +36,10 @@ const CloseTask = ({
   const displayResult = () => {
     let result = 0;
     data.data.forEach(({ answer }, i) => answer == taskStatus[i] && result++);
-    return `${result}/${Object.keys(taskStatus).length}`;
+    return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
   return (
-    <>
+    <div className={styles.root}>
       {isFetching ? (
         <BeatLoader size={20} />
       ) : (
@@ -49,17 +50,26 @@ const CloseTask = ({
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
-                <li>
-                  {`${i + 1}). `}
-                  <MathJax content={content} />
+                <li className={styles.listElement}>
+                  <div className={styles.order}>
+                    {`${i + 1}). `}
+                    <MathJax content={"`" + content + "`"} />
+                  </div>
                   Podaj odpowiedz:
-                  <input
-                    name={`${i}`}
-                    value={taskStatus[`${i}`]}
-                    onChange={(e) => onChange(e)}
-                  ></input>
-                  {checkAnswers &&
-                    (taskStatus[`${i}`] == answer ? "Ok" : "Źle")}
+                  <div className={styles.item}>
+                    <input
+                      name={`${i}`}
+                      value={taskStatus[`${i}`]}
+                      onChange={(e) => onChange(e)}
+                    ></input>
+                    <MathJax content={"`" + taskStatus[`${i}`] + "`"} />
+                    {checkAnswers &&
+                      (taskStatus[`${i}`] == answer ? (
+                        <div className={styles.success}>Ok</div>
+                      ) : (
+                        <div className={styles.fail}>Źle</div>
+                      ))}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -67,11 +77,11 @@ const CloseTask = ({
           <button onClick={() => setChekAnswers(true)}>
             Sprawdź odpowiedzi
           </button>
-          {checkAnswers && displayResult()}
+          {checkAnswers && <div>{displayResult()}</div>}
           {accountType == "teacher" && <AddTaskToClass />}
         </>
       )}
-    </>
+    </div>
   );
 };
 
