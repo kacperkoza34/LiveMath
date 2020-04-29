@@ -8,9 +8,17 @@
   .wrapper {
     background: $color-background;
     box-shadow: 10px 10px 38px -14px rgba(0, 0, 0, 0.75);
-    width: 60%;
+    width: 70%;
     min-height: 65vh;
     margin: 30px;
     padding: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .root {
+    .wrapper {
+      width: 100%;
+    }
   }
 }

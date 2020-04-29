@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./CloseTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
-import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass";
+import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getCloseTask } from "../../../../redux/actions/tasks";
 
@@ -58,11 +58,15 @@ const CloseTask = ({
                   Podaj odpowiedz:
                   <div className={styles.item}>
                     <input
+                      autocomplete="off"
                       name={`${i}`}
                       value={taskStatus[`${i}`]}
                       onChange={(e) => onChange(e)}
                     ></input>
-                    <MathJax content={"`" + taskStatus[`${i}`] + "`"} />
+                    <div>
+                      <span>Twoja odpowiedz:</span>
+                      <MathJax content={"`" + taskStatus[`${i}`] + "`"} />
+                    </div>
                     {checkAnswers &&
                       (taskStatus[`${i}`] == answer ? (
                         <div className={styles.success}>Ok</div>
@@ -77,7 +81,9 @@ const CloseTask = ({
           <button onClick={() => setChekAnswers(true)}>
             Sprawdź odpowiedzi
           </button>
-          {checkAnswers && <div>{displayResult()}</div>}
+          {checkAnswers && (
+            <div className={styles.result}>{displayResult()}</div>
+          )}
           {accountType == "teacher" && <AddTaskToClass />}
         </>
       )}

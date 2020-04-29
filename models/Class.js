@@ -1,85 +1,97 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ClassSchema = new Schema({
   teacher: {
     type: Schema.Types.ObjectId,
-    ref: 'teacherProfile'
+    ref: "teacherProfile",
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   tasksOpen: [
     {
       date: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
       },
       deadLine: {
         type: Date,
-        required: true
+        required: true,
       },
       promptsAllowed: {
         type: Boolean,
-        default: true
+        required: true,
       },
       descriptionRequired: {
         type: Boolean,
-        default: true
+        required: true,
+      },
+      taskType: {
+        type: String,
+        default: "taskOpen",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'taskOpen'
-      }
-    }
+        ref: "taskOpen",
+      },
+    },
   ],
   tasksClose: [
     {
       date: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
       },
       deadLine: {
-        type: Date
+        type: Date,
+      },
+      taskType: {
+        type: String,
+        default: "taskClose",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tasksClose'
-      }
-    }
+        ref: "taskClose",
+      },
+    },
   ],
   tasksBoolean: [
     {
       date: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
       },
       deadLine: {
-        type: Date
+        type: Date,
+      },
+      taskType: {
+        type: String,
+        default: "taskBoolean",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tasksBoolean'
-      }
-    }
+        ref: "taskBoolean",
+      },
+    },
   ],
   maxStudentsAmount: {
     type: Number,
-    default: 35
+    default: 35,
   },
   open: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  students:[
+  students: [
     {
-      student:  {
+      student: {
         type: Schema.Types.ObjectId,
-        ref: 'student'
-      }
-    }
-  ]
-})
+        ref: "student",
+      },
+    },
+  ],
+});
 
-module.exports = Class = mongoose.model('class', ClassSchema);
+module.exports = Class = mongoose.model("class", ClassSchema);

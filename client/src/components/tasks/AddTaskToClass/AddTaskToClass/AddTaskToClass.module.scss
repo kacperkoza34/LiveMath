@@ -1,0 +1,21 @@
+@import "../../../../styles/settings.scss";
+@import "../../../../styles/global.scss";
+
+.root {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid;
+  background: $color-light;
+  display: flex;
+  flex-direction: column;
+
+  .error {
+    margin: 10px 0 10px 0;
+    color: $color-alert;
+  }
+
+  .success {
+    margin: 10px 0;
+    color: $color-success;
+  }
+}

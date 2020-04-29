@@ -50,7 +50,7 @@ textarea {
 }
 
 .asideWrapper {
-  width: 200px;
+  min-width: 200px;
   background: #fff;
   margin: 10px;
   padding: 20px;
@@ -58,7 +58,7 @@ textarea {
 }
 
 .contentWrapper {
-  width: 600px;
+  width: 100%;
   min-height: 500px;
   background: #fff;
   margin: 10px;

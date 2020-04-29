@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
-import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass";
+import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getBooleanTask } from "../../../../redux/actions/tasks";
 
@@ -41,10 +42,10 @@ const BooleanTask = ({
   const displayResult = () => {
     let result = 0;
     data.data.forEach(({ answer }, i) => answer === taskStatus[i] && result++);
-    return `${result}/${Object.keys(taskStatus).length}`;
+    return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
   return (
-    <>
+    <div className={styles.root}>
       {isFetching ? (
         <BeatLoader size={20} />
       ) : (
@@ -59,6 +60,7 @@ const BooleanTask = ({
                   {`${i + 1}). `}
                   {content + "   "}
                   <select
+                    className={styles.select}
                     name={`${i}`}
                     value={taskStatus[`${i}`]}
                     onChange={(e) => onChange(e)}
@@ -67,18 +69,26 @@ const BooleanTask = ({
                     <option value={true}>Prawda</option>
                     <option value={false}>Fałsz</option>
                   </select>
+                  {checkAnswers &&
+                    (answer === taskStatus[`${i}`] ? (
+                      <div className={styles.success}>Dobrze</div>
+                    ) : (
+                      <div className={styles.fail}>Źle</div>
+                    ))}
                 </li>
               ))}
             </ul>
           )}
-          <button onClick={() => setChekAnswers(true)}>
+          <button className={styles.check} onClick={() => setChekAnswers(true)}>
             Sprawdź odpowiedzi
           </button>
-          {checkAnswers && displayResult()}
+          {checkAnswers && (
+            <div className={styles.result}>{displayResult()}</div>
+          )}
           {accountType == "teacher" && <AddTaskToClass />}
         </>
       )}
-    </>
+    </div>
   );
 };
 

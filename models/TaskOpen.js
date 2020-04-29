@@ -1,48 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   points: {
     type: Number,
-    default: 4
+    default: 4,
   },
   class: {
     type: String,
-    required: true
+    required: true,
   },
   section: {
     type: String,
-    required: true
+    required: true,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'teacher'
+    ref: "teacher",
   },
   taskType: {
     type: String,
-    default: 'openTask'
+    default: "openTask",
   },
   date: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   data: {
     content: {
       type: String,
-      required: true
+      required: true,
     },
     model: {
       type: String,
-      required: true
+      required: true,
     },
     variables: [],
     additionalVariables: [],
-    groups: []
-  }
-})
+    groups: [],
+  },
+});
 
-module.exports = TaskOpen = mongoose.model('taskOpen', TaskSchema);
+module.exports = TaskOpen = mongoose.model("taskOpen", TaskSchema);

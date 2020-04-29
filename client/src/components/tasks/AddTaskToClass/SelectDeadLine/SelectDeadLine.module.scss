@@ -1,0 +1,12 @@
+@import "../../../../styles/settings.scss";
+@import "../../../../styles/global.scss";
+
+.root {
+  margin: 20px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    margin: 10px 0;
+  }
+}

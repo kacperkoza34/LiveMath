@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./OpenTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
-import DisplayContent from "./DisplayContent";
-import DisplayPrompts from "./DisplayPrompts";
+import DisplayContent from "./DisplayContent/DisplayContent";
+import DisplayPrompts from "./DisplayPrompts/DisplayPrompts";
 import MathJax from "../../MathJax";
-import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass";
+import TextareaAutosize from "react-textarea-autosize";
+import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getOpenTask } from "../../../../redux/actions/tasks";
 
@@ -50,7 +52,7 @@ const OpenTask = ({
     }
   };
   return (
-    <>
+    <div className={styles.root}>
       {isFetching ? (
         <BeatLoader size={20} />
       ) : (
@@ -72,13 +74,22 @@ const OpenTask = ({
               ]}
             />
           )}
-          <textarea
+          <h4>Miejsce na rozwiązanie</h4>
+          <TextareaAutosize
+            maxCols="15"
+            minCols="5"
             value={answerDescription}
             onChange={(e) => setAnswerDescription(e.target.value)}
-          ></textarea>
+          ></TextareaAutosize>
           <MathJax content={"`" + answerDescription + "`"} />
-          <input value={answer} onChange={(e) => addAnswer(e)}></input>
-          <MathJax content={"`" + answer + "`"} />
+          <div className={styles.answer}>
+            <h4>Odpowiedź:</h4>
+            <input value={answer} onChange={(e) => addAnswer(e)}></input>
+          </div>
+          <div className={styles.answer}>
+            <h4>Twoja odpowiedź:</h4>
+            <MathJax content={"`" + answer + "`"} />
+          </div>
           {checkAnswer ? (
             correctAnswer == answer ? (
               "Brawo!"
@@ -91,7 +102,7 @@ const OpenTask = ({
           {accountType == "teacher" && <AddTaskToClass />}
         </>
       )}
-    </>
+    </div>
   );
 };
 
