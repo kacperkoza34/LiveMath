@@ -8,7 +8,7 @@ const TaskSchema = new Schema({
   },
   points: {
     type: Number,
-    default: 4,
+    required: true,
   },
   class: {
     type: String,

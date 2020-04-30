@@ -8,7 +8,8 @@ import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
-import { getOpenTask } from "../../../../redux/actions/tasks";
+import { getOpenTask, setTaskConfig } from "../../../../redux/actions/tasks";
+import { useOnePrompt } from "../../../../redux/actions/resolveTask";
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -20,15 +21,19 @@ const OpenTask = ({
   match,
   getOpenTask,
   accountType,
-  tasks: {
-    data,
-    isFetching,
-    errors,
-    taskConfig: { deadLine, promptsAllowed, usedPrompts, descriptionRequired },
-  },
+  setTaskConfig,
+  tasks: { data, isFetching, errors, taskConfig },
 }) => {
+  const {
+    deadLine,
+    promptsAllowed,
+    usedPrompts,
+    descriptionRequired,
+    _id,
+  } = taskConfig;
   useEffect(() => {
     getOpenTask(match.params.id);
+    return () => setTaskConfig({});
   }, []);
 
   const [answer, setAnswer] = useState("");
@@ -45,12 +50,18 @@ const OpenTask = ({
 
   const addAnswer = (e) => {
     check(false);
-    if (descriptionRequired && !answerDescription.length) {
-      setAnswer("Wymagany opis zadania!");
-    } else {
-      setAnswer(e.target.value);
+    setAnswer(e.target.value);
+  };
+
+  const countPoints = (points) => {
+    if (accountType == "teacher") return points;
+    else {
+      if (!usedPrompts) return points;
+      if (usedPrompts === 1) return (points / 2).toPrecision(2);
+      if (usedPrompts === 2) return (points / 4).toPrecision(2);
     }
   };
+
   return (
     <div className={styles.root}>
       {isFetching ? (
@@ -58,30 +69,37 @@ const OpenTask = ({
       ) : (
         <>
           <h4>{data.name}</h4>
+          <p className={styles.points}>
+            <span>Punkty: {countPoints(data.points)}</span>
+            {accountType == "teacher" && (
+              <span>Ilość grup: {data.data.groups.length}</span>
+            )}
+          </p>
           <DisplayContent
             content={data.data.content}
             variables={data.data.variables}
             group={data.data.groups[randomIndex]}
           />
           {randomIndex === null ? setGroup() : ""}
-          {(accountType == "teacher" || promptsAllowed) && (
-            <DisplayPrompts
-              usedPrompts={accountType == "teacher" ? 0 : usedPrompts}
-              model={data.data.model}
-              variables={[
-                ...data.data.variables,
-                ...data.data.additionalVariables,
-              ]}
-            />
-          )}
-          <h4>Miejsce na rozwiązanie</h4>
+          <DisplayPrompts
+            promptsAllowed={promptsAllowed}
+            usedPrompts={usedPrompts}
+            action={useOnePrompt}
+            accountType={accountType}
+            taskId={_id}
+            model={data.data.model}
+            variables={[
+              ...data.data.variables,
+              ...data.data.additionalVariables,
+            ]}
+          />
+          <h4>Miejsce na link z rozwiązaniem</h4>
           <TextareaAutosize
             maxCols="15"
             minCols="5"
             value={answerDescription}
             onChange={(e) => setAnswerDescription(e.target.value)}
           ></TextareaAutosize>
-          <MathJax content={"`" + answerDescription + "`"} />
           <div className={styles.answer}>
             <h4>Odpowiedź:</h4>
             <input value={answer} onChange={(e) => addAnswer(e)}></input>
@@ -99,7 +117,9 @@ const OpenTask = ({
           ) : (
             <button onClick={() => check(true)}>Dodaj odpowiedz!</button>
           )}
-          {accountType == "teacher" && <AddTaskToClass />}
+          {!Object.keys(taskConfig).length > 0 && accountType == "teacher" && (
+            <AddTaskToClass />
+          )}
         </>
       )}
     </div>
@@ -113,4 +133,6 @@ const mapStateToProps = (state) => ({
   accountType: state.user.data.accountType,
 });
 
-export default connect(mapStateToProps, { getOpenTask })(OpenTask);
+export default connect(mapStateToProps, { getOpenTask, setTaskConfig })(
+  OpenTask
+);

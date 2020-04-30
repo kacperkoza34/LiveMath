@@ -22,6 +22,10 @@ const StudentProfileSchema = new Schema({
     type: Number,
     default: 0,
   },
+  maxPoints: {
+    type: Number,
+    default: 0,
+  },
   tasksOpen: [
     {
       date: {
@@ -44,6 +48,9 @@ const StudentProfileSchema = new Schema({
         type: Boolean,
         default: true,
       },
+      description: {
+        type: String,
+      },
       toUpdate: {
         type: Boolean,
         default: false,
@@ -52,9 +59,9 @@ const StudentProfileSchema = new Schema({
         type: Boolean,
         default: false,
       },
-      resolvedInTime: {
-        type: Boolean,
-        default: true,
+      taskType: {
+        type: String,
+        default: "taskOpen",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
@@ -75,9 +82,9 @@ const StudentProfileSchema = new Schema({
         type: Boolean,
         default: false,
       },
-      resolvedInTime: {
-        type: Boolean,
-        default: true,
+      taskType: {
+        type: String,
+        default: "taskClose",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
@@ -98,9 +105,9 @@ const StudentProfileSchema = new Schema({
         type: Boolean,
         default: false,
       },
-      resolvedInTime: {
-        type: Boolean,
-        default: true,
+      taskType: {
+        type: String,
+        default: "taskBoolean",
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,

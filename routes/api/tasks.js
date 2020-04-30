@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../../middleware/auth");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
@@ -14,6 +13,7 @@ const StudentProfile = require("../../models/StudentProfile");
 
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
+const auth = require("../../middleware/auth");
 
 // ADD open task
 router.post(
@@ -29,6 +29,7 @@ router.post(
       check("section", "Podaj dział").not().isEmpty(),
       check("content", "Podaj treść zadania").not().isEmpty(),
       check("model", "Podaj wzór").not().isEmpty(),
+      check("points", "Podaj ilość punktów").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -122,6 +123,7 @@ router.post(
         .isEmpty()
         .isInt({ min: 1, max: 8 }),
       check("section", "Podaj dział").not().isEmpty(),
+      check("groups", "Dodaj grupy").not().isEmpty(),
       check("content", "Podaj treść zadania").not().isEmpty(),
     ],
   ],
@@ -141,11 +143,11 @@ router.post(
       let task = new TaskBoolean({
         name: req.body.name,
         content: req.body.content,
-        points: req.body.data.length,
+        points: req.body.groups.length,
         class: req.body.class,
         section: req.body.section,
         author: req.user.id,
-        data: req.body.data,
+        data: req.body.groups,
       });
       task.save();
       res.json({ _id: task._id, taskType: "booleanTask", name: task.name });
@@ -156,7 +158,7 @@ router.post(
   }
 );
 
-router.get("/open/:id", authTeacher, async (req, res) => {
+router.get("/open/:id", auth, async (req, res) => {
   try {
     let task = await TaskOpen.findOne({ _id: req.params.id });
     if (!task)
@@ -174,7 +176,7 @@ router.get("/open/:id", authTeacher, async (req, res) => {
   }
 });
 
-router.get("/close/:id", authTeacher, async (req, res) => {
+router.get("/close/:id", auth, async (req, res) => {
   try {
     let task = await TaskClose.findOne({ _id: req.params.id });
     if (!task)
@@ -192,7 +194,7 @@ router.get("/close/:id", authTeacher, async (req, res) => {
   }
 });
 
-router.get("/boolean/:id", authTeacher, async (req, res) => {
+router.get("/boolean/:id", auth, async (req, res) => {
   try {
     let task = await TaskBoolean.findOne({ _id: req.params.id });
     if (!task)
@@ -267,6 +269,9 @@ router.post(
 
         currentClass.students.forEach(async ({ student }, i) => {
           let profile = await StudentProfile.findOne({ user: student });
+
+          profile.maxPoints = req.body.points + profile.maxPoints;
+
           profile.tasksOpen.push({
             deadLine: req.body.deadLine,
             promptsAllowed: req.body.promptsAllowed,
@@ -313,6 +318,9 @@ router.post(
 
         currentClass.students.forEach(async ({ student }, i) => {
           let profile = await StudentProfile.findOne({ user: student });
+
+          profile.maxPoints = req.body.points + profile.maxPoints;
+
           profile.tasksClose.push({
             deadLine: req.body.deadLine,
             task: req.body.taskId,
@@ -356,6 +364,9 @@ router.post(
 
         currentClass.students.forEach(async ({ student }, i) => {
           let profile = await StudentProfile.findOne({ user: student });
+
+          profile.maxPoints = req.body.points + profile.maxPoints;
+
           profile.tasksBoolean.push({
             deadLine: req.body.deadLine,
             task: req.body.taskId,
@@ -372,5 +383,23 @@ router.post(
     }
   }
 );
+
+router.put("/:taskId", authStudent, async (req, res) => {
+  try {
+    let profile = await StudentProfile.findOne({ user: req.user.id });
+    console.log(profile.tasksOpen);
+    profile.tasksOpen.map((item) => {
+      if (item._id.toString() === req.params.taskId.toString()) {
+        item.usedPrompts++;
+      }
+      return item;
+    });
+    await profile.save();
+    res.json({ msg: "ok" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 module.exports = router;

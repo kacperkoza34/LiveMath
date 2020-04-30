@@ -5,16 +5,18 @@ import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
-import { getCloseTask } from "../../../../redux/actions/tasks";
+import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
 
 const CloseTask = ({
   match,
   getCloseTask,
   accountType,
-  tasks: { data, isFetching, errors },
+  setTaskConfig,
+  tasks: { data, isFetching, errors, taskConfig },
 }) => {
   useEffect(() => {
     getCloseTask(match.params.id);
+    return () => setTaskConfig({});
   }, []);
 
   const answers = {};
@@ -38,6 +40,7 @@ const CloseTask = ({
     data.data.forEach(({ answer }, i) => answer == taskStatus[i] && result++);
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
+
   return (
     <div className={styles.root}>
       {isFetching ? (
@@ -47,6 +50,7 @@ const CloseTask = ({
           {taskStatus === null && prepareState()}
           <h4>{data.name}</h4>
           <p>{data.content}</p>
+          <p className={styles.points}>Punkty: {data.points}</p>
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
@@ -84,7 +88,9 @@ const CloseTask = ({
           {checkAnswers && (
             <div className={styles.result}>{displayResult()}</div>
           )}
-          {accountType == "teacher" && <AddTaskToClass />}
+          {!Object.keys(taskConfig).length > 0 && accountType == "teacher" && (
+            <AddTaskToClass />
+          )}
         </>
       )}
     </div>
@@ -98,4 +104,6 @@ const mapStateToProps = (state) => ({
   accountType: state.user.data.accountType,
 });
 
-export default connect(mapStateToProps, { getCloseTask })(CloseTask);
+export default connect(mapStateToProps, { getCloseTask, setTaskConfig })(
+  CloseTask
+);

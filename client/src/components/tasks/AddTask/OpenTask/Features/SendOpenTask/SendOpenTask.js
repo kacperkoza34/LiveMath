@@ -12,6 +12,7 @@ const SendOpenTask = ({ newTask, sendOpenTask }) => {
     model,
     groups,
     section,
+    points,
     class: classNew,
   } = newTask;
   const [errors, setErrors] = useState("");
@@ -23,6 +24,7 @@ const SendOpenTask = ({ newTask, sendOpenTask }) => {
     if (!model.trim().length) errors.push("Nie podano wzoru");
     if (!groups.length) errors.push("Nie podano grup");
     if (!section.length || !classNew.length) errors.push("Nie wybrano działu");
+    if (!points) errors.push("Nie wybrano punktów");
     if (!errors.length) {
       setErrors([]);
       sendOpenTask(newTask);

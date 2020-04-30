@@ -4,6 +4,14 @@
 .root {
   padding: 10px;
   margin: 10px;
+  position: relative;
+
+  .points {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: 600;
+  }
 
   .listElement {
     height: 180px;

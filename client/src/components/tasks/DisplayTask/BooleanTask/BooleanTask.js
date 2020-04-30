@@ -5,16 +5,18 @@ import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
-import { getBooleanTask } from "../../../../redux/actions/tasks";
+import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 
 const BooleanTask = ({
   match,
   getBooleanTask,
   accountType,
-  tasks: { data, isFetching, errors },
+  setTaskConfig,
+  tasks: { data, isFetching, errors, taskConfig },
 }) => {
   useEffect(() => {
     getBooleanTask(match.params.id);
+    return () => setTaskConfig({});
   }, []);
 
   const answers = {};
@@ -44,6 +46,7 @@ const BooleanTask = ({
     data.data.forEach(({ answer }, i) => answer === taskStatus[i] && result++);
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
+
   return (
     <div className={styles.root}>
       {isFetching ? (
@@ -53,10 +56,11 @@ const BooleanTask = ({
           {taskStatus === null && prepareState()}
           <h4>{data.name}</h4>
           <p>{data.description}</p>
+          <p className={styles.points}>Punkty: {data.points}</p>
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
-                <li>
+                <li className={styles.item}>
                   {`${i + 1}). `}
                   {content + "   "}
                   <select
@@ -85,7 +89,9 @@ const BooleanTask = ({
           {checkAnswers && (
             <div className={styles.result}>{displayResult()}</div>
           )}
-          {accountType == "teacher" && <AddTaskToClass />}
+          {!Object.keys(taskConfig).length > 0 && accountType == "teacher" && (
+            <AddTaskToClass />
+          )}
         </>
       )}
     </div>
@@ -99,4 +105,6 @@ const mapStateToProps = (state) => ({
   accountType: state.user.data.accountType,
 });
 
-export default connect(mapStateToProps, { getBooleanTask })(BooleanTask);
+export default connect(mapStateToProps, { getBooleanTask, setTaskConfig })(
+  BooleanTask
+);

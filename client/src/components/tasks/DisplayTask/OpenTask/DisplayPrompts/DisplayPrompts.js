@@ -1,40 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./DisplayPrompts.module.scss";
+import PromptsDumm from "./PromptsDumm";
 import MathJax from "../../../MathJax";
+import { connect } from "react-redux";
 
-const DisplayPrompts = ({ usedPrompts, model, variables }) => {
-  const [prompts, addOne] = useState(usedPrompts);
-  const [canAddPrompt, cantAddPrompt] = useState(true);
-  const addPrompts = () => {
-    if (prompts == 1) cantAddPrompt(false);
-    if (prompts < 2) addOne(prompts + 1);
-  };
+const DisplayPrompts = ({
+  usedPrompts,
+  promptsAllowed,
+  model,
+  variables,
+  accountType,
+  taskId,
+  action,
+  context,
+  store,
+  dispatch,
+}) => {
   return (
-    <div className={styles.root}>
-      {canAddPrompt && usedPrompts != 2 && (
-        <button onClick={() => addPrompts()}>Pokaż podpowiedz</button>
+    <div>
+      {accountType == "teacher" && (
+        <PromptsDumm model={model} variables={variables} />
       )}
-      {prompts >= 1 && (
-        <>
-          <h4>Zmienne:</h4>
+      {accountType == "student" && promptsAllowed && (
+        <div className={styles.root}>
+          {usedPrompts < 2 && (
+            <button onClick={() => dispatch(action(taskId))}>
+              Pokaż podpowiedz
+            </button>
+          )}
+          {usedPrompts >= 1 && (
+            <>
+              <h4>Zmienne:</h4>
 
-          <ul>
-            {variables.map(({ variable, description }, index) => (
-              <li key={index}>
-                {variable + "  -  "}
-                {description}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-      {prompts == 2 && (
-        <>
-          {" "}
-          <h4>Wzór:</h4>
-          <MathJax content={"`" + model + "`"} />
-        </>
+              <ul>
+                {variables.map(({ variable, description }, index) => (
+                  <li key={index}>
+                    {variable + "  -  "}
+                    {description}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          {usedPrompts == 2 && (
+            <>
+              {" "}
+              <h4>Wzór:</h4>
+              <MathJax content={"`" + model + "`"} />
+            </>
+          )}
+        </div>
       )}
     </div>
   );
@@ -42,6 +58,4 @@ const DisplayPrompts = ({ usedPrompts, model, variables }) => {
 
 DisplayPrompts.propTypes = {};
 
-const mapStateToProps = (state) => ({});
-
-export default DisplayPrompts;
+export default connect()(DisplayPrompts);

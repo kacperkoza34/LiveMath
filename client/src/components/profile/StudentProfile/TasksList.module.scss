@@ -1,0 +1,31 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
+
+.root {
+  table {
+    width: 100%;
+
+    tr {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .name {
+    text-decoration: underline;
+  }
+  .name:hover {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .failed {
+    color: $color-alert;
+  }
+  .success {
+    background: $color-light;
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: 700;
+    color: $color-success;
+  }
+}

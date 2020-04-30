@@ -9,6 +9,7 @@ import VariabelsList from "./Features/VariabelsList/VariabelsList.js";
 import Model from "./Features/Model/Model.js";
 import AdditionalVariables from "./Features/AdditionalVariables/AdditionalVariables.js";
 import AddGroups from "./Features/AddGroups/AddGroups.js";
+import Points from "./Features/Points/Points.js";
 import SendOpenTask from "./Features/SendOpenTask/SendOpenTask.js";
 
 import { clearTask } from "../../../../redux/actions/newTask";
@@ -32,6 +33,7 @@ const OpenTask = ({ clearTask, clearTasks, success }) => {
           <AdditionalVariables />
           <Model />
           <AddGroups />
+          <Points />
           <SelectSection />
           <SendOpenTask />
         </>

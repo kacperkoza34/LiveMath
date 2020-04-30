@@ -14,6 +14,7 @@ import SelectPrompt from "../SelectPrompt/SelectPrompt";
 
 const AddTaskToClass = ({
   taskId,
+  points,
   taskType,
   taskParams,
   addOpenTask,
@@ -38,6 +39,7 @@ const AddTaskToClass = ({
         promptsAllowed,
         deadLine,
         classes,
+        points,
       });
     } else setError(true);
   };
@@ -47,6 +49,7 @@ const AddTaskToClass = ({
       setError(false);
       addCloseTask({
         taskId,
+        points,
         deadLine,
         classes,
       });
@@ -58,6 +61,7 @@ const AddTaskToClass = ({
       setError(false);
       addBooleanTask({
         taskId,
+        points,
         deadLine,
         classes,
       });
@@ -117,6 +121,7 @@ const AddTaskToClass = ({
 
 const mapStateToProps = (state) => ({
   taskId: state.tasks.data._id,
+  points: state.tasks.data.points,
   taskType: state.tasks.data.taskType,
   taskParams: state.addTaskToClass.data,
   success: state.addTaskToClass.success,
