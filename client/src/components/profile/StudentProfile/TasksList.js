@@ -12,12 +12,19 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
   };
   const sortedTasks = [...tasks].sort(compare);
 
-  const displayStatus = (deadLine, resolved) => {
+  const displayStatus = (deadLine, resolved, description) => {
     if (Date.parse(deadLine) < Date.now() && !resolved)
       return <div className={styles.failed}>Niewykonane</div>;
     if (Date.parse(deadLine) > Date.now() && !resolved)
       return <div>Do wykonania</div>;
-    if (resolved) return <div className={styles.success}>Rozwiązane</div>;
+    if (resolved)
+      return (
+        <div className={styles.success}>
+          <a href={description} target="_blank">
+            Rozwiązane
+          </a>
+        </div>
+      );
   };
 
   const displayOpenTask = ({
@@ -25,9 +32,13 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
     deadLine,
     promptsAllowed,
     descriptionRequired,
+    description,
     usedPrompts,
     resolved,
+    result,
     _id,
+    group,
+    answer,
   }) => (
     <div className={styles.openTask}>
       <table>
@@ -37,13 +48,15 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
               onClick={() => {
                 clearTasks();
                 setTaskConfig({
-                  description: "",
+                  description,
                   deadLine,
                   resolved,
                   promptsAllowed,
                   descriptionRequired,
                   usedPrompts,
                   _id,
+                  group,
+                  answer,
                 });
               }}
               to={`/display/openTask/${task._id}`}
@@ -64,13 +77,14 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
           <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
         </tr>
         <tr>
-          <td>Status: {displayStatus(deadLine, resolved)}</td>{" "}
+          <td>Status: {displayStatus(deadLine, resolved, description)}</td>{" "}
+          <td>Wynik: {`${result}/${task.points}`}</td>
         </tr>
       </table>
     </div>
   );
 
-  const displayCloseTask = ({ task, deadLine, resolved }) => (
+  const displayCloseTask = ({ task, deadLine, resolved, result, answers }) => (
     <div className={styles.closeTask}>
       <table>
         <tr>
@@ -79,7 +93,7 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
             <Link
               onClick={() => {
                 clearTasks();
-                setTaskConfig({ deadLine, resolved });
+                setTaskConfig({ deadLine, resolved, result, answers });
               }}
               to={`/display/closeTask/${task._id}`}
             >
@@ -92,12 +106,13 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
         </tr>
         <tr>
           <td>Status: {displayStatus(deadLine, resolved)}</td>{" "}
+          <td>Wynik: {`${result}/${task.points}`}</td>
         </tr>
       </table>
     </div>
   );
 
-  const displayBooleanTask = ({ task, deadLine, resolved }) => (
+  const displayBooleanTask = ({ task, deadLine, resolved, result }) => (
     <div className={styles.booleanTask}>
       <table>
         <tr>
@@ -119,6 +134,7 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
         </tr>
         <tr>
           <td>Status: {displayStatus(deadLine, resolved)}</td>{" "}
+          <td>Wynik: {`${result}/${task.points}`}</td>
         </tr>
       </table>
     </div>

@@ -5,18 +5,14 @@ import { connect } from "react-redux";
 import { setPrompts } from "../../../../redux/actions/taskToClass";
 
 const SelectPropmt = ({ setPrompts }) => {
-  const [formData, setFormData] = useState({
-    prompt: false,
-    description: false,
-  });
+  const [formData, setFormData] = useState(false);
 
   const onClick = (name) => {
-    setFormData({ ...formData, [name]: !formData[name] });
-    setPrompts({ ...formData, [name]: !formData[name] });
+    setFormData(!formData);
+    setPrompts(!formData);
   };
   return (
     <div className={styles.root}>
-      <h4>Dodatkowe paramtery</h4>
       <div>
         <input
           type="checkbox"
@@ -24,14 +20,6 @@ const SelectPropmt = ({ setPrompts }) => {
           name="prompt"
         />
         <label for="prompt">Dostępne podpowiedzi</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          onClick={(e) => onClick(e.target.name)}
-          name="description"
-        />
-        <label for="description">Wymagany opis</label>
       </div>
     </div>
   );

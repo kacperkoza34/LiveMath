@@ -6,7 +6,12 @@ import {
   SET_TASK_CONFIG,
 } from "../actions/tasks";
 
-import { UPDATE_PROMPT } from "../actions/resolveTask";
+import {
+  UPDATE_PROMPT,
+  UPDATE_DESCRIPTION,
+  UPDATE_ANSWER,
+  TASKS_RESOLVED,
+} from "../actions/resolveTask";
 
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
@@ -44,6 +49,30 @@ export default function reducer(statePart = [], action = {}) {
         taskConfig: {
           ...statePart.taskConfig,
           usedPrompts: statePart.taskConfig.usedPrompts + 1,
+        },
+      };
+    case UPDATE_DESCRIPTION:
+      return {
+        ...statePart,
+        taskConfig: {
+          ...statePart.taskConfig,
+          description: action.payload,
+        },
+      };
+    case UPDATE_ANSWER:
+      return {
+        ...statePart,
+        taskConfig: {
+          ...statePart.taskConfig,
+          answer: action.payload,
+        },
+      };
+    case TASKS_RESOLVED:
+      return {
+        ...statePart,
+        taskConfig: {
+          ...statePart.taskConfig,
+          resolved: true,
         },
       };
     default:

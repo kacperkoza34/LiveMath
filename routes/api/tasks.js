@@ -15,6 +15,12 @@ const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
 const auth = require("../../middleware/auth");
 
+const getRandomIntInclusive = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 // ADD open task
 router.post(
   "/open",
@@ -258,6 +264,9 @@ router.post(
     }
 
     try {
+      let task = await TaskOpen.findOne({ _id: req.body.taskId });
+      const groupsLength = task.data.groups.length;
+
       req.body.classes.forEach(async (item, i) => {
         let currentClass = await Class.findOne({ _id: item });
         currentClass.tasksOpen.push({
@@ -277,9 +286,9 @@ router.post(
             promptsAllowed: req.body.promptsAllowed,
             descriptionRequired: req.body.descriptionRequired,
             task: req.body.taskId,
+            group: getRandomIntInclusive(0, groupsLength - 1),
           });
           await profile.save();
-          console.log();
         });
         await currentClass.save();
       });
@@ -300,6 +309,7 @@ router.post(
       check("classes", "Nie wybrano klas!").not().isEmpty(),
       check("taskId", "Nie wybrano zadania!").not().isEmpty(),
       check("deadLine", "Nie wybrano daty!").not().isEmpty(),
+      check("descriptionRequired", "Nie wybrano daty!").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -309,11 +319,20 @@ router.post(
     }
 
     try {
+      let task = await TaskClose.findOne({ _id: req.body.taskId });
+
+      const answers = {};
+
+      task.data.forEach((item, i) => {
+        answers[`${i}`] = "";
+      });
+
       req.body.classes.forEach(async (item, i) => {
         let currentClass = await Class.findOne({ _id: item });
         currentClass.tasksClose.push({
           deadLine: req.body.deadLine,
           task: req.body.taskId,
+          descriptionRequired: req.body.descriptionRequired,
         });
 
         currentClass.students.forEach(async ({ student }, i) => {
@@ -322,8 +341,10 @@ router.post(
           profile.maxPoints = req.body.points + profile.maxPoints;
 
           profile.tasksClose.push({
+            answers: answers,
             deadLine: req.body.deadLine,
             task: req.body.taskId,
+            descriptionRequired: req.body.descriptionRequired,
           });
           await profile.save();
         });

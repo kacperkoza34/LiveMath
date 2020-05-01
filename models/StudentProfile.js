@@ -50,6 +50,7 @@ const StudentProfileSchema = new Schema({
       },
       description: {
         type: String,
+        default: "",
       },
       toUpdate: {
         type: Boolean,
@@ -59,9 +60,20 @@ const StudentProfileSchema = new Schema({
         type: Boolean,
         default: false,
       },
+      result: {
+        type: Number,
+        default: 0,
+      },
+      answer: {
+        type: String,
+        default: "",
+      },
       taskType: {
         type: String,
         default: "taskOpen",
+      },
+      group: {
+        type: Number,
       },
       task: {
         type: mongoose.Schema.Types.ObjectId,
@@ -81,6 +93,21 @@ const StudentProfileSchema = new Schema({
       resolved: {
         type: Boolean,
         default: false,
+      },
+      result: {
+        type: Number,
+        default: 0,
+      },
+      answers: {
+        type: Object,
+      },
+      descriptionRequired: {
+        type: Boolean,
+        default: true,
+      },
+      description: {
+        type: String,
+        default: "",
       },
       taskType: {
         type: String,
@@ -104,6 +131,10 @@ const StudentProfileSchema = new Schema({
       resolved: {
         type: Boolean,
         default: false,
+      },
+      result: {
+        type: Number,
+        default: 0,
       },
       taskType: {
         type: String,

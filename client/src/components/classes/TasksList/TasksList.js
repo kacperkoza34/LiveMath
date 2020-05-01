@@ -41,7 +41,7 @@ const TasksList = ({ tasks, clearTasks }) => {
     </div>
   );
 
-  const displayCloseTask = ({ task, deadLine }) => (
+  const displayCloseTask = ({ task, deadLine, descriptionRequired }) => (
     <div className={styles.closeTask}>
       <table>
         <tr>
@@ -57,6 +57,10 @@ const TasksList = ({ tasks, clearTasks }) => {
           <td>
             {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
           </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
         </tr>
       </table>
     </div>

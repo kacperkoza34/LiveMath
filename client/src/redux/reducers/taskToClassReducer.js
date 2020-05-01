@@ -2,6 +2,7 @@ import {
   UPDATE_CLASSES,
   SET_DEADLINE,
   SET_PROMPTS,
+  SET_DESCRIPTION,
   ADD_TASK_ERROR,
   ADD_TASK_SUCCESS,
   CLEAR_TASK,
@@ -30,8 +31,15 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         data: {
           ...statePart.data,
-          promptsAllowed: action.payload.prompt,
-          descriptionRequired: action.payload.description,
+          promptsAllowed: action.payload,
+        },
+      };
+    case SET_DESCRIPTION:
+      return {
+        ...statePart,
+        data: {
+          ...statePart.data,
+          descriptionRequired: action.payload,
         },
       };
     case ADD_TASK_SUCCESS:

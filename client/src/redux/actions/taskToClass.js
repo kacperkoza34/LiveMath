@@ -1,6 +1,7 @@
 export const UPDATE_CLASSES = "[taskToClass] UPDATE_CLASSES";
 export const SET_DEADLINE = "[taskToClass] SET_DEADLINE";
 export const SET_PROMPTS = "[taskToClass] SET_PROMPTS";
+export const SET_DESCRIPTION = "[taskToClass] SET_DESCRIPTION";
 export const ADD_OPEN_TASK = "[taskToClass] ADD_OPEN_TASK";
 export const ADD_CLOSE_TASK = "[taskToClass] ADD_CLOSE_TASK";
 export const ADD_BOOLEAN_TASK = "[taskToClass] ADD_BOOLEAN_TASK";
@@ -20,6 +21,11 @@ export const setDeadLine = (payload) => ({
 
 export const setPrompts = (payload) => ({
   type: SET_PROMPTS,
+  payload,
+});
+
+export const setDescription = (payload) => ({
+  type: SET_DESCRIPTION,
   payload,
 });
 

@@ -51,6 +51,10 @@ const ClassSchema = new Schema({
         type: String,
         default: "taskClose",
       },
+      descriptionRequired: {
+        type: Boolean,
+        default: true,
+      },
       task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "taskClose",

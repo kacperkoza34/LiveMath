@@ -40,7 +40,7 @@ const CloseTask = ({
     data.data.forEach(({ answer }, i) => answer == taskStatus[i] && result++);
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
-
+  console.log(taskStatus);
   return (
     <div className={styles.root}>
       {isFetching ? (

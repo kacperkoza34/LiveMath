@@ -13,18 +13,14 @@ const DisplayPrompts = ({
   accountType,
   taskId,
   action,
-  context,
-  store,
+  resolved,
   dispatch,
 }) => {
   return (
     <div>
-      {accountType == "teacher" && (
-        <PromptsDumm model={model} variables={variables} />
-      )}
-      {accountType == "student" && promptsAllowed && (
+      {promptsAllowed && (
         <div className={styles.root}>
-          {usedPrompts < 2 && (
+          {accountType !== "teacher" && !resolved && usedPrompts < 2 && (
             <button onClick={() => dispatch(action(taskId))}>
               Pokaż podpowiedz
             </button>

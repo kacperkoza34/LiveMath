@@ -11,6 +11,7 @@ import {
 import SelectClass from "../SelectClass/SelectClass";
 import SelectDeadLine from "../SelectDeadLine/SelectDeadLine";
 import SelectPrompt from "../SelectPrompt/SelectPrompt";
+import SelectDescription from "../SelectDescription/SelectDescription";
 
 const AddTaskToClass = ({
   taskId,
@@ -49,6 +50,7 @@ const AddTaskToClass = ({
       setError(false);
       addCloseTask({
         taskId,
+        descriptionRequired,
         points,
         deadLine,
         classes,
@@ -86,7 +88,9 @@ const AddTaskToClass = ({
       <SelectDeadLine />
       {taskType === "openTask" && (
         <>
+          <h4>Wybierz dodatkowe parametry</h4>
           <SelectPrompt />
+          <SelectDescription />
           <div>
             {displayError()}
             <button onClick={() => submitOpenTask()}>
@@ -97,6 +101,8 @@ const AddTaskToClass = ({
       )}
       {taskType === "closeTask" && (
         <>
+          <h4>Wybierz dodatkowe parametry</h4>
+          <SelectDescription />
           <div>
             {displayError()}
             <button onClick={() => submitCloseTask()}>
