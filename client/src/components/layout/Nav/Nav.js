@@ -60,7 +60,8 @@ const Nav = ({
   return (
     <nav className={styles.root}>
       <h1>
-        <Link to="/">LiveMath {fetching && <ClipLoader size={25} />}</Link>
+        <Link to="/">LiveMath</Link>
+        {fetching && <ClipLoader size={25} />}
       </h1>
       {isFetching ? "" : isAuthenticated ? authLinks : guestLinks}
     </nav>

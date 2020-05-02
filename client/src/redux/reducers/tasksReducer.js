@@ -11,6 +11,7 @@ import {
   UPDATE_DESCRIPTION,
   UPDATE_ANSWER,
   TASKS_RESOLVED,
+  REVIEW_CLOSE_TASK_SUCCESS,
 } from "../actions/resolveTask";
 
 export default function reducer(statePart = [], action = {}) {
@@ -72,7 +73,18 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         taskConfig: {
           ...statePart.taskConfig,
+          toUpdate: action.payload ? true : false,
           resolved: true,
+        },
+      };
+    case REVIEW_CLOSE_TASK_SUCCESS:
+      return {
+        ...statePart,
+        taskConfig: {
+          ...statePart.taskConfig,
+          toUpdate: false,
+          resolved: action.payload.resolved ? true : false,
+          messages: [...statePart.taskConfig.messages, action.payload.message],
         },
       };
     default:

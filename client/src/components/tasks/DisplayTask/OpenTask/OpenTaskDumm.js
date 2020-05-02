@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./OpenTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from "./DisplayContent/DisplayContent";
+import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import PromptsDumm from "./DisplayPrompts/PromptsDumm";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
@@ -83,15 +84,12 @@ const OpenTaskDumm = ({
             <h4>Twoja odpowiedź:</h4>
             <MathJax content={"`" + answer + "`"} />
           </div>
-          {checkAnswer ? (
-            correctAnswer == answer ? (
-              "Brawo!"
-            ) : (
-              "Pomyśl o tym jeszcze raz"
-            )
-          ) : (
-            <button onClick={() => check(true)}>Dodaj odpowiedz!</button>
-          )}
+          <SendSolutionDumm
+            checkAnswer={checkAnswer}
+            answer={answer}
+            correctAnswer={correctAnswer}
+            check={check}
+          />
           {accountType == "teacher" && <AddTaskToClass />}
         </>
       )}

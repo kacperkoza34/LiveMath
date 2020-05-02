@@ -5,6 +5,9 @@ export const UPDATE_ANSWER = "[RESOLVE_TASK] UPDATE_ANSWER";
 export const SEND_OPEN_TASK_RESOLUTION =
   "[RESOLVE_TASK] SEND_OPEN_TASK_RESOLUTION";
 export const TASKS_RESOLVED = "[RESOLVE_TASK] TASKS_RESOLVED";
+export const REVIEW_CLOSE_TASK = "[RESOLVE_TASK] REVIEW_CLOSE_TASK";
+export const REVIEW_CLOSE_TASK_SUCCESS =
+  "[RESOLVE_TASK] REVIEW_CLOSE_TASK_SUCCESS";
 
 export const useOnePrompt = (payload) => ({
   type: USE_PROMPT,
@@ -31,6 +34,17 @@ export const sendOpenTaskResolution = (payload) => ({
   payload,
 });
 
-export const taskResolved = () => ({
+export const taskResolved = (payload) => ({
   type: TASKS_RESOLVED,
+  payload,
+});
+
+export const reviewCloseTask = (payload) => ({
+  type: REVIEW_CLOSE_TASK,
+  payload,
+});
+
+export const reviewCloseTaskSuccess = (payload) => ({
+  type: REVIEW_CLOSE_TASK_SUCCESS,
+  payload,
 });

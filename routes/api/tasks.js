@@ -287,6 +287,7 @@ router.post(
             descriptionRequired: req.body.descriptionRequired,
             task: req.body.taskId,
             group: getRandomIntInclusive(0, groupsLength - 1),
+            messages: [],
           });
           await profile.save();
         });

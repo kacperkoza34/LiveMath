@@ -12,11 +12,13 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
   };
   const sortedTasks = [...tasks].sort(compare);
 
-  const displayStatus = (deadLine, resolved, description) => {
+  const displayStatus = (deadLine, resolved, description, toUpdate) => {
     if (Date.parse(deadLine) < Date.now() && !resolved)
       return <div className={styles.failed}>Niewykonane</div>;
     if (Date.parse(deadLine) > Date.now() && !resolved)
       return <div>Do wykonania</div>;
+    if (resolved && toUpdate)
+      return <div className={styles.success}>Prośba o weryfikacje</div>;
     if (resolved)
       return (
         <div className={styles.success}>
@@ -39,6 +41,8 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
     _id,
     group,
     answer,
+    toUpdate,
+    messages,
   }) => (
     <div className={styles.openTask}>
       <table>
@@ -57,6 +61,8 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   _id,
                   group,
                   answer,
+                  toUpdate,
+                  messages,
                 });
               }}
               to={`/display/openTask/${task._id}`}
@@ -77,7 +83,9 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
           <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
         </tr>
         <tr>
-          <td>Status: {displayStatus(deadLine, resolved, description)}</td>{" "}
+          <td>
+            Status: {displayStatus(deadLine, resolved, description, toUpdate)}
+          </td>{" "}
           <td>Wynik: {`${result}/${task.points}`}</td>
         </tr>
       </table>

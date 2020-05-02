@@ -4,6 +4,10 @@ import styles from "./OpenTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from "./DisplayContent/DisplayContent";
 import DisplayPromptsFromApi from "./DisplayPrompts/DisplayPromptsFromApi";
+import Messages from "./Messages/Messages";
+import SendSolutionApi from "./SendSolution/SendSolutionApi";
+import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
+import ReviewTask from "./ReviewTask/ReviewTask";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
@@ -24,6 +28,7 @@ const OpenTask = ({
   updateDescription,
   updateAnswer,
   sendOpenTaskResolution,
+  student,
   tasks: { data, isFetching, errors, taskConfig },
 }) => {
   const {
@@ -36,6 +41,8 @@ const OpenTask = ({
     group,
     description,
     answer,
+    toUpdate,
+    messages,
   } = taskConfig;
   useEffect(() => {
     getOpenTask(match.params.id);
@@ -52,9 +59,12 @@ const OpenTask = ({
     if (usedPrompts === 2) return (points / 4).toPrecision(2);
   };
 
-  const sendSolution = () => {
+  const sendSolution = (toUpdate = false) => {
     if (descriptionRequired && !description.length) setError("Wymagany opis!");
-    else sendOpenTaskResolution(taskConfig);
+    else {
+      if (toUpdate) sendOpenTaskResolution({ ...taskConfig, toUpdate: true });
+      else sendOpenTaskResolution({ ...taskConfig });
+    }
   };
 
   return (
@@ -111,28 +121,36 @@ const OpenTask = ({
             <h4>Twoja odpowiedź:</h4>
             <MathJax content={"`" + answer + "`"} />
           </div>
-          {checkAnswer ? (
-            correctAnswer == answer ? (
-              <>
-                <div className={styles.success}>Poprawna odpowiedź!</div>
-                {error.length > 0 && <div className={styles.fail}>{error}</div>}
-                {!resolved && accountType == "student" ? (
-                  <button onClick={() => sendSolution()}>
-                    Prześlij rozwiązanie
-                  </button>
-                ) : (
-                  <div className={styles.success}>Zadanie rozwiązane!</div>
-                )}
-              </>
-            ) : (
-              <div>Pomyśl o tym jeszcze raz</div>
-            )
+          {accountType === "student" ? (
+            <SendSolutionApi
+              check={check}
+              checkAnswer={checkAnswer}
+              answer={answer}
+              correctAnswer={correctAnswer}
+              error={error}
+              resolved={resolved}
+              sendSolution={sendSolution}
+              toUpdate={toUpdate}
+              error={error}
+            />
           ) : (
-            <button onClick={() => check(true)}>Dodaj odpowiedz!</button>
+            <SendSolutionDumm
+              checkAnswer={checkAnswer}
+              answer={answer}
+              correctAnswer={correctAnswer}
+              check={check}
+            />
           )}
-          {!Object.keys(taskConfig).length > 0 && accountType == "teacher" && (
-            <AddTaskToClass />
+          {accountType === "teacher" && toUpdate ? (
+            <ReviewTask
+              correctAnswer={correctAnswer}
+              taskId={_id}
+              studentId={student}
+            />
+          ) : (
+            ""
           )}
+          <Messages messages={messages} />
         </>
       )}
     </div>
@@ -144,6 +162,7 @@ OpenTask.propTypes = {};
 const mapStateToProps = (state) => ({
   tasks: state.tasks,
   accountType: state.user.data.accountType,
+  student: state.student.data._id,
 });
 
 export default connect(mapStateToProps, {

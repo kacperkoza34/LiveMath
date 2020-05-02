@@ -4,8 +4,11 @@ import {
   UPDATE_PROMPT,
   SEND_OPEN_TASK_RESOLUTION,
   TASKS_RESOLVED,
+  REVIEW_CLOSE_TASK,
+  REVIEW_CLOSE_TASK_SUCCESS,
   updatePrompt,
   taskResolved,
+  reviewCloseTaskSuccess,
 } from "../actions/resolveTask";
 import { taskError, TASKS_ERROR } from "../actions/tasks";
 
@@ -42,10 +45,25 @@ const resolveTask = ({ dispatch }) => (next) => (action) => {
     );
   }
 
+  if (action.type === REVIEW_CLOSE_TASK) {
+    dispatch(smallLoadingStart());
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/api/student/profile/resolve/open/update`,
+        reviewCloseTaskSuccess,
+        taskError,
+        action.payload,
+        null
+      )
+    );
+  }
+
   if (
     action.type === UPDATE_PROMPT ||
     action.type === TASKS_ERROR ||
-    action.type === TASKS_RESOLVED
+    action.type === TASKS_RESOLVED ||
+    action.type === REVIEW_CLOSE_TASK_SUCCESS
   ) {
     dispatch(smallLoadingStop());
   }

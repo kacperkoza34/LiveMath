@@ -32,8 +32,8 @@ const SelectClass = ({ getClasses, classes, updateClasses }) => {
       <h4>Wybierz klasy</h4>
       <div className={styles.classList}>
         {data.map(({ title, _id }) => (
-          <div onClick={() => addClass(_id)} className={styles.itemList}>
-            <input type="checkbox" name={title} />
+          <div className={styles.itemList}>
+            <input onClick={() => addClass(_id)} type="checkbox" name={title} />
             <label for={title}>{title}</label>
           </div>
         ))}

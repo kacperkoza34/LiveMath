@@ -57,6 +57,7 @@ router.put(
         .isEmpty(),
       check("_id", "Nie określono statusu zadania").not().isEmpty(),
       check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
+      check("toUpdate", "Nie określono statusu zadania").exists(),
     ],
   ],
 
@@ -84,6 +85,7 @@ router.put(
       let profile = await StudentProfile.findOne({
         user: req.user.id,
       }).populate("tasksOpen.task", "points");
+
       profile.tasksOpen.map((item) => {
         if (req.body._id.toString() === item._id.toString()) {
           let foo = 1;
@@ -94,16 +96,19 @@ router.put(
             (item.task.points / foo).toPrecision(2)
           );
 
-          profile.points = parseFloat(profile.points) + pointsForTask;
+          if (!req.body.toUpdate) {
+            profile.points = parseFloat(profile.points) + pointsForTask;
+            item.result = pointsForTask;
+          }
 
           item.answer = req.body.answer;
           item.description = req.body.description;
-          item.result = pointsForTask;
           item.resolved = true;
+          item.toUpdate = req.body.toUpdate;
         }
       });
       await profile.save();
-      res.json({ msg: "success" });
+      res.json(req.body.toUpdate);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
@@ -162,6 +167,61 @@ router.put(
       });
       await profile.save();
       res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+/// change task status from teacher account
+/// open task
+
+router.put(
+  "/resolve/open/update",
+  [
+    authTeacher,
+    [
+      check("task_id", "Nie określono statusu zadania").not().isEmpty(),
+      check("student_id", "Nie określono statusu zadania").not().isEmpty(),
+      check("message", "Nie określono statusu zadania").not().isEmpty(),
+      check("accept", "Nie określono statusu zadania").not().isEmpty(),
+    ],
+  ],
+
+  async (req, res) => {
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+      return res.status(400).json({ errors: erros.array() });
+    }
+    try {
+      let profile = await StudentProfile.findOne({
+        _id: req.body.student_id,
+      }).populate("tasksOpen.task", "points");
+
+      profile.tasksOpen.map((item) => {
+        if (req.body.task_id.toString() === item._id.toString()) {
+          if (req.body.accept) {
+            let foo = 1;
+            if (parseInt(item.usedPrompts) === 1) foo = 2;
+            if (parseInt(item.usedPrompts) === 2) foo = 4;
+            let pointsForTask = parseFloat(
+              (item.task.points / foo).toPrecision(2)
+            );
+            profile.points = parseFloat(profile.points) + pointsForTask;
+            item.result = pointsForTask;
+            item.toUpdate = false;
+            item.messages.push(req.body.message);
+          } else {
+            item.toUpdate = false;
+            item.resolved = false;
+            item.messages.push(req.body.message);
+          }
+        }
+      });
+
+      await profile.save();
+      res.json({ resolved: req.body.accept, message: req.body.message });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");

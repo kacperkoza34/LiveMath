@@ -75,6 +75,11 @@ const StudentProfileSchema = new Schema({
       group: {
         type: Number,
       },
+      messages: [
+        {
+          type: String,
+        },
+      ],
       task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "taskOpen",
@@ -89,6 +94,10 @@ const StudentProfileSchema = new Schema({
       },
       deadLine: {
         type: Date,
+      },
+      toUpdate: {
+        type: Boolean,
+        default: false,
       },
       resolved: {
         type: Boolean,
