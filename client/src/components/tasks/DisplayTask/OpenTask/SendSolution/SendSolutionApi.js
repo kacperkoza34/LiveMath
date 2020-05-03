@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import styles from "./SendSolution.module.scss";
 
 const SendSolutionApi = ({
   checkAnswer,
@@ -13,30 +14,36 @@ const SendSolutionApi = ({
   toUpdate,
 }) => {
   return (
-    <div>
+    <div className={styles.root}>
       {resolved ? (
         <>
           {toUpdate ? (
-            <>Zadanie wysłano do weryfikacji</>
+            <p className={styles.statusBox + " " + styles.toUpdate}>
+              Zadanie wysłano do weryfikacji
+            </p>
           ) : (
-            <>Zadanie rozwiazane</>
+            <p className={styles.statusBox + " " + styles.success}>
+              Zadanie rozwiazane
+            </p>
           )}
         </>
       ) : (
         <>
           {checkAnswer && (
             <>
-              {error.length > 0 && <div>{error}</div>}
+              {error.length > 0 && <div className={styles.error}>{error}</div>}
               {correctAnswer == answer ? (
                 <div>
-                  <p>Dobra odpowiedź</p>
+                  <p className={styles.statusBox + " " + styles.success}>
+                    Dobra odpowiedź
+                  </p>
                   <button onClick={() => sendSolution()}>
                     Prześlij rozwiązanie
                   </button>
                 </div>
               ) : (
                 <div>
-                  <p>Zła odpowiedź</p>
+                  <p className={styles.error}>Zła odpowiedź</p>
                   <button onClick={() => sendSolution(true)}>
                     Prześlij z prośbą o weryfikacje
                   </button>

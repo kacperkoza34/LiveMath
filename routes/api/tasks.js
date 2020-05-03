@@ -288,6 +288,7 @@ router.post(
             task: req.body.taskId,
             group: getRandomIntInclusive(0, groupsLength - 1),
             messages: [],
+            date: Date.now(),
           });
           await profile.save();
         });

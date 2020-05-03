@@ -14,14 +14,24 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
 
   const displayStatus = (deadLine, resolved, description, toUpdate) => {
     if (Date.parse(deadLine) < Date.now() && !resolved)
-      return <div className={styles.failed}>Niewykonane</div>;
+      return (
+        <div className={styles.statusBox + " " + styles.failed}>
+          Niewykonane
+        </div>
+      );
     if (Date.parse(deadLine) > Date.now() && !resolved)
-      return <div>Do wykonania</div>;
+      return (
+        <div className={styles.statusBox + " " + styles.toDo}>Do wykonania</div>
+      );
     if (resolved && toUpdate)
-      return <div className={styles.success}>Prośba o weryfikacje</div>;
+      return (
+        <div className={styles.statusBox + " " + styles.toUpdate}>
+          Prośba o weryfikacje
+        </div>
+      );
     if (resolved)
       return (
-        <div className={styles.success}>
+        <div className={styles.statusBox + " " + styles.success}>
           <a href={description} target="_blank">
             Rozwiązane
           </a>

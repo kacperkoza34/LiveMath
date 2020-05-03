@@ -51,16 +51,20 @@ const OpenTaskDumm = ({
         <BeatLoader size={20} />
       ) : (
         <>
-          <h4>{data.name}</h4>
-          <p className={styles.points}>
-            <span>Punkty: {data.points}</span>
-            <span>Ilość grup: {data.data.groups.length}</span>
-          </p>
-          <DisplayContent
-            content={data.data.content}
-            variables={data.data.variables}
-            group={data.data.groups[randomIndex]}
-          />
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <DisplayContent
+                content={data.data.content}
+                variables={data.data.variables}
+                group={data.data.groups[randomIndex]}
+              />
+            </div>
+            <p>
+              <span>Punkty: {data.points}</span>
+              <span>Ilość grup: {data.data.groups.length}</span>
+            </p>
+          </div>
           {randomIndex === null ? setGroup() : ""}
           <PromptsDumm
             model={data.data.model}
@@ -82,7 +86,9 @@ const OpenTaskDumm = ({
           </div>
           <div className={styles.answer}>
             <h4>Twoja odpowiedź:</h4>
-            <MathJax content={"`" + answer + "`"} />
+            <div className={styles.result}>
+              <MathJax content={"`" + answer + "`"} />
+            </div>
           </div>
           <SendSolutionDumm
             checkAnswer={checkAnswer}

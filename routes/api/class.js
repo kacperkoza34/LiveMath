@@ -10,6 +10,7 @@ const Student = require("../../models/Student");
 const Teacher = require("../../models/Teacher");
 const Class = require("../../models/Class");
 const TeacherProfile = require("../../models/TeacherProfile");
+const StudentProfile = require("../../models/StudentProfile");
 
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
@@ -91,7 +92,7 @@ router.put("/open/:id", authTeacher, async (req, res) => {
 router.get("/my", authTeacher, async (req, res) => {
   try {
     let allClasses = await Class.find({ teacher: req.user.id })
-      .populate("students.student", "_id name")
+      .populate("students.studentProfile", "user name")
       .populate("tasksOpen.task", "_id name")
       .populate("tasksClose.task", "_id name")
       .populate("tasksBoolean.task", "_id name");

@@ -75,15 +75,19 @@ const OpenTask = ({
         <>
           {correctAnswer == null &&
             setCorrectAnswer(data.data.groups[group].answer)}
-          <h4>{data.name}</h4>
-          <p className={styles.points}>
-            <span>Punkty: {countPoints(data.points)}</span>
-          </p>
-          <DisplayContent
-            content={data.data.content}
-            variables={data.data.variables}
-            group={data.data.groups[group]}
-          />
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <DisplayContent
+                content={data.data.content}
+                variables={data.data.variables}
+                group={data.data.groups[group]}
+              />
+            </div>
+            <p>
+              <span>Punkty: {countPoints(data.points)}</span>
+            </p>
+          </div>
           <DisplayPromptsFromApi
             resolved={resolved}
             promptsAllowed={promptsAllowed}
@@ -119,7 +123,9 @@ const OpenTask = ({
           </div>
           <div className={styles.answer}>
             <h4>Twoja odpowiedź:</h4>
-            <MathJax content={"`" + answer + "`"} />
+            <div className={styles.result}>
+              <MathJax content={"`" + answer + "`"} />
+            </div>
           </div>
           {accountType === "student" ? (
             <SendSolutionApi

@@ -6,13 +6,16 @@
   margin: 10px;
   position: relative;
 
-  .points {
+  .header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-weight: 600;
+    justify-content: space-between;
+
+    p {
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+    }
   }
   .check {
     margin: 10px 0;
@@ -24,6 +27,12 @@
 
   .answer {
     margin: 10px 0;
+  }
+
+  .result {
+    background: $color-light;
+    padding: 5px;
+    border: 1px solid;
   }
 
   .fail {

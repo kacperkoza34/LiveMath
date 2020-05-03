@@ -90,9 +90,9 @@ const ClassSchema = new Schema({
   },
   students: [
     {
-      student: {
-        type: Schema.Types.ObjectId,
-        ref: "student",
+      studentProfile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "studentProfile",
       },
     },
   ],

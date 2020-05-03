@@ -1,21 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styles from "./Messages.module.scss";
 
 const Messages = ({ messages }) => {
   return (
-    <div>
+    <>
       {messages.length > 0 && (
-        <>
-          <h4>Informacje od nauczyciela</h4>
+        <div className={styles.root}>
+          <>
+            <h4>Informacje od nauczyciela</h4>
 
-          <ul>
-            {messages.map((message) => (
-              <li>{message}</li>
-            ))}
-          </ul>
-        </>
+            <ul>
+              {messages.map((message) => (
+                <li className={styles.message}>{message}</li>
+              ))}
+            </ul>
+          </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

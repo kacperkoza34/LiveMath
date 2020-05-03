@@ -18,14 +18,23 @@
     font-weight: 600;
   }
 
-  .failed {
-    color: $color-alert;
-  }
-  .success {
+  .statusBox {
     background: $color-light;
     padding: 5px;
     border: 1px solid black;
     font-weight: 700;
+  }
+  .success {
     color: $color-success;
+  }
+  .failed {
+    color: $color-alert;
+  }
+  .toUpdate {
+    color: $color-to-update;
+  }
+
+  .toDo {
+    color: $color-to-do;
   }
 }
