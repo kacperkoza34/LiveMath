@@ -39,11 +39,9 @@ router.post(
         await Teacher.findOne({ _id: req.params.id });
 
       if (user) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
-          });
+        return res.status(400).json({
+          errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+        });
       }
 
       // Get user gravatar
@@ -135,11 +133,9 @@ router.post(
       let user = await Student.findOne({ email });
 
       if (user) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
-          });
+        return res.status(400).json({
+          errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+        });
       }
 
       //Return error if ids are wrong
@@ -171,16 +167,15 @@ router.post(
         password,
       });
 
-      currentClass.students.push({ studentProfile: user._id });
-      await currentClass.save();
-
       let userProfile = new StudentProfile({
         user: user._id,
         name,
         teacher: req.params.id,
         class: req.params.class_id,
       });
-      console.log(userProfile);
+
+      currentClass.students.push({ studentProfile: userProfile._id });
+      await currentClass.save();
       await userProfile.save();
 
       // Add to inviter profile

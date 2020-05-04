@@ -4,10 +4,10 @@ import styles from "./OpenTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from "./DisplayContent/DisplayContent";
 import DisplayPromptsFromApi from "./DisplayPrompts/DisplayPromptsFromApi";
-import Messages from "./Messages/Messages";
+import Messages from "../Messages/Messages";
 import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
-import ReviewTask from "./ReviewTask/ReviewTask";
+import ReviewTask from "../ReviewTask/ReviewTask";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
@@ -18,6 +18,7 @@ import {
   updateDescription,
   updateAnswer,
   sendOpenTaskResolution,
+  reviewOpenTask,
 } from "../../../../redux/actions/resolveTask";
 
 const OpenTask = ({
@@ -29,6 +30,7 @@ const OpenTask = ({
   updateAnswer,
   sendOpenTaskResolution,
   student,
+  reviewOpenTask,
   tasks: { data, isFetching, errors, taskConfig },
 }) => {
   const {
@@ -152,6 +154,7 @@ const OpenTask = ({
               correctAnswer={correctAnswer}
               taskId={_id}
               studentId={student}
+              reduxAction={reviewOpenTask}
             />
           ) : (
             ""
@@ -177,4 +180,5 @@ export default connect(mapStateToProps, {
   updateDescription,
   updateAnswer,
   sendOpenTaskResolution,
+  reviewOpenTask,
 })(OpenTask);

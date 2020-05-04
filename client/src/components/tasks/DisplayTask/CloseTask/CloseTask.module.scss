@@ -13,8 +13,24 @@
     font-weight: 600;
   }
 
+  .description {
+    display: flex;
+    flex-direction: column;
+  }
+
+  textarea {
+    resize: none;
+    width: 100%;
+  }
+
+  .result {
+    background: $color-light;
+    padding: 5px;
+    border: 1px solid;
+  }
+
   .listElement {
-    height: 180px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     padding: 10px 0 10px 0;
@@ -27,6 +43,10 @@
     .item {
       height: 50px;
     }
+  }
+
+  .check {
+    margin: 20px 0;
   }
 
   .fail {

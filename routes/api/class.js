@@ -92,7 +92,10 @@ router.put("/open/:id", authTeacher, async (req, res) => {
 router.get("/my", authTeacher, async (req, res) => {
   try {
     let allClasses = await Class.find({ teacher: req.user.id })
-      .populate("students.studentProfile", "user name")
+      .populate(
+        "students.studentProfile",
+        "user name maxPoints points needReview"
+      )
       .populate("tasksOpen.task", "_id name")
       .populate("tasksClose.task", "_id name")
       .populate("tasksBoolean.task", "_id name");

@@ -4,4 +4,13 @@
 .root {
   display: flex;
   flex-direction: column;
+
+  .student {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .toUpdate {
+    background: $color-to-update;
+  }
 }

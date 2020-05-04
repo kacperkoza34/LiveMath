@@ -26,11 +26,15 @@ const StudentProfileSchema = new Schema({
     type: Number,
     default: 0,
   },
+  needReview: {
+    type: Boolean,
+    default: false,
+  },
   tasksOpen: [
     {
       date: {
         type: Date,
-        default: Date.now(),
+        required: true,
       },
       deadLine: {
         type: Date,
@@ -90,7 +94,7 @@ const StudentProfileSchema = new Schema({
     {
       date: {
         type: Date,
-        default: Date.now(),
+        required: true,
       },
       deadLine: {
         type: Date,
@@ -107,7 +111,7 @@ const StudentProfileSchema = new Schema({
         type: Number,
         default: 0,
       },
-      answers: {
+      answer: {
         type: Object,
       },
       descriptionRequired: {
@@ -122,6 +126,11 @@ const StudentProfileSchema = new Schema({
         type: String,
         default: "taskClose",
       },
+      messages: [
+        {
+          type: String,
+        },
+      ],
       task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "taskClose",
@@ -132,7 +141,7 @@ const StudentProfileSchema = new Schema({
     {
       date: {
         type: Date,
-        default: Date.now(),
+        required: true,
       },
       deadLine: {
         type: Date,

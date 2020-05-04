@@ -86,6 +86,8 @@ router.put(
         user: req.user.id,
       }).populate("tasksOpen.task", "points");
 
+      if (req.body.toUpdate) profile.needReview = true;
+
       profile.tasksOpen.map((item) => {
         if (req.body._id.toString() === item._id.toString()) {
           let foo = 1;
@@ -123,7 +125,12 @@ router.put(
     authStudent,
     [
       check("resolved", "Nie określono statusu zadania").exists(),
+      check("descriptionRequired", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("_id", "Nie określono statusu zadania").not().isEmpty(),
       check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
+      check("toUpdate", "Nie określono statusu zadania").exists(),
     ],
   ],
 
@@ -143,30 +150,34 @@ router.put(
         .status(400)
         .json({ errors: { msg: "Skończył się czas na rozwiązanie zadania" } });
 
+    if (req.body.descriptionRequired && !req.body.description.length)
+      return res
+        .status(400)
+        .json({ errors: { msg: "Zadanie wymaga dodania opisu" } });
+
     try {
       let profile = await StudentProfile.findOne({
         user: req.user.id,
       }).populate("tasksOpen.task", "points");
 
       profile.tasksClose.map((item) => {
-        if (req.body.taskId.toString() === item._id.toString()) {
-          let foo = 1;
-          if (parseInt(req.body.usedPrompts) === 1) foo = 2;
-          if (parseInt(req.body.usedPrompts) === 2) foo = 4;
-
-          let pointsForTask = parseFloat(
-            (item.task.points / foo).toPrecision(2)
-          );
-
-          profile.points = parseFloat(profile.points) + pointsForTask;
-
-          item.result = pointsForTask;
+        if (req.body._id.toString() === item._id.toString()) {
+          if (!req.body.toUpdate) {
+            profile.points =
+              parseFloat(profile.points) + parseFloat(req.body.result);
+            item.result = req.body.result;
+          } else {
+            item.toUpdate = true;
+            profile.needReview = true;
+          }
+          item.description = req.body.description;
+          item.answer = req.body.answer;
           item.resolved = true;
         }
         return item;
       });
       await profile.save();
-      res.json(profile);
+      res.json(req.body.toUpdate);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
@@ -210,15 +221,66 @@ router.put(
             );
             profile.points = parseFloat(profile.points) + pointsForTask;
             item.result = pointsForTask;
-            item.toUpdate = false;
-            item.messages.push(req.body.message);
           } else {
-            item.toUpdate = false;
             item.resolved = false;
-            item.messages.push(req.body.message);
           }
+          item.toUpdate = false;
+          item.messages.push(req.body.message);
         }
       });
+
+      profile.needReview = [...profile.tasksOpen, ...profile.tasksClose].some(
+        ({ toUpdate }) => toUpdate === true
+      );
+
+      await profile.save();
+      res.json({ resolved: req.body.accept, message: req.body.message });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+/// change task status from teacher account
+/// close task
+
+router.put(
+  "/resolve/close/update",
+  [
+    authTeacher,
+    [
+      check("task_id", "Nie określono statusu zadania").not().isEmpty(),
+      check("student_id", "Nie określono statusu zadania").not().isEmpty(),
+      check("message", "Nie określono statusu zadania").not().isEmpty(),
+      check("accept", "Nie określono statusu zadania").not().isEmpty(),
+    ],
+  ],
+
+  async (req, res) => {
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+      return res.status(400).json({ errors: erros.array() });
+    }
+    try {
+      let profile = await StudentProfile.findOne({
+        _id: req.body.student_id,
+      }).populate("tasksClose.task", "points");
+      profile.tasksClose.map((item) => {
+        if (req.body.task_id.toString() === item._id.toString()) {
+          if (req.body.accept) {
+            item.result = item.task.points;
+          } else {
+            item.resolved = false;
+          }
+          item.toUpdate = false;
+          item.messages.push(req.body.message);
+        }
+      });
+
+      profile.needReview = [...profile.tasksOpen, ...profile.tasksClose].some(
+        ({ toUpdate }) => toUpdate === true
+      );
 
       await profile.save();
       res.json({ resolved: req.body.accept, message: req.body.message });

@@ -11,7 +11,7 @@ import {
   UPDATE_DESCRIPTION,
   UPDATE_ANSWER,
   TASKS_RESOLVED,
-  REVIEW_CLOSE_TASK_SUCCESS,
+  REVIEW_OPEN_TASK_SUCCESS,
 } from "../actions/resolveTask";
 
 export default function reducer(statePart = [], action = {}) {
@@ -77,7 +77,7 @@ export default function reducer(statePart = [], action = {}) {
           resolved: true,
         },
       };
-    case REVIEW_CLOSE_TASK_SUCCESS:
+    case REVIEW_OPEN_TASK_SUCCESS:
       return {
         ...statePart,
         taskConfig: {

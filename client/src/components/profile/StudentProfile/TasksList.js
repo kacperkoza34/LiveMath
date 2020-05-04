@@ -102,7 +102,18 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
     </div>
   );
 
-  const displayCloseTask = ({ task, deadLine, resolved, result, answers }) => (
+  const displayCloseTask = ({
+    task,
+    deadLine,
+    resolved,
+    result,
+    description,
+    descriptionRequired,
+    answer,
+    toUpdate,
+    _id,
+    messages,
+  }) => (
     <div className={styles.closeTask}>
       <table>
         <tr>
@@ -111,7 +122,17 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
             <Link
               onClick={() => {
                 clearTasks();
-                setTaskConfig({ deadLine, resolved, result, answers });
+                setTaskConfig({
+                  deadLine,
+                  resolved,
+                  result,
+                  answer,
+                  description,
+                  descriptionRequired,
+                  toUpdate,
+                  _id,
+                  messages,
+                });
               }}
               to={`/display/closeTask/${task._id}`}
             >
@@ -123,7 +144,9 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
           </td>
         </tr>
         <tr>
-          <td>Status: {displayStatus(deadLine, resolved)}</td>{" "}
+          <td>
+            Status: {displayStatus(deadLine, resolved, description, toUpdate)}
+          </td>{" "}
           <td>Wynik: {`${result}/${task.points}`}</td>
         </tr>
       </table>

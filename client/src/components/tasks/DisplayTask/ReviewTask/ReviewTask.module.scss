@@ -1,0 +1,9 @@
+@import "../../../../styles/settings.scss";
+@import "../../../../styles/global.scss";
+
+.root {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: $color-light;
+  border: 1px solid;
+}

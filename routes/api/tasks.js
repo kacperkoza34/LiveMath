@@ -268,7 +268,9 @@ router.post(
       const groupsLength = task.data.groups.length;
 
       req.body.classes.forEach(async (item, i) => {
-        let currentClass = await Class.findOne({ _id: item });
+        let currentClass = await Class.findOne({ _id: item }).populate(
+          "students.studentProfile"
+        );
         currentClass.tasksOpen.push({
           deadLine: req.body.deadLine,
           promptsAllowed: req.body.promptsAllowed,
@@ -276,21 +278,18 @@ router.post(
           task: req.body.taskId,
         });
 
-        currentClass.students.forEach(async ({ student }, i) => {
-          let profile = await StudentProfile.findOne({ user: student });
-
-          profile.maxPoints = req.body.points + profile.maxPoints;
-
-          profile.tasksOpen.push({
+        currentClass.students.forEach(async ({ studentProfile }, i) => {
+          studentProfile.maxPoints = req.body.points + studentProfile.maxPoints;
+          studentProfile.tasksOpen.push({
+            date: Date.now(),
             deadLine: req.body.deadLine,
             promptsAllowed: req.body.promptsAllowed,
             descriptionRequired: req.body.descriptionRequired,
             task: req.body.taskId,
             group: getRandomIntInclusive(0, groupsLength - 1),
             messages: [],
-            date: Date.now(),
           });
-          await profile.save();
+          await studentProfile.save();
         });
         await currentClass.save();
       });
@@ -330,25 +329,26 @@ router.post(
       });
 
       req.body.classes.forEach(async (item, i) => {
-        let currentClass = await Class.findOne({ _id: item });
+        let currentClass = await Class.findOne({ _id: item }).populate(
+          "students.studentProfile"
+        );
         currentClass.tasksClose.push({
           deadLine: req.body.deadLine,
           task: req.body.taskId,
           descriptionRequired: req.body.descriptionRequired,
         });
 
-        currentClass.students.forEach(async ({ student }, i) => {
-          let profile = await StudentProfile.findOne({ user: student });
-
-          profile.maxPoints = req.body.points + profile.maxPoints;
-
-          profile.tasksClose.push({
-            answers: answers,
+        currentClass.students.forEach(async ({ studentProfile }, i) => {
+          studentProfile.maxPoints = req.body.points + studentProfile.maxPoints;
+          studentProfile.tasksClose.push({
+            date: Date.now(),
+            answer: answers,
             deadLine: req.body.deadLine,
             task: req.body.taskId,
             descriptionRequired: req.body.descriptionRequired,
+            messages: [],
           });
-          await profile.save();
+          await studentProfile.save();
         });
         await currentClass.save();
       });

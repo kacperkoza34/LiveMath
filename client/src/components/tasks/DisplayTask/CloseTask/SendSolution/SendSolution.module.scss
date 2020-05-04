@@ -1,0 +1,28 @@
+@import "../../../../../styles/settings.scss";
+@import "../../../../../styles/global.scss";
+
+.root {
+  margin: 10px 0;
+
+  button {
+    margin: 10px 0;
+  }
+  .statusBox {
+    background: $color-light;
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: 700;
+  }
+
+  .success {
+    color: $color-success;
+  }
+
+  .toUpdate {
+    color: $color-to-update;
+  }
+
+  .error {
+    color: $color-alert;
+  }
+}
