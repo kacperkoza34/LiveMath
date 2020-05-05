@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import BeatLoader from "react-spinners/BeatLoader";
 
 const TeacherRoute = ({
   component: Component,
@@ -14,7 +13,7 @@ const TeacherRoute = ({
     <Route
       {...rest}
       render={(props) => {
-        if (isAuthenticated && accountType == "teacher")
+        if (isAuthenticated && accountType === "teacher")
           return <Component {...props} />;
         else return <Redirect to="/login" />;
       }}
@@ -24,6 +23,7 @@ const TeacherRoute = ({
 
 TeacherRoute.propTypes = {
   auth: PropTypes.object.isRequired,
+  accountType: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

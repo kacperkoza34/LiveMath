@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import styles from "./Register.module.scss";
 import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
+import Errors from "../../layout/Errors/Errors";
 import { connect } from "react-redux";
 import { register, alreadyLogged } from "../../../redux/actions/auth";
 
@@ -16,7 +17,7 @@ const Register = ({
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
-  }, []);
+  }, [alreadyLogged]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,8 +28,10 @@ const Register = ({
   const [passwordsErr, setPasswordErr] = useState([]);
   const { name, email, password, password2 } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setPasswordErr([]);
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -108,6 +111,7 @@ const Register = ({
             Zaloguj się
           </Link>
         </p>
+        {errors && <Errors errors={[...errors.data.err, ...passwordsErr]} />}
       </div>
     </div>
   );

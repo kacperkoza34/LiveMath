@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./CloseTask.module.scss";
 import CloseTaskFromApi from "./CloseTaskFromApi";
@@ -20,7 +20,10 @@ const CloseTask = ({
   );
 };
 
-CloseTask.propTypes = {};
+CloseTask.propTypes = {
+  match: PropTypes.object.isRequired,
+  task: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

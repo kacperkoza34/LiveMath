@@ -38,6 +38,7 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         data: {},
         isFetching: true,
+        errors: false,
       };
     case SET_TASK_CONFIG:
       return {

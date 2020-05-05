@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import styles from "./NewTask.module.scss";
 
 const NewTask = () => {
-  const [taskType, setTaskType] = useState(null);
+  const [taskType, setTaskType] = useState("");
   const [redirect, setRedirect] = useState(null);
   const [valiadtionError, setError] = useState(false);
 

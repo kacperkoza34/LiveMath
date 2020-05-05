@@ -9,8 +9,8 @@ import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import ReviewTask from "../ReviewTask/ReviewTask";
 import MathJax from "../../MathJax";
+import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
-import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getOpenTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -49,7 +49,7 @@ const OpenTask = ({
   useEffect(() => {
     getOpenTask(match.params.id);
     return () => setTaskConfig({});
-  }, []);
+  }, [getOpenTask, setTaskConfig, match.params.id]);
 
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [checkAnswer, check] = useState(false);
@@ -105,8 +105,8 @@ const OpenTask = ({
           />
           <h4>Miejsce na link z rozwiązaniem</h4>
           <TextareaAutosize
-            maxCols="15"
-            minCols="5"
+            maxcols="15"
+            mincols="5"
             value={description}
             onChange={(e) => {
               setError("");
@@ -130,17 +130,19 @@ const OpenTask = ({
             </div>
           </div>
           {accountType === "student" ? (
-            <SendSolutionApi
-              check={check}
-              checkAnswer={checkAnswer}
-              answer={answer}
-              correctAnswer={correctAnswer}
-              error={error}
-              resolved={resolved}
-              sendSolution={sendSolution}
-              toUpdate={toUpdate}
-              error={error}
-            />
+            <>
+              {errors && <Errors errors={errors.data.err} />}
+              <SendSolutionApi
+                check={check}
+                checkAnswer={checkAnswer}
+                answer={answer}
+                correctAnswer={correctAnswer}
+                error={error}
+                resolved={resolved}
+                sendSolution={sendSolution}
+                toUpdate={toUpdate}
+              />
+            </>
           ) : (
             <SendSolutionDumm
               checkAnswer={checkAnswer}
@@ -166,7 +168,18 @@ const OpenTask = ({
   );
 };
 
-OpenTask.propTypes = {};
+OpenTask.propTypes = {
+  match: PropTypes.object.isRequired,
+  getOpenTask: PropTypes.func.isRequired,
+  accountType: PropTypes.string.isRequired,
+  setTaskConfig: PropTypes.func.isRequired,
+  updateDescription: PropTypes.func.isRequired,
+  updateAnswer: PropTypes.func.isRequired,
+  sendOpenTaskResolution: PropTypes.func.isRequired,
+  student: PropTypes.string.isRequired,
+  reviewOpenTask: PropTypes.func.isRequired,
+  tasks: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

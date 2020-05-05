@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import MathJax from "../../MathJax";
 import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
@@ -44,7 +43,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h3>Podaj teze</h3>
           <input
-            autocomplete="off"
+            autoComplete="off"
             placeholder="Teza"
             name="content"
             value={formData.content}
@@ -69,7 +68,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         {groups.length > 0 && (
           <ul className={styles.groupList}>
             {groups.map(({ content, answer, id }, index) => (
-              <li className={styles.listElement}>
+              <li key={index} className={styles.listElement}>
                 <span>{`${index + 1}). ${content}`}</span>
                 <span>{`Odpowiedź: ${answer ? "Prawda" : "Fałsz"}`}</span>
                 <button onClick={() => deleteGroup(id)}>Usun grupe</button>
@@ -80,6 +79,12 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       </form>
     </div>
   );
+};
+
+AddQuestion.propTypes = {
+  addGroup: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

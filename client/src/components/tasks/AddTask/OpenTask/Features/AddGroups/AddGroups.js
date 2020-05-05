@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./AddGroups.module.scss";
-import TextareaAutosize from "react-textarea-autosize";
+import PropTypes from "prop-types";
 import MathJax from "../../../../MathJax";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
@@ -24,10 +24,10 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
   const displayGroup = (item) => {
     const listItems = [];
     for (let i in item) {
-      if (i != "id") {
+      if (i !== "id") {
         listItems.push(
-          <li className={styles.readyGroupView}>
-            <span>{i == "answer" ? "Odpowiedz =  " : `${i} =  `}</span>
+          <li key={i} className={styles.readyGroupView}>
+            <span>{i === "answer" ? "Odpowiedz =  " : `${i} =  `}</span>
             <span>
               <MathJax content={"`" + item[i] + "`"} />
             </span>
@@ -44,11 +44,11 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
       {variables.length > 0 && (
         <form className={styles.addGroup} onSubmit={(e) => onSubmit(e)}>
           <h3>Zdefinuj wartości dla grup</h3>
-          {variables.map(({ variable }) => (
-            <div className={styles.box}>
+          {variables.map(({ variable }, i) => (
+            <div key={i} className={styles.box}>
               <h5>{variable + "  =  "}</h5>
               <input
-                autocomplete="off"
+                autoComplete="off"
                 placeholder="Wartość"
                 name={variable}
                 value={formData[variable]}
@@ -66,7 +66,7 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
           <div className={styles.box}>
             <h5>Wynik:</h5>
             <input
-              autocomplete="off"
+              autoComplete="off"
               placeholder="Odpowiedz"
               name="answer"
               value={formData.answer}
@@ -82,7 +82,11 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
       {groups.length > 0 && (
         <ul className={styles.groups}>
           {groups.map((item, index) => (
-            <li className={styles.singleGroup} styles="display: block">
+            <li
+              key={index}
+              className={styles.singleGroup}
+              styles="display: block"
+            >
               <h4>{`Grupa ${index + 1}`}</h4>
               {displayGroup(item)}
               <button onClick={() => deleteGroup(item.id)}>Usun grupe</button>
@@ -92,6 +96,14 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
       )}
     </div>
   );
+};
+
+AddGroups.propTypes = {
+  variables: PropTypes.array.isRequired,
+  content: PropTypes.string.isRequired,
+  addGroup: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

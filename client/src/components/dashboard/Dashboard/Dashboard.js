@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import DashboardTeacher from "../DashboardTeacher/DashboardTeacher";
 import DashboardStudent from "../DashboardStudent/DashboardStudent";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -11,7 +10,7 @@ const Dashboard = ({ user: { data, isFetching, errors } }) => {
     <BeatLoader size={50} />
   ) : (
     <>
-      {data.accountType == "student" ? (
+      {data.accountType === "student" ? (
         <DashboardStudent user={data} />
       ) : (
         <DashboardTeacher user={data} />
@@ -22,10 +21,7 @@ const Dashboard = ({ user: { data, isFetching, errors } }) => {
 };
 
 Dashboard.propTypes = {
-  getTeacherProfile: PropTypes.func.isRequired,
-  getStudentProfile: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

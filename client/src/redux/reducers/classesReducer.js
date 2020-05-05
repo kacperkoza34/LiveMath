@@ -3,51 +3,55 @@ import {
   CLASSES_SUCCESS,
   CLASSES_ERROR,
   UPDATE_CLASS,
-  ADD_CLASS,
   ADD_CLASS_TO_STATE,
-  CLEAR_CLASSES
-} from '../actions/classes';
+  CLEAR_CLASSES,
+} from "../actions/classes";
 
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case LOADING_CLASSES:
-      return{
+      return {
         ...statePart,
-        isFetching: true
-      }
+        isFetching: true,
+      };
     case CLASSES_SUCCESS:
-      return{
+      return {
         ...statePart,
         data: action.payload,
-        isFetching: false
-      }
+        isFetching: false,
+        errors: false,
+      };
     case CLASSES_ERROR:
-      return{
+      return {
         ...statePart,
         errors: action.payload,
-        isFetching: false
-      }
+        isFetching: false,
+      };
     case UPDATE_CLASS:
       return {
         ...statePart,
         loading: false,
-        data: [...statePart.data.map((item)=>{
-          if(item._id == action.payload.id) item.open = action.payload.newStatus;
-          return item
-        })],
-        errors: []
+        data: [
+          ...statePart.data.map((item) => {
+            if (item._id === action.payload.id)
+              item.open = action.payload.newStatus;
+            return item;
+          }),
+        ],
+        errors: false,
       };
     case ADD_CLASS_TO_STATE:
       return {
         ...statePart,
         loading: false,
-        data: [...statePart.data,action.payload],
-        errors: []
+        data: [...statePart.data, action.payload],
+        errors: false,
       };
     case CLEAR_CLASSES:
       return {
         ...statePart,
-        data: []
+        data: [],
+        errors: false,
       };
     default:
       return statePart;

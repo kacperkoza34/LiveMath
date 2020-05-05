@@ -14,4 +14,9 @@ const Success = ({ success, clearTasks }) => {
   );
 };
 
+Success.propTypes = {
+  success: PropTypes.object,
+  clearTasks: PropTypes.func,
+};
+
 export default Success;

@@ -19,7 +19,7 @@ const StudentProfile = ({
   useEffect(() => {
     if (match) getStudent(match.params.id);
     else getStudent(user);
-  }, [id]);
+  }, [id, getStudent, user, match]);
   return (
     <div className={styles.root}>
       {isFetching ? (
@@ -35,7 +35,13 @@ const StudentProfile = ({
   );
 };
 
-StudentProfile.propTypes = {};
+StudentProfile.propTypes = {
+  id: PropTypes.string,
+  student: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
+  getStudent: PropTypes.func.isRequired,
+  match: PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
   student: state.student,

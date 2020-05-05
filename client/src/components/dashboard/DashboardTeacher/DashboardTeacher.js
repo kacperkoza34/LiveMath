@@ -5,7 +5,6 @@ import BeatLoader from "react-spinners/BeatLoader";
 import TeacherProfile from "../../profile/TeacherProfile/TeacherProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProfile } from "../../../redux/actions/profile";
 
@@ -20,13 +19,18 @@ const DashboardTeacher = ({
 }) => {
   useEffect(() => {
     getProfile();
-  }, []);
-  const [teacher, setTeacher] = useState(null);
+  }, [getProfile]);
+  const [teacher, setTeacher] = useState(_id);
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
-        <h3 className="large text-primary">Panel nauczyciela</h3>
-        <p className="lead">Witaj {name}</p>
+        <h3>Panel nauczyciela</h3>
+        <p>
+          Witaj{" "}
+          <span className={styles.myProfile} onClick={() => setTeacher(_id)}>
+            {name}
+          </span>
+        </p>
 
         {!isFetching &&
           (_id !== inviter._id ? (
@@ -71,12 +75,17 @@ const DashboardTeacher = ({
                 <div className={styles.list}>
                   <h4>Zaproszeni przez Ciebie</h4>
                   <ul>
-                    {invitedByMe.map(({ user }) => (
+                    {invitedByMe.map(({ user }, index) => (
                       <li
+                        key={index}
                         className={
-                          user._id == teacher
-                            ? styles.btnListActive
-                            : styles.btnList
+                          index % 2 !== 0
+                            ? [styles.btnList, styles.student].join(" ")
+                            : [
+                                styles.btnList,
+                                styles.student,
+                                styles.light,
+                              ].join(" ")
                         }
                         onClick={() => setTeacher(user._id)}
                       >

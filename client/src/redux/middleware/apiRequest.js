@@ -14,9 +14,8 @@ const apiRequest = ({ dispatch }) => (next) => (action) => {
       .then(({ data }) => {
         dispatch(onSucces(data));
       })
-      .catch((err) => {
-        console.log(err);
-        dispatch(onError(err));
+      .catch(({ response }) => {
+        dispatch(onError(response));
       });
   }
 };

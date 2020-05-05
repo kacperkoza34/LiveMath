@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./SendOpenTask.module.scss";
+import Errors from "../../../../../layout/Errors/Errors";
 import { connect } from "react-redux";
 import { sendOpenTask } from "../../../../../../redux/actions/newTask";
 
-const SendOpenTask = ({ newTask, sendOpenTask }) => {
+const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
   const {
     content,
     name,
@@ -34,18 +35,28 @@ const SendOpenTask = ({ newTask, sendOpenTask }) => {
     <div className={styles.root}>
       {errors.length > 0 && (
         <ul>
-          {errors.map((item) => (
-            <li className={styles.error}>{item}</li>
+          {errors.map((item, i) => (
+            <li key={i} className={styles.error}>
+              {item}
+            </li>
           ))}
         </ul>
       )}
+      {apiErrors && <Errors errors={apiErrors.data.err} />}
       <button onClick={() => sendTask()}>Zapisz zadanie</button>
     </div>
   );
 };
 
+SendOpenTask.propTypes = {
+  newTask: PropTypes.object.isRequired,
+  sendOpenTask: PropTypes.func.isRequired,
+  apiErrors: PropTypes.any.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   newTask: state.newTask.data,
+  apiErrors: state.newTask.errors,
 });
 
 export default connect(mapStateToProps, { sendOpenTask })(SendOpenTask);

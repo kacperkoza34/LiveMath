@@ -154,6 +154,10 @@ const StudentProfileSchema = new Schema({
         type: Number,
         default: 0,
       },
+      answer: {
+        type: Object,
+        required: true,
+      },
       taskType: {
         type: String,
         default: "taskBoolean",

@@ -1,4 +1,4 @@
-import { apiRequest } from '../actions/apiRequest';
+import { apiRequest } from "../actions/apiRequest";
 import {
   GET_CLASSES,
   OPEN_CLASS,
@@ -11,49 +11,81 @@ import {
   classesSuccess,
   classesError,
   updateClass,
-  addClass,
-  addClassToState
-} from '../actions/classes';
+  addClassToState,
+} from "../actions/classes";
 
-import {
-  smallLoadingStart,
-  smallLoadingStop
-} from '../actions/smallLoading'
+import { smallLoadingStart, smallLoadingStop } from "../actions/smallLoading";
 
 const configJson = {
   headers: {
-    'Content-Type' : 'application/json'
-  }
+    "Content-Type": "application/json",
+  },
 };
 
-const classes = ({dispatch}) => next => action => {
+const classes = ({ dispatch }) => (next) => (action) => {
   next(action);
-  if ( action.type === GET_CLASSES  ) {
+  if (action.type === GET_CLASSES) {
     dispatch(loadingClasses());
-    dispatch(apiRequest('GET','/api/class/my', classesSuccess, classesError, null, null));
+    dispatch(
+      apiRequest(
+        "GET",
+        "/api/class/my",
+        classesSuccess,
+        classesError,
+        null,
+        null
+      )
+    );
   }
 
-  if ( action.type === OPEN_CLASS  ) {
+  if (action.type === OPEN_CLASS) {
     dispatch(smallLoadingStart());
-    dispatch(apiRequest('PUT',`/api/class/open/${action.payload}`, updateClass, classesError, null, null));
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/api/class/open/${action.payload}`,
+        updateClass,
+        classesError,
+        null,
+        null
+      )
+    );
   }
 
-  if ( action.type === CLOSE_CLASS  ) {
+  if (action.type === CLOSE_CLASS) {
     dispatch(smallLoadingStart());
-    dispatch(apiRequest('PUT',`/api/class/close/${action.payload}`, updateClass, classesError, null, null));
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/api/class/close/${action.payload}`,
+        updateClass,
+        classesError,
+        null,
+        null
+      )
+    );
   }
-  if ( action.type === UPDATE_CLASS  ) {
+  if (action.type === UPDATE_CLASS) {
     dispatch(smallLoadingStop());
   }
-  if ( action.type === ADD_CLASS  ) {
+  if (action.type === ADD_CLASS) {
     console.log(action.payload);
     dispatch(smallLoadingStart());
-    dispatch(apiRequest('POST','/api/class/create', addClassToState, classesError, action.payload, configJson));
+    dispatch(
+      apiRequest(
+        "POST",
+        "/api/class/create",
+        addClassToState,
+        classesError,
+        action.payload,
+        configJson
+      )
+    );
   }
-  if ( action.type === CLASSES_ERROR  ) {
+  if (action.type === CLASSES_ERROR) {
     dispatch(smallLoadingStop());
   }
-  if ( action.type === ADD_CLASS_TO_STATE  ) {
+  if (action.type === ADD_CLASS_TO_STATE) {
     dispatch(smallLoadingStop());
   }
 };

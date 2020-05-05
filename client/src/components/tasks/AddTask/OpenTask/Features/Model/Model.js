@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Model.module.scss";
-import TextareaAutosize from "react-textarea-autosize";
+import PropTypes from "prop-types";
 import MathJax from "../../../../MathJax";
 import { addTaskModel } from "../../../../../../redux/actions/newTask";
 import { connect } from "react-redux";
 
 const Model = ({ addTaskModel, variabels, modelFromState }) => {
-  const [model, setModel] = useState("");
-
   return (
     <div className={styles.root}>
       <h3>Wzór</h3>
@@ -16,7 +14,6 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
         value={modelFromState}
         onChange={(e) => {
           addTaskModel(e.target.value);
-          setModel(e.target.value);
         }}
       />
       {modelFromState.length > 0 && (
@@ -26,6 +23,12 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
       )}
     </div>
   );
+};
+
+Model.propTypes = {
+  addTaskModel: PropTypes.func.isRequired,
+  variabels: PropTypes.array,
+  modelFromState: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

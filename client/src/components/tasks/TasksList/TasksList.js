@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./TasksList.module.scss";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
 import { connect } from "react-redux";
@@ -18,7 +18,7 @@ const TasksList = ({
     if (classId && sectionId) {
       getTasks({ classId, sectionId });
     }
-  }, [sectionId, classId]);
+  }, [getTasks, sectionId, classId]);
 
   return (
     <div className={styles.root}>
@@ -31,8 +31,8 @@ const TasksList = ({
             <>
               <ul>
                 {data.length > 0
-                  ? data.map(({ name, taskType, _id }) => (
-                      <li className={styles[taskType]}>
+                  ? data.map(({ name, taskType, _id }, index) => (
+                      <li key={index} className={styles[taskType]}>
                         <Link
                           onClick={() => clearTasks()}
                           to={`/display/${taskType}/${_id}`}
@@ -54,9 +54,10 @@ const TasksList = ({
 };
 
 TasksList.propTypes = {
-  classId: PropTypes.string,
-  sectionId: PropTypes.string,
+  classId: PropTypes.number,
+  sectionId: PropTypes.number,
   getTasks: PropTypes.func,
+  clearTasks: PropTypes.func,
   tasks: PropTypes.object,
 };
 

@@ -7,11 +7,11 @@ import { getClasses } from "../../../../redux/actions/classes";
 import { updateClasses } from "../../../../redux/actions/taskToClass";
 
 const SelectClass = ({ getClasses, classes, updateClasses }) => {
-  const { isFetching, errors, data } = classes;
+  const { isFetching, data } = classes;
 
   useEffect(() => {
     getClasses();
-  }, []);
+  }, [getClasses]);
 
   const [selectedClasses, setSelectedClasses] = useState([]);
 
@@ -31,15 +31,21 @@ const SelectClass = ({ getClasses, classes, updateClasses }) => {
     <div className={styles.root}>
       <h4>Wybierz klasy</h4>
       <div className={styles.classList}>
-        {data.map(({ title, _id }) => (
-          <div className={styles.itemList}>
+        {data.map(({ title, _id }, index) => (
+          <div key={index} className={styles.itemList}>
             <input onClick={() => addClass(_id)} type="checkbox" name={title} />
-            <label for={title}>{title}</label>
+            <label>{title}</label>
           </div>
         ))}
       </div>
     </div>
   );
+};
+
+SelectClass.propTypes = {
+  getClasses: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  updateClasses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

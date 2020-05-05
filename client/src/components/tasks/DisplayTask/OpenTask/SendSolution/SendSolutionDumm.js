@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./SendSolution.module.scss";
 
 const SendSolutionDumm = ({ checkAnswer, answer, correctAnswer, check }) => {
   return (
     <div>
       {checkAnswer ? (
-        correctAnswer == answer ? (
+        correctAnswer === answer ? (
           "Brawo!"
         ) : (
           "Pomyśl o tym jeszcze raz"
@@ -16,6 +15,13 @@ const SendSolutionDumm = ({ checkAnswer, answer, correctAnswer, check }) => {
       )}
     </div>
   );
+};
+
+SendSolutionDumm.propTypes = {
+  checkAnswer: PropTypes.bool.isRequired,
+  answer: PropTypes.string.isRequired,
+  correctAnswer: PropTypes.string,
+  check: PropTypes.func.isRequired,
 };
 
 export default SendSolutionDumm;

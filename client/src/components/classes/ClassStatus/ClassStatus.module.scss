@@ -1,16 +1,26 @@
 @import "../../../styles/settings.scss";
 
 .root {
-  .link {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    padding: 6px;
-    background-color: $color-background;
+  display: flex;
+  flex-direction: column;
+
+  .wrapper {
+    width: 100%;
   }
+
   .copy {
     width: 100%;
     display: flex;
     padding: 10px 0 10px 0;
+
+    .link {
+      display: flex;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      padding: 6px;
+      background-color: $color-background;
+    }
 
     span {
       transition: 0.3s;

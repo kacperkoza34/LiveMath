@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import styles from "./Errors.module.scss";
 
 const Errors = ({ errors }) => {
-  const uniqueErrors = [...new Set(errors)];
+  useEffect(() => {}, [errors]);
   return (
-    <>
-      {uniqueErrors.map(({ msg }, index) => (
+    <div className={styles.root}>
+      {errors.map(({ msg }, index) => (
         <div key={index} className="alert alert-danger">
           {msg}
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ const Nav = ({
   logout,
 }) => {
   const authLinks =
-    accountType == "teacher" ? (
+    accountType === "teacher" ? (
       <ul className={styles.navLinks}>
         <li>
           <Link to="/classes">Klasy</Link>
@@ -71,6 +71,7 @@ const Nav = ({
 Nav.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -10,20 +10,16 @@ import { connect } from "react-redux";
 const TaskDashboard = ({ taskSuccess }) => {
   useEffect(() => {
     taskSuccess({});
-  }, []);
+  }, [taskSuccess]);
 
   const [activeList, setActiveList] = useState(null);
-  const [title, setTitle] = useState("Wybierz klase");
   const [activeSection, setActiveSection] = useState(null);
 
   const hideSections = () => {
     setActiveList(null);
     setActiveSection(null);
   };
-  const showSections = (id) => {
-    setActiveList(id);
-    setActiveSection(null);
-  };
+
   const setList = (id) => {
     setActiveList(id);
     setActiveSection(null);
@@ -35,24 +31,25 @@ const TaskDashboard = ({ taskSuccess }) => {
         <div className={styles.asideWrapper}>
           <h2>Zadania</h2>
           <ul>
-            {availableClasses.map(({ name, id, sections }) => (
-              <>
+            {availableClasses.map(({ name, id, sections }, index) => (
+              <div key={index}>
                 <li
                   className={
-                    id == activeList ? styles.btnListActive : styles.btnList
+                    id === activeList ? styles.btnListActive : styles.btnList
                   }
                   onClick={() => {
-                    id == activeList ? hideSections() : setList(id);
+                    id === activeList ? hideSections() : setList(id);
                   }}
                 >
                   <span>{name}</span>
                 </li>
-                {id == activeList && (
+                {id === activeList && (
                   <ul className={styles.subList}>
-                    {sections.map((section) => (
+                    {sections.map((section, index) => (
                       <li
+                        key={index}
                         className={
-                          activeSection == section.id
+                          activeSection === section.id
                             ? styles.btnListActive
                             : styles.btnList
                         }
@@ -63,7 +60,7 @@ const TaskDashboard = ({ taskSuccess }) => {
                     ))}
                   </ul>
                 )}
-              </>
+              </div>
             ))}
           </ul>
         </div>
@@ -73,6 +70,10 @@ const TaskDashboard = ({ taskSuccess }) => {
       </div>
     </div>
   );
+};
+
+TaskDashboard.propTypes = {
+  taskSuccess: PropTypes.func.isRequired,
 };
 
 export default connect(null, { taskSuccess })(TaskDashboard);

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./TaskContent.module.scss";
 import {
@@ -8,9 +9,6 @@ import {
 import { connect } from "react-redux";
 
 const TaskContent = ({ addTaskContent, addTaskName, name, content }) => {
-  const [task, setTask] = useState("");
-  const [taskName, setTaskName] = useState("");
-
   return (
     <div className={styles.root}>
       <div>
@@ -19,11 +17,10 @@ const TaskContent = ({ addTaskContent, addTaskName, name, content }) => {
           value={name}
           placeholder="Dodaj nazwe zadania"
           onChange={(e) => {
-            setTaskName(e.target.value);
             addTaskName(e.target.value);
           }}
-          maxCols="15"
-          minCols="5"
+          maxcols={15}
+          mincols={5}
         />
       </div>
       <div>
@@ -31,16 +28,22 @@ const TaskContent = ({ addTaskContent, addTaskName, name, content }) => {
         <TextareaAutosize
           placeholder="Dodaj treść zadania"
           onChange={(e) => {
-            setTask(e.target.value);
             addTaskContent(e.target.value);
           }}
           value={content}
-          maxRows="15"
-          minRows="5"
+          maxrows={15}
+          minrows={5}
         />
       </div>
     </div>
   );
+};
+
+TaskContent.propTypes = {
+  addTaskContent: PropTypes.func.isRequired,
+  addTaskName: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

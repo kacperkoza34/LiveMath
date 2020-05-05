@@ -20,11 +20,11 @@ const AdditionalVariables = ({
   const [error, setError] = useState("");
 
   const onChange = (e) => {
-    if (e.target.name == "variable") {
+    if (e.target.name === "variable") {
       if (e.target.value.length > 1) setError("Zmienne nazywamy jedną literą");
       else {
         let alredyUsed = [...variables, ...additionalVariables].some(
-          ({ variable }) => variable == e.target.value
+          ({ variable }) => variable === e.target.value
         );
         if (!alredyUsed) {
           setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,34 +53,38 @@ const AdditionalVariables = ({
         <h3>Dodaj pomocnicze zmienne</h3>
         <form className={styles.addFrom} onSubmit={(e) => onSubmit(e)}>
           <table>
-            <tr>
-              <td className={styles.variable}>Nazwa</td>
-              <td>Opis</td>
-            </tr>
+            <thead>
+              <tr>
+                <td className={styles.variable}>Nazwa</td>
+                <td>Opis</td>
+              </tr>
+            </thead>
           </table>
           <table>
-            <tr>
-              <td className={styles.variable}>
-                <input
-                  className={styles.variable}
-                  name={"variable"}
-                  placeholder="Zmienna"
-                  value={formData.variable}
-                  onChange={(e) => onChange(e)}
-                  required
-                />
-              </td>
-              <td>
-                {" "}
-                <input
-                  name={"description"}
-                  placeholder="Opis"
-                  value={formData.description}
-                  onChange={(e) => onChange(e)}
-                  required
-                />
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td className={styles.variable}>
+                  <input
+                    className={styles.variable}
+                    name={"variable"}
+                    placeholder="Zmienna"
+                    value={formData.variable}
+                    onChange={(e) => onChange(e)}
+                    required
+                  />
+                </td>
+                <td>
+                  {" "}
+                  <input
+                    name={"description"}
+                    placeholder="Opis"
+                    value={formData.description}
+                    onChange={(e) => onChange(e)}
+                    required
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
           <button>Dodaj</button>
         </form>
@@ -89,16 +93,18 @@ const AdditionalVariables = ({
           <ul className={styles.varList}>
             <h3>Pomocnicze zmienne</h3>
             <table>
-              <tr>
-                <td className={styles.variable}>Nazwa</td>
-                <td>Opis</td>
-              </tr>
+              <thead>
+                <tr>
+                  <td className={styles.variable}>Nazwa</td>
+                  <td>Opis</td>
+                </tr>
+              </thead>
             </table>
-            {additionalVariables.map(({ variable, description }) => (
-              <>
-                <div>
-                  <li className={styles.listElement}>
-                    <table>
+            {additionalVariables.map(({ variable, description }, index) => (
+              <div key={index}>
+                <li className={styles.listElement}>
+                  <table>
+                    <tbody>
                       <tr>
                         <td className={styles.variable}>{variable}</td>
                         <td className={styles.description}>{description}</td>
@@ -111,10 +117,10 @@ const AdditionalVariables = ({
                           Usuń
                         </button>
                       </tr>
-                    </table>
-                  </li>
-                </div>
-              </>
+                    </tbody>
+                  </table>
+                </li>
+              </div>
             ))}
           </ul>
         )}
@@ -123,7 +129,12 @@ const AdditionalVariables = ({
   );
 };
 
-AdditionalVariables.propTypes = {};
+AdditionalVariables.propTypes = {
+  addAddVariable: PropTypes.func.isRequired,
+  additionalVariables: PropTypes.array.isRequired,
+  variables: PropTypes.array.isRequired,
+  removeAddVariable: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   additionalVariables: state.newTask.data.additionalVariables,

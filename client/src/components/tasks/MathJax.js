@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import MathJax from "react-mathjax-preview";
 
 class Demo extends Component {

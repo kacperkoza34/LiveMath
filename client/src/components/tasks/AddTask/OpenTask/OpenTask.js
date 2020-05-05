@@ -17,10 +17,9 @@ import { clearTasks } from "../../../../redux/actions/tasks";
 import { connect } from "react-redux";
 
 const OpenTask = ({ clearTask, clearTasks, success }) => {
-  const { taskType, _id, name } = success;
   useEffect(() => {
     return () => clearTask({});
-  }, []);
+  }, [clearTask]);
 
   return (
     <>
@@ -40,6 +39,12 @@ const OpenTask = ({ clearTask, clearTasks, success }) => {
       )}
     </>
   );
+};
+
+OpenTask.propTypes = {
+  clearTask: PropTypes.func.isRequired,
+  clearTasks: PropTypes.func.isRequired,
+  success: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

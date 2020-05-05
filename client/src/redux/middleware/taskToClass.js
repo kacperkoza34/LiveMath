@@ -4,7 +4,6 @@ import {
   ADD_CLOSE_TASK,
   ADD_BOOLEAN_TASK,
   ADD_TASK_SUCCESS,
-  addTaskError,
   taskSuccess,
 } from "../actions/taskToClass";
 

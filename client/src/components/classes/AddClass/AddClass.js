@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Errors from "../../layout/Errors";
+import Errors from "../../layout/Errors/Errors";
 import { connect } from "react-redux";
 import { addClass } from "../../../redux/actions/classes";
 
-const AddClass = ({ addClass }) => {
+const AddClass = ({ addClass, errors }) => {
   const [formData, setFormData] = useState("");
 
   const onSubmit = (e) => {
@@ -26,6 +26,7 @@ const AddClass = ({ addClass }) => {
           />
         </div>
         <button>Dodaj</button>
+        {errors && <Errors errors={errors.data.err} />}
       </form>
     </>
   );
@@ -33,6 +34,7 @@ const AddClass = ({ addClass }) => {
 
 AddClass.propTypes = {
   addClass: PropTypes.func.isRequired,
+  errors: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = (state) => ({

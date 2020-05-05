@@ -29,7 +29,7 @@ router.get("/:id", auth, async (req, res) => {
     res.json(students);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -41,7 +41,7 @@ router.get("/me", auth, async (req, res) => {
     res.json(students);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -64,23 +64,23 @@ router.put(
   async (req, res) => {
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
-      return res.status(400).json({ errors: erros.array() });
+      return res.status(400).json({ err: erros.array() });
     }
 
     if (req.body.resolved)
       return res
         .status(400)
-        .json({ errors: { msg: "Zadanie jest już rozwiązane" } });
+        .json({ err: [{ msg: "Zadanie jest już rozwiązane" }] });
 
     if (Date.parse(req.body.deadLine) < Date.now())
       return res
         .status(400)
-        .json({ errors: { msg: "Skończył się czas na rozwiązanie zadania" } });
+        .json({ err: [{ msg: "Skończył się czas na rozwiązanie zadania" }] });
 
     if (req.body.descriptionRequired && !req.body.description.length)
       return res
         .status(400)
-        .json({ errors: { msg: "Zadanie wymaga dodania opisu" } });
+        .json({ err: [{ msg: "Zadanie wymaga dodania opisu" }] });
     try {
       let profile = await StudentProfile.findOne({
         user: req.user.id,
@@ -113,7 +113,7 @@ router.put(
       res.json(req.body.toUpdate);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send({ err: [{ msg: "Server error" }] });
     }
   }
 );
@@ -137,23 +137,23 @@ router.put(
   async (req, res) => {
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
-      return res.status(400).json({ errors: erros.array() });
+      return res.status(400).json({ err: erros.array() });
     }
 
     if (req.body.resolved)
       return res
         .status(400)
-        .json({ errors: { msg: "Zadanie jest już rozwiązane" } });
+        .json({ err: [{ msg: "Zadanie jest już rozwiązane" }] });
 
     if (Date.parse(req.body.deadLine) < Date.now())
       return res
         .status(400)
-        .json({ errors: { msg: "Skończył się czas na rozwiązanie zadania" } });
+        .json({ err: [{ msg: "Skończył się czas na rozwiązanie zadania" }] });
 
     if (req.body.descriptionRequired && !req.body.description.length)
       return res
         .status(400)
-        .json({ errors: { msg: "Zadanie wymaga dodania opisu" } });
+        .json({ err: [{ msg: "Zadanie wymaga dodania opisu" }] });
 
     try {
       let profile = await StudentProfile.findOne({
@@ -180,7 +180,55 @@ router.put(
       res.json(req.body.toUpdate);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send({ err: [{ msg: "Server error" }] });
+    }
+  }
+);
+
+//resolve boolean task
+router.put(
+  "/resolve/boolean",
+  [
+    authStudent,
+    [
+      check("_id", "Nie określono statusu zadania").not().isEmpty(),
+      check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
+      check("result", "Nie określono statusu zadania").exists(),
+      check("answer", "Nie określono statusu zadania").exists(),
+    ],
+  ],
+
+  async (req, res) => {
+    const erros = validationResult(req);
+    if (!erros.isEmpty()) {
+      return res.status(400).json({ err: erros.array() });
+    }
+
+    if (Date.parse(req.body.deadLine) < Date.now())
+      return res
+        .status(400)
+        .json({ err: [{ msg: "Skończył się czas na rozwiązanie zadania" }] });
+
+    try {
+      let profile = await StudentProfile.findOne({
+        user: req.user.id,
+      }).populate("tasksBoolean.task", "points");
+
+      profile.tasksBoolean.map((item) => {
+        if (req.body._id.toString() === item._id.toString()) {
+          profile.points =
+            parseFloat(profile.points) + parseFloat(req.body.result);
+          item.result = req.body.result;
+          item.answer = req.body.answer;
+          item.resolved = true;
+        }
+        return item;
+      });
+      await profile.save();
+      res.json(false);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send({ err: [{ msg: "Server error" }] });
     }
   }
 );
@@ -203,7 +251,7 @@ router.put(
   async (req, res) => {
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
-      return res.status(400).json({ errors: erros.array() });
+      return res.status(400).json({ err: erros.array() });
     }
     try {
       let profile = await StudentProfile.findOne({
@@ -237,7 +285,7 @@ router.put(
       res.json({ resolved: req.body.accept, message: req.body.message });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send({ err: [{ msg: "Server error" }] });
     }
   }
 );
@@ -260,7 +308,7 @@ router.put(
   async (req, res) => {
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
-      return res.status(400).json({ errors: erros.array() });
+      return res.status(400).json({ err: erros.array() });
     }
     try {
       let profile = await StudentProfile.findOne({
@@ -286,7 +334,7 @@ router.put(
       res.json({ resolved: req.body.accept, message: req.body.message });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send({ err: [{ msg: "Server error" }] });
     }
   }
 );

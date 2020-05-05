@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Errors from "../../../../layout/Errors/Errors";
 import styles from "./SendTask.module.scss";
 import { connect } from "react-redux";
 
-const SendTask = ({ newTask, send }) => {
+const SendTask = ({ newTask, send, apiErrors }) => {
   const { content, name, groups, section, class: classNew } = newTask;
   const [errors, setErrors] = useState("");
 
@@ -23,18 +24,28 @@ const SendTask = ({ newTask, send }) => {
     <div className={styles.root}>
       {errors.length > 0 && (
         <ul>
-          {errors.map((item) => (
-            <li className={styles.error}>{item}</li>
+          {errors.map((item, i) => (
+            <li key={i} className={styles.error}>
+              {item}
+            </li>
           ))}
         </ul>
       )}
+      {apiErrors && <Errors errors={apiErrors.data.err} />}
       <button onClick={() => sendTask()}>Zapisz zadanie</button>
     </div>
   );
 };
 
+SendTask.propTypes = {
+  newTask: PropTypes.object.isRequired,
+  send: PropTypes.func.isRequired,
+  apiErrors: PropTypes.any.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   newTask: state.newTask.data,
+  apiErrors: state.newTask.errors,
 });
 
 export default connect(mapStateToProps)(SendTask);

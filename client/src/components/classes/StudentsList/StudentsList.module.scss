@@ -10,6 +10,17 @@
     justify-content: space-between;
   }
 
+  .light {
+    background: $color-contrast-list;
+  }
+
+  .light:hover {
+    background: $color-background;
+  }
+
+  .review {
+    color: $color-to-update;
+  }
   .toUpdate {
     background: $color-to-update;
   }

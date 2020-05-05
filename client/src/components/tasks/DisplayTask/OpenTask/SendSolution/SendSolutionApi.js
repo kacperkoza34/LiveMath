@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./SendSolution.module.scss";
 
@@ -32,7 +32,7 @@ const SendSolutionApi = ({
           {checkAnswer && (
             <>
               {error.length > 0 && <div className={styles.error}>{error}</div>}
-              {correctAnswer == answer ? (
+              {correctAnswer === answer ? (
                 <div>
                   <p className={styles.statusBox + " " + styles.success}>
                     Dobra odpowiedź
@@ -63,6 +63,16 @@ const SendSolutionApi = ({
       )}
     </div>
   );
+};
+
+SendSolutionApi.propTypes = {
+  checkAnswer: PropTypes.bool.isRequired,
+  answers: PropTypes.object,
+  sendSolution: PropTypes.func.isRequired,
+  resolved: PropTypes.bool.isRequired,
+  error: PropTypes.any.isRequired,
+  check: PropTypes.func.isRequired,
+  accountType: PropTypes.string,
 };
 
 export default SendSolutionApi;

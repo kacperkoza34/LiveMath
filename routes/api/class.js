@@ -21,9 +21,9 @@ router.post(
   "/create",
   [authTeacher, [check("title", "Podaj nazwe").not().isEmpty()]],
   async (req, res) => {
-    const erros = validationResult(req);
-    if (!erros.isEmpty()) {
-      return res.status(400).json({ errors: erros.array() });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ err: errors.array() });
     }
 
     try {
@@ -42,7 +42,7 @@ router.post(
       if (titleAlredyExist)
         return res
           .status(401)
-          .send({ errors: [{ msg: "Masz już klase o tej nazwie" }] });
+          .send({ err: [{ msg: "Masz już klase o tej nazwie" }] });
 
       let newClass = new Class({
         teacher: req.user.id,
@@ -58,7 +58,7 @@ router.post(
       res.json(newClass);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send({ errors: [{ msg: "Server error" }] });
+      res.status(500).send({ err: [{ msg: "Server error" }] });
     }
   }
 );
@@ -71,7 +71,7 @@ router.put("/close/:id", authTeacher, async (req, res) => {
     res.json({ newStatus: false, id: req.params.id });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ errors: [{ msg: "Server error" }] });
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -83,7 +83,7 @@ router.put("/open/:id", authTeacher, async (req, res) => {
     res.json({ newStatus: true, id: req.params.id });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ errors: [{ msg: "Server error" }] });
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -102,7 +102,7 @@ router.get("/my", authTeacher, async (req, res) => {
     res.json(allClasses);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: "Server error" });
   }
 });
 

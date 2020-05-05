@@ -12,10 +12,9 @@ import { clearTask, sendCloseTask } from "../../../../redux/actions/newTask";
 import { clearTasks } from "../../../../redux/actions/tasks";
 
 const CloseTask = ({ clearTask, clearTasks, success, sendCloseTask }) => {
-  const { taskType, _id, name } = success;
   useEffect(() => {
     return () => clearTask({});
-  }, []);
+  }, [clearTask]);
 
   return (
     <>
@@ -31,6 +30,13 @@ const CloseTask = ({ clearTask, clearTasks, success, sendCloseTask }) => {
       )}
     </>
   );
+};
+
+CloseTask.propTypes = {
+  clearTask: PropTypes.func.isRequired,
+  clearTasks: PropTypes.func.isRequired,
+  success: PropTypes.object.isRequired,
+  sendCloseTask: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

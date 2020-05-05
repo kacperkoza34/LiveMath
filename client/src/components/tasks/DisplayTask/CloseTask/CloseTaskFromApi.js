@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import styles from "./CloseTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
-import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import SendSolution from "./SendSolution/SendSolution";
 import TextareaAutosize from "react-textarea-autosize";
 import ReviewTask from "../ReviewTask/ReviewTask";
@@ -32,7 +31,7 @@ const CloseTaskFromApi = ({
   useEffect(() => {
     getCloseTask(match.params.id);
     return () => setTaskConfig({});
-  }, []);
+  }, [getCloseTask, setTaskConfig, match.params.id]);
 
   const {
     answer,
@@ -66,7 +65,7 @@ const CloseTaskFromApi = ({
 
   const displayResult = () => {
     result = 0;
-    data.data.forEach(({ answer }, i) => answer == taskStatus[i] && result++);
+    data.data.forEach(({ answer }, i) => answer === taskStatus[i] && result++);
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
 
@@ -92,7 +91,7 @@ const CloseTaskFromApi = ({
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer: correctAnswer }, i) => (
-                <li className={styles.listElement}>
+                <li key={i} className={styles.listElement}>
                   <div className={styles.order}>
                     {`${i + 1}). `}
                     <MathJax content={"`" + content + "`"} />
@@ -100,7 +99,7 @@ const CloseTaskFromApi = ({
                   Podaj odpowiedz:
                   <div className={styles.item}>
                     <input
-                      autocomplete="off"
+                      autoComplete="off"
                       name={`${i}`}
                       value={answer[`${i}`]}
                       onChange={(e) => onChange(e)}
@@ -112,7 +111,7 @@ const CloseTaskFromApi = ({
                       </div>
                     </div>
                     {checkAnswers &&
-                      (answer[`${i}`] == correctAnswer ? (
+                      (answer[`${i}`] === correctAnswer ? (
                         <div className={styles.success}>Ok</div>
                       ) : (
                         <div className={styles.fail}>Źle</div>
@@ -125,8 +124,8 @@ const CloseTaskFromApi = ({
           <div className={styles.description}>
             <h4>Miejsce na link z rozwiązaniem</h4>
             <TextareaAutosize
-              maxCols="15"
-              minCols="5"
+              maxcols="15"
+              mincols="5"
               value={description}
               onChange={(e) => updateDescription(e.target.value)}
             ></TextareaAutosize>
@@ -162,7 +161,18 @@ const CloseTaskFromApi = ({
   );
 };
 
-CloseTaskFromApi.propTypes = {};
+CloseTaskFromApi.propTypes = {
+  match: PropTypes.object.isRequired,
+  getCloseTask: PropTypes.func.isRequired,
+  accountType: PropTypes.string.isRequired,
+  setTaskConfig: PropTypes.func.isRequired,
+  updateDescription: PropTypes.func.isRequired,
+  updateAnswer: PropTypes.func.isRequired,
+  sendCloseTaskResolution: PropTypes.func.isRequired,
+  student: PropTypes.string.isRequired,
+  reviewCloseTask: PropTypes.func.isRequired,
+  tasks: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

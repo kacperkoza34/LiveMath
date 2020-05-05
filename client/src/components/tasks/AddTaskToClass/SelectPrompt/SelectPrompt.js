@@ -19,10 +19,14 @@ const SelectPropmt = ({ setPrompts }) => {
           onClick={(e) => onClick(e.target.name)}
           name="prompt"
         />
-        <label for="prompt">Dostępne podpowiedzi</label>
+        <label>Dostępne podpowiedzi</label>
       </div>
     </div>
   );
+};
+
+SelectPropmt.propTypes = {
+  setPrompts: PropTypes.func.isRequired,
 };
 
 export default connect(null, { setPrompts })(SelectPropmt);

@@ -29,7 +29,7 @@ const AddTaskToClass = ({
 
   useEffect(() => {
     return () => clearTask();
-  }, []);
+  }, [clearTask]);
 
   const submitOpenTask = () => {
     if (deadLine.length && classes.length) {
@@ -123,6 +123,18 @@ const AddTaskToClass = ({
       )}
     </div>
   );
+};
+
+AddTaskToClass.propTypes = {
+  taskId: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired,
+  taskType: PropTypes.string.isRequired,
+  taskParams: PropTypes.object.isRequired,
+  addOpenTask: PropTypes.func.isRequired,
+  addBooleanTask: PropTypes.func.isRequired,
+  addCloseTask: PropTypes.func.isRequired,
+  success: PropTypes.bool.isRequired,
+  clearTask: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

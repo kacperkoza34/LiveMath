@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import BeatLoader from "react-spinners/BeatLoader";
 import OpenTaskDumm from "./OpenTaskDumm";
 import OpenTaskFromApi from "./OpenTaskFromApi";
 import styles from "./OpenTask.module.scss";
@@ -8,7 +7,7 @@ import styles from "./OpenTask.module.scss";
 import { connect } from "react-redux";
 
 const OpenTask = ({ match, tasks }) => {
-  const { isFetching, taskConfig } = tasks;
+  const { taskConfig } = tasks;
 
   return (
     <div className={styles.root}>
@@ -23,7 +22,10 @@ const OpenTask = ({ match, tasks }) => {
   );
 };
 
-OpenTask.propTypes = {};
+OpenTask.propTypes = {
+  match: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

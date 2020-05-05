@@ -27,7 +27,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ err: errors.array() });
     }
 
     const { name, email, password } = req.body;
@@ -40,7 +40,7 @@ router.post(
 
       if (user) {
         return res.status(400).json({
-          errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
         });
       }
 
@@ -105,7 +105,7 @@ router.post(
     } catch (err) {
       console.error(err);
       if (err.kind == "ObjectId")
-        return res.status(400).json({ errors: [{ msg: "Błędny link" }] });
+        return res.status(400).json({ err: [{ msg: "Błędny link" }] });
       res.status(500).send({ errors: [{ msg: "Błąd servera" }] });
     }
   }
@@ -123,7 +123,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ err: errors.array() });
     }
 
     const { name, email, password } = req.body;
@@ -134,7 +134,7 @@ router.post(
 
       if (user) {
         return res.status(400).json({
-          errors: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
         });
       }
 
@@ -143,16 +143,12 @@ router.post(
       let currentClass = await Class.findOne({ _id: req.params.class_id });
       //Check if teacher owns this class
       if (currentTeacher._id.toString() !== currentClass.teacher.toString()) {
-        return res.status(400).json({ errors: [{ msg: "Błędny link" }] });
+        return res.status(400).json({ err: [{ msg: "Błędny link" }] });
       }
       if (!currentClass.open)
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Klasa jest zamknięta" }] });
+        return res.status(400).json({ err: [{ msg: "Klasa jest zamknięta" }] });
       if (currentClass.students.length === currentClass.maxStudentsAmount)
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Klasa jest zamknięta" }] });
+        return res.status(400).json({ err: [{ msg: "Klasa jest zamknięta" }] });
 
       const avatar = gravatar.url(email, {
         s: "200",
@@ -212,9 +208,9 @@ router.post(
       );
     } catch (err) {
       if (err.kind == "ObjectId")
-        return res.status(400).json({ errors: [{ msg: "Błędny link" }] });
+        return res.status(400).json({ err: [{ msg: "Błędny link" }] });
       console.error(err.message);
-      res.status(500).send({ msg: "Błąd servera" });
+      res.status(500).send({ err: [{ msg: "Błąd servera" }] });
     }
   }
 );

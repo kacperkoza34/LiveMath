@@ -45,14 +45,16 @@ router.post(
     }
 
     try {
-      let alredyExist = await TaskOpen.findOne({ name: req.body.name });
+      let profile = await TeacherProfile.findOne({ user: req.user.id });
+      let taskName = `${req.body.name} [${profile.name}]`;
+      let alredyExist = await TaskOpen.findOne({ name: taskName });
       if (alredyExist)
         return res
           .status(400)
-          .json({ errors: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
+          .json({ err: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
 
       let task = new TaskOpen({
-        name: req.body.name,
+        name: taskName,
         points: req.body.points,
         class: req.body.class,
         section: req.body.section,
@@ -95,13 +97,15 @@ router.post(
     }
 
     try {
-      let alredyExist = await TaskClose.findOne({ name: req.body.name });
+      let profile = await TeacherProfile.findOne({ user: req.user.id });
+      let taskName = `${req.body.name} [${profile.name}]`;
+      let alredyExist = await TaskClose.findOne({ name: taskName });
       if (alredyExist)
         return res
           .status(400)
-          .json({ errors: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
+          .json({ err: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
       let task = new TaskClose({
-        name: req.body.name,
+        name: taskName,
         content: req.body.content,
         points: req.body.groups.length,
         class: req.body.class,
@@ -140,14 +144,16 @@ router.post(
     }
 
     try {
-      let alredyExist = await TaskBoolean.findOne({ name: req.body.name });
+      let profile = await TeacherProfile.findOne({ user: req.user.id });
+      let taskName = `${req.body.name} [${profile.name}]`;
+      let alredyExist = await TaskBoolean.findOne({ name: taskName });
       if (alredyExist)
         return res
           .status(400)
-          .json({ errors: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
+          .json({ err: [{ msg: "Zadanie o takiej nazwie już istnieje" }] });
 
       let task = new TaskBoolean({
-        name: req.body.name,
+        name: taskName,
         content: req.body.content,
         points: req.body.groups.length,
         class: req.body.class,
@@ -379,22 +385,33 @@ router.post(
 
     try {
       req.body.classes.forEach(async (item, i) => {
-        let currentClass = await Class.findOne({ _id: item });
+        let currentClass = await Class.findOne({ _id: item }).populate(
+          "students.studentProfile"
+        );
+
         currentClass.tasksBoolean.push({
           deadLine: req.body.deadLine,
           task: req.body.taskId,
         });
 
-        currentClass.students.forEach(async ({ student }, i) => {
-          let profile = await StudentProfile.findOne({ user: student });
+        let task = await TaskBoolean.findOne({ _id: req.body.taskId });
 
-          profile.maxPoints = req.body.points + profile.maxPoints;
+        const answers = {};
+        task.data.forEach((item, i) => {
+          answers[`${i}`] = "";
+        });
 
-          profile.tasksBoolean.push({
+        currentClass.students.forEach(async ({ studentProfile }, i) => {
+          studentProfile.maxPoints =
+            task.data.length + studentProfile.maxPoints;
+
+          studentProfile.tasksBoolean.push({
+            date: Date.now(),
             deadLine: req.body.deadLine,
+            answer: answers,
             task: req.body.taskId,
           });
-          await profile.save();
+          await studentProfile.save();
         });
         await currentClass.save();
       });

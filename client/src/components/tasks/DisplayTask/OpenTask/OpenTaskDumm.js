@@ -26,7 +26,7 @@ const OpenTaskDumm = ({
 }) => {
   useEffect(() => {
     getOpenTask(match.params.id);
-  }, []);
+  }, [getOpenTask, match.params.id]);
 
   const [answer, setAnswer] = useState("");
   const [description, setDescription] = useState("");
@@ -75,8 +75,8 @@ const OpenTaskDumm = ({
           />
           <h4>Miejsce na link z rozwiązaniem</h4>
           <TextareaAutosize
-            maxCols="15"
-            minCols="5"
+            maxcols="15"
+            mincols="5"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></TextareaAutosize>
@@ -96,14 +96,20 @@ const OpenTaskDumm = ({
             correctAnswer={correctAnswer}
             check={check}
           />
-          {accountType == "teacher" && <AddTaskToClass />}
+          {accountType === "teacher" && <AddTaskToClass />}
         </>
       )}
     </div>
   );
 };
 
-OpenTaskDumm.propTypes = {};
+OpenTaskDumm.propTypes = {
+  match: PropTypes.object.isRequired,
+  getOpenTask: PropTypes.func.isRequired,
+  accountType: PropTypes.string.isRequired,
+  updateDescription: PropTypes.func,
+  tasks: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

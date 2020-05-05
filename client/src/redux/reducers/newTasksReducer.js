@@ -88,7 +88,7 @@ export default function reducer(statePart = [], action = {}) {
         data: {
           ...statePart.data,
           additionalVariables: statePart.data.additionalVariables.filter(
-            ({ variable }) => variable != action.payload
+            ({ variable }) => variable !== action.payload
           ),
         },
       };
@@ -106,7 +106,7 @@ export default function reducer(statePart = [], action = {}) {
         data: {
           ...statePart.data,
           groups: statePart.data.groups.filter(
-            ({ id }) => id != action.payload
+            ({ id }) => id !== action.payload
           ),
         },
       };

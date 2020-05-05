@@ -19,6 +19,11 @@ const Success = ({ updatePoints, points }) => {
   );
 };
 
+Success.propTypes = {
+  updatePoints: PropTypes.func.isRequired,
+  points: PropTypes.number.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   points: state.newTask.data.points,
 });

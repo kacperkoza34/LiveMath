@@ -32,7 +32,9 @@ const SelectSection = ({ addClass, addSection }) => {
       >
         <option value={""}>---</option>
         {availableClasses.map(({ name, id }) => (
-          <option value={id}>{name}</option>
+          <option key={id} value={id}>
+            {name}
+          </option>
         ))}
       </select>
 
@@ -45,11 +47,18 @@ const SelectSection = ({ addClass, addSection }) => {
         <option value={""}>---</option>
         {currentClass &&
           availableClasses[currentClass - 1].sections.map(({ name, id }) => (
-            <option value={id}>{name}</option>
+            <option key={id} value={id}>
+              {name}
+            </option>
           ))}
       </select>
     </div>
   );
+};
+
+SelectSection.propTypes = {
+  addClass: PropTypes.func.isRequired,
+  addSection: PropTypes.func.isRequired,
 };
 
 export default connect(null, { addClass, addSection })(SelectSection);

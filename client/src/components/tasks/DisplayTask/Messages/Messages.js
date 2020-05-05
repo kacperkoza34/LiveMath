@@ -11,8 +11,10 @@ const Messages = ({ messages }) => {
             <h4>Informacje od nauczyciela</h4>
 
             <ul>
-              {messages.map((message) => (
-                <li className={styles.message}>{message}</li>
+              {messages.map((message, index) => (
+                <li key={index} className={styles.message}>
+                  {message}
+                </li>
               ))}
             </ul>
           </>
@@ -20,6 +22,10 @@ const Messages = ({ messages }) => {
       )}
     </>
   );
+};
+
+Messages.propTypes = {
+  messages: PropTypes.array.isRequired,
 };
 
 export default Messages;

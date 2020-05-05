@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./DisplayPrompts.module.scss";
-import PromptsDumm from "./PromptsDumm";
 import MathJax from "../../../MathJax";
 import { connect } from "react-redux";
 
@@ -39,7 +38,7 @@ const DisplayPrompts = ({
               </ul>
             </>
           )}
-          {usedPrompts == 2 && (
+          {usedPrompts === 2 && (
             <>
               {" "}
               <h4>Wzór:</h4>
@@ -52,6 +51,16 @@ const DisplayPrompts = ({
   );
 };
 
-DisplayPrompts.propTypes = {};
+DisplayPrompts.propTypes = {
+  usedPrompts: PropTypes.number.isRequired,
+  promptsAllowed: PropTypes.bool.isRequired,
+  model: PropTypes.string.isRequired,
+  variables: PropTypes.array.isRequired,
+  accountType: PropTypes.string.isRequired,
+  taskId: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
+  resolved: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(DisplayPrompts);

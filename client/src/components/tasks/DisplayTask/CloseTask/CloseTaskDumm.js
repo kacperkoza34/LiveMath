@@ -18,7 +18,7 @@ const CloseTaskDumm = ({
   useEffect(() => {
     getCloseTask(match.params.id);
     return () => setTaskConfig({});
-  }, []);
+  }, [getCloseTask, setTaskConfig, match]);
 
   const answers = {};
   const [taskStatus, setTaskStatus] = useState(null);
@@ -39,7 +39,7 @@ const CloseTaskDumm = ({
 
   const displayResult = () => {
     let result = 0;
-    data.data.forEach(({ answer }, i) => answer == taskStatus[i] && result++);
+    data.data.forEach(({ answer }, i) => answer === taskStatus[i] && result++);
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
 
@@ -56,7 +56,7 @@ const CloseTaskDumm = ({
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
-                <li className={styles.listElement}>
+                <li key={i} className={styles.listElement}>
                   <div className={styles.order}>
                     {`${i + 1}). `}
                     <MathJax content={"`" + content + "`"} />
@@ -64,7 +64,7 @@ const CloseTaskDumm = ({
                   Podaj odpowiedz:
                   <div className={styles.item}>
                     <input
-                      autocomplete="off"
+                      autoComplete="off"
                       name={`${i}`}
                       value={taskStatus[`${i}`]}
                       onChange={(e) => onChange(e)}
@@ -76,7 +76,7 @@ const CloseTaskDumm = ({
                       </div>
                     </div>
                     {checkAnswers &&
-                      (taskStatus[`${i}`] == answer ? (
+                      (taskStatus[`${i}`] === answer ? (
                         <div className={styles.success}>Ok</div>
                       ) : (
                         <div className={styles.fail}>Źle</div>
@@ -89,8 +89,8 @@ const CloseTaskDumm = ({
           <div className={styles.description}>
             <h4>Miejsce na link z rozwiązaniem</h4>
             <TextareaAutosize
-              maxCols="15"
-              minCols="5"
+              maxcols="15"
+              mincols="5"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></TextareaAutosize>
@@ -103,14 +103,20 @@ const CloseTaskDumm = ({
           {checkAnswers && (
             <div className={styles.result}>{displayResult()}</div>
           )}
-          {accountType == "teacher" && <AddTaskToClass />}
+          {accountType === "teacher" && <AddTaskToClass />}
         </>
       )}
     </div>
   );
 };
 
-CloseTaskDumm.propTypes = {};
+CloseTaskDumm.propTypes = {
+  match: PropTypes.object.isRequired,
+  getCloseTask: PropTypes.func.isRequired,
+  accountType: PropTypes.string.isRequired,
+  setTaskConfig: PropTypes.func.isRequired,
+  task: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks,

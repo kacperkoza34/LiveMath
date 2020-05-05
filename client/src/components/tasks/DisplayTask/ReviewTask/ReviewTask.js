@@ -36,7 +36,7 @@ const ReviewTask = ({
             <h5>Poprawne odpowiedzi: </h5>
             <ul>
               {correctAnswers.map(({ answer }, index) => (
-                <li>{`${index + 1}. ${answer}`}</li>
+                <li key={index}>{`${index + 1}. ${answer}`}</li>
               ))}
             </ul>
           </>
@@ -44,10 +44,10 @@ const ReviewTask = ({
         <h5>Dodaj wiadomość:</h5>
         <TextareaAutosize
           required
-          maxCols="15"
-          minCols="5"
-          maxRows="15"
-          minRows="5"
+          maxcols="15"
+          mincols="5"
+          maxrows="15"
+          minrows="5"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
@@ -65,6 +65,15 @@ const ReviewTask = ({
       </form>
     </div>
   );
+};
+
+ReviewTask.propTypes = {
+  taskId: PropTypes.string.isRequired,
+  studentId: PropTypes.string.isRequired,
+  reduxAction: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  correctAnswer: PropTypes.object.isRequired,
+  correctAnswers: PropTypes.object.isRequired,
 };
 
 export default connect()(ReviewTask);

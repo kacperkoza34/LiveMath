@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./TaskTypeBox.module.scss";
-import { connect } from "react-redux";
 
 const TaskTypeBox = () => {
   return (

@@ -19,10 +19,14 @@ const SelectDescription = ({ setDescription }) => {
           onClick={(e) => onClick(e.target.name)}
           name="description"
         />
-        <label for="description">Wymagany opis</label>
+        <label>Wymagany opis</label>
       </div>
     </div>
   );
+};
+
+SelectDescription.propTypes = {
+  setDescription: PropTypes.func.isRequired,
 };
 
 export default connect(null, { setDescription })(SelectDescription);

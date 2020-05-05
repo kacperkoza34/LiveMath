@@ -19,7 +19,7 @@
     border: 1px solid;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .groupData {
@@ -34,7 +34,13 @@
       background-color: $color-background;
     }
   }
-
+  .light {
+    background: $color-contrast-list;
+  }
+  .myProfile:hover {
+    cursor: pointer;
+    color: $color-primary;
+  }
   .teacherProfile {
     height: 100%;
     display: flex;

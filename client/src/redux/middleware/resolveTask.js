@@ -4,6 +4,7 @@ import {
   UPDATE_PROMPT,
   SEND_OPEN_TASK_RESOLUTION,
   SEND_CLOSE_TASK_RESOLUTION,
+  SEND_BOOLEAN_TASK_RESOLUTION,
   TASKS_RESOLVED,
   REVIEW_OPEN_TASK,
   REVIEW_OPEN_TASK_SUCCESS,
@@ -12,7 +13,6 @@ import {
   updatePrompt,
   taskResolved,
   reviewOpenTaskSuccess,
-  reviewCloseTaskSuccess,
 } from "../actions/resolveTask";
 import { taskError, TASKS_ERROR } from "../actions/tasks";
 
@@ -63,6 +63,20 @@ const resolveTask = ({ dispatch }) => (next) => (action) => {
     );
   }
 
+  if (action.type === SEND_BOOLEAN_TASK_RESOLUTION) {
+    dispatch(smallLoadingStart());
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/api/student/profile/resolve/boolean`,
+        taskResolved,
+        taskError,
+        action.payload,
+        null
+      )
+    );
+  }
+
   if (action.type === REVIEW_OPEN_TASK) {
     dispatch(smallLoadingStart());
     dispatch(
@@ -83,7 +97,7 @@ const resolveTask = ({ dispatch }) => (next) => (action) => {
       apiRequest(
         "PUT",
         `/api/student/profile/resolve/close/update`,
-        reviewCloseTaskSuccess,
+        reviewOpenTaskSuccess,
         taskError,
         action.payload,
         null

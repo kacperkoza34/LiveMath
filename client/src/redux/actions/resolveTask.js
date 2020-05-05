@@ -7,6 +7,8 @@ export const SEND_OPEN_TASK_RESOLUTION =
   "[RESOLVE_TASK] SEND_OPEN_TASK_RESOLUTION";
 export const SEND_CLOSE_TASK_RESOLUTION =
   "[RESOLVE_TASK] SEND_CLOSE_TASK_RESOLUTION";
+export const SEND_BOOLEAN_TASK_RESOLUTION =
+  "[RESOLVE_TASK] SEND_BOOLEAN_TASK_RESOLUTION";
 export const TASKS_RESOLVED = "[RESOLVE_TASK] TASKS_RESOLVED";
 export const REVIEW_OPEN_TASK = "[RESOLVE_TASK] REVIEW_OPEN_TASK";
 export const REVIEW_OPEN_TASK_SUCCESS =
@@ -47,6 +49,11 @@ export const sendOpenTaskResolution = (payload) => ({
 
 export const sendCloseTaskResolution = (payload) => ({
   type: SEND_CLOSE_TASK_RESOLUTION,
+  payload,
+});
+
+export const sendBooleanTaskResolution = (payload) => ({
+  type: SEND_BOOLEAN_TASK_RESOLUTION,
   payload,
 });
 

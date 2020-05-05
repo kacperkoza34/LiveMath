@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./SelectDeadLine.module.scss";
 import { connect } from "react-redux";
@@ -27,5 +27,9 @@ class SelectDeadLine extends React.Component {
     );
   }
 }
+
+SelectDeadLine.propTypes = {
+  setDeadLine: PropTypes.func.isRequired,
+};
 
 export default connect(null, { setDeadLine })(SelectDeadLine);

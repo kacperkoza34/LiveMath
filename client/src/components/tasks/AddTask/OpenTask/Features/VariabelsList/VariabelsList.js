@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./VariabelsList.module.scss";
 import { connect } from "react-redux";
@@ -24,7 +25,7 @@ class VariabelsList extends React.Component {
     for (let i in task) {
       if (task[i] === "}") {
         if (subString.length) {
-          if (!code.some(({ variable }) => variable == subString.trim())) {
+          if (!code.some(({ variable }) => variable === subString.trim())) {
             code.push({ variable: subString.trim(), description: "" });
           }
         }
@@ -79,26 +80,30 @@ class VariabelsList extends React.Component {
             <ul>
               <li>
                 <table>
-                  <tr>
-                    <td className={styles.variable}>Nazwa</td>
-                    <td>Opis</td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <td className={styles.variable}>Nazwa</td>
+                      <td>Opis</td>
+                    </tr>
+                  </thead>
                 </table>
               </li>
               {Array.from(taskData).map(({ variable, description }) => (
                 <li key={variable}>
                   <table>
-                    <tr>
-                      <td className={styles.variable}>{variable}</td>
-                      <td>
-                        <TextareaAutosize
-                          value={description}
-                          placeholder="Opis"
-                          onChange={(e) => this.addDescription(e, variable)}
-                          name="title"
-                        />
-                      </td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td className={styles.variable}>{variable}</td>
+                        <td>
+                          <TextareaAutosize
+                            value={description}
+                            placeholder="Opis"
+                            onChange={(e) => this.addDescription(e, variable)}
+                            name="title"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
                   </table>
                 </li>
               ))}
@@ -109,6 +114,13 @@ class VariabelsList extends React.Component {
     );
   }
 }
+
+VariabelsList.propTypes = {
+  taskContent: PropTypes.string.isRequired,
+  addVarDescription: PropTypes.func.isRequired,
+  addTaskData: PropTypes.func.isRequired,
+  taskData: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   taskContent: state.newTask.data.content,

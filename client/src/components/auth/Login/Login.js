@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styles from "./Login.module.scss";
 import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
+import Errors from "../../layout/Errors/Errors";
 import { connect } from "react-redux";
 import { login, alreadyLogged } from "../../../redux/actions/auth";
 
@@ -15,7 +16,7 @@ const Login = ({
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
-  }, []);
+  }, [alreadyLogged]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -67,12 +68,9 @@ const Login = ({
               <option value={"student"}>Uczeń</option>
             </select>
           </div>
-          {isFetching ? (
-            <BeatLoader size={30} />
-          ) : (
-            <input type="submit" className="btn btn-primary" value="Login" />
-          )}
+          {isFetching ? <BeatLoader size={30} /> : <button>Login</button>}
         </form>
+        {errors && <Errors errors={errors.data.err} />}
       </div>
     </div>
   );

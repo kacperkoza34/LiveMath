@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../../MathJax";
 
 const DisplayContent = ({ content, variables, group }) => {
-  const [contentD, setContentD] = useState(content);
-  const [variablesD, setvariablesD] = useState(variables);
-  const [groupD, setgroupD] = useState(group);
+  const contentCopy = content;
+  const variablesCopy = variables;
+  const groupCopy = group;
 
   const displayContent = (content, variables, group) => {
     for (let i in variables) {
@@ -16,11 +16,13 @@ const DisplayContent = ({ content, variables, group }) => {
     return <MathJax content={content} />;
   };
 
-  return <>{displayContent(contentD, variablesD, groupD)}</>;
+  return <>{displayContent(contentCopy, variablesCopy, groupCopy)}</>;
 };
 
-DisplayContent.propTypes = {};
-
-const mapStateToProps = (state) => ({});
+DisplayContent.propTypes = {
+  content: PropTypes.string.isRequired,
+  variables: PropTypes.array.isRequired,
+  group: PropTypes.object,
+};
 
 export default DisplayContent;

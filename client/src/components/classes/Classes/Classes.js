@@ -8,19 +8,17 @@ import TasksList from "../TasksList/TasksList.js";
 import ClassStatus from "../ClassStatus/ClassStatus.js";
 import SelectSection from "../SelectSection/SelectSection.js";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getClasses } from "../../../redux/actions/classes";
 
 const Classes = ({
-  fetching,
   getClasses,
-  classes: { isFetching, data: classes },
+  classes: { isFetching, data: classes, errors },
   myId,
 }) => {
   useEffect(() => {
     getClasses();
-  }, []);
+  }, [getClasses]);
 
   const [activeClass, setActiveClass] = useState(null);
   const [activePage, setActivePage] = useState(1);
@@ -34,10 +32,11 @@ const Classes = ({
           <div className={styles.asideWrapper}>
             <h2>Klasy</h2>
             <ul>
-              {classes.map(({ title, _id }) => (
+              {classes.map(({ title, _id }, index) => (
                 <li
+                  key={index}
                   className={
-                    activeClass == _id ? styles.btnListActive : styles.btnList
+                    activeClass === _id ? styles.btnListActive : styles.btnList
                   }
                   onClick={() => {
                     setActiveClass(_id);
@@ -56,18 +55,21 @@ const Classes = ({
               ) : (
                 <>
                   {classes.map(
-                    ({
-                      _id,
-                      students,
-                      tasksOpen,
-                      tasksClose,
-                      tasksBoolean,
-                      open,
-                      title,
-                      maxStudentsAmount,
-                    }) =>
-                      _id == activeClass && (
-                        <>
+                    (
+                      {
+                        _id,
+                        students,
+                        tasksOpen,
+                        tasksClose,
+                        tasksBoolean,
+                        open,
+                        title,
+                        maxStudentsAmount,
+                      },
+                      index
+                    ) =>
+                      _id === activeClass && (
+                        <div key={index}>
                           <h3>{title}</h3>
                           {students.length === maxStudentsAmount ? (
                             <h5>Klasa jest pełna</h5>
@@ -96,7 +98,7 @@ const Classes = ({
                               />
                             </>
                           )}
-                        </>
+                        </div>
                       )
                   )}
                 </>
@@ -109,7 +111,11 @@ const Classes = ({
   );
 };
 
-Classes.propTypes = {};
+Classes.propTypes = {
+  getClasses: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  myId: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   classes: state.classes,

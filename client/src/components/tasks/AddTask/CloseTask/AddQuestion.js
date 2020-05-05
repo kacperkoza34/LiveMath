@@ -30,7 +30,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h5>Wprowadz równanie</h5>
           <input
-            autocomplete="off"
+            autoComplete="off"
             placeholder="Równanie"
             name="content"
             value={formData.content}
@@ -42,7 +42,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h5>Dodaj odpowiedz:</h5>
           <input
-            autocomplete="off"
+            autoComplete="off"
             placeholder="Odpowiedz"
             name="answer"
             value={formData.answer}
@@ -55,7 +55,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         {groups.length > 0 && (
           <ul className={styles.groupList}>
             {groups.map(({ content, answer, id }, index) => (
-              <li className={styles.listElement}>
+              <li key={index} className={styles.listElement}>
                 <span className={styles.order}>
                   <div>{`${index + 1}).   `}</div>
                   <div>
@@ -76,6 +76,12 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       </form>
     </div>
   );
+};
+
+AddQuestion.propTypes = {
+  addGroup: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

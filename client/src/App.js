@@ -1,14 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import styles from "./styles/global.scss";
 import MainLayout from "./components/layout/MainLayout/MainLayout";
-import Landing from "./components/layout/Landing/Landing";
 import Login from "./components/auth/Login/Login";
 import Register from "./components/auth/Register/Register";
-import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute/PrivateRoute";
-import StudentRoute from "./components/routing/StudentRoute/StudentRoute";
 import TeacherRoute from "./components/routing/TeacherRoute/TeacherRoute";
 import Classes from "./components/classes/Classes/Classes";
 import StudentProfile from "./components/profile/StudentProfile/StudentProfile";
@@ -23,8 +19,6 @@ import AddBooleanTask from "./components/tasks/AddTask/BooleanTask/BooleanTask";
 // Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { connect } from "react-redux";
-import setAuthToken from "./utils/setAuthToken";
 
 const App = () => {
   return (

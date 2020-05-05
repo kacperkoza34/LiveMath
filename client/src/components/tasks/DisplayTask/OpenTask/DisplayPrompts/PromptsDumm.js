@@ -8,7 +8,7 @@ const PromptsDumm = ({ model, variables }) => {
 
   const [canAddPrompt, cantAddPrompt] = useState(true);
   const addPrompts = () => {
-    if (prompts == 1) cantAddPrompt(false);
+    if (prompts === 1) cantAddPrompt(false);
     if (prompts < 2) addOne(prompts + 1);
   };
   return (
@@ -31,7 +31,7 @@ const PromptsDumm = ({ model, variables }) => {
           </ul>
         </>
       )}
-      {prompts == 2 && (
+      {prompts === 2 && (
         <>
           {" "}
           <h4>Wzór:</h4>
@@ -40,6 +40,11 @@ const PromptsDumm = ({ model, variables }) => {
       )}
     </div>
   );
+};
+
+PromptsDumm.propTypes = {
+  model: PropTypes.string.isRequired,
+  variables: PropTypes.array.isRequired,
 };
 
 export default PromptsDumm;
