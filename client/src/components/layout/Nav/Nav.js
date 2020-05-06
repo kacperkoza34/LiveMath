@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Nav.module.scss";
+import MobileNav from "./MobileNav";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -15,9 +16,24 @@ const Nav = ({
   auth: { isAuthenticated },
   logout,
 }) => {
+  const [mobileNav, setMobile] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 576) setMobile(true);
+    else setMobile(false);
+    window.addEventListener("resize", () => {
+      console.log(window.innerWidth);
+      if (window.innerWidth < 576) setMobile(true);
+      else setMobile(false);
+    });
+  }, []);
+
   const authLinks =
     accountType === "teacher" ? (
-      <ul className={styles.navLinks}>
+      <>
+        <li>
+          <Link to="/about">Pomoc</Link>
+        </li>
         <li>
           <Link to="/classes">Klasy</Link>
         </li>
@@ -32,39 +48,57 @@ const Nav = ({
             Wyloguj{" "}
           </Link>
         </li>
-      </ul>
+      </>
     ) : (
-      <ul className={styles.navLinks}>
+      <>
         <li>
-          <Link to="/class">Moja klasa</Link>
+          <Link to="/about">Pomoc</Link>
         </li>
         <li>
-          <Link to="/dashboard">Konto</Link>
+          <Link to="/dashboard">Zadania </Link>
         </li>
         <li>
           <Link onClick={logout} to="/login">
             Wyloguj{" "}
           </Link>
         </li>
-      </ul>
+      </>
     );
 
   const guestLinks = (
-    <ul>
+    <>
       <li>
         <Link to="/login">Login</Link>
       </li>
-    </ul>
+    </>
   );
 
+  const logo = (
+    <>
+      <Link to="/">LiveMath</Link>
+      {fetching && <ClipLoader size={25} />}
+    </>
+  );
   return (
-    <nav className={styles.root}>
-      <h1>
-        <Link to="/">LiveMath</Link>
-        {fetching && <ClipLoader size={25} />}
-      </h1>
-      {isFetching ? "" : isAuthenticated ? authLinks : guestLinks}
-    </nav>
+    <>
+      {mobileNav ? (
+        <MobileNav
+          logo={logo}
+          navLinks={isAuthenticated ? authLinks : guestLinks}
+        />
+      ) : (
+        <nav className={styles.root}>
+          <h1>{logo}</h1>
+          {isFetching ? (
+            ""
+          ) : isAuthenticated ? (
+            <ul className={styles.navLinks}>{authLinks}</ul>
+          ) : (
+            <ul className={styles.navLinks}>{guestLinks}</ul>
+          )}
+        </nav>
+      )}
+    </>
   );
 };
 

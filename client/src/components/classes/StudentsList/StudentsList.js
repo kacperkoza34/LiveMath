@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Line } from "rc-progress";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import styles from "./StudentsList.module.scss";
@@ -43,7 +44,15 @@ const StudentsList = ({ students }) => {
                   />
                 )}
               </span>
-              <span>{`${points}/${maxPoints}`}</span>
+              <span className={styles.result}>
+                <Line
+                  percent={(points / maxPoints) * 100}
+                  strokeWidth="8"
+                  strokeColor="#222f3e"
+                  trailColor="#222f3e"
+                />
+                <div>{`${points}/${maxPoints}`}</div>
+              </span>
             </Link>
           )
         )}

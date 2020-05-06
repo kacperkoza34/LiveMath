@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./StudentProfile.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
+import { Line } from "rc-progress";
 import TasksList from "./TasksList";
 import { connect } from "react-redux";
 import { getStudent } from "../../../redux/actions/student";
@@ -26,8 +27,18 @@ const StudentProfile = ({
         <BeatLoader />
       ) : (
         <div>
-          <h3>{name}</h3>
-          <div>{`Postęp: ${points}/${maxPoints}`}</div>
+          <div className={styles.profile}>
+            <h3>{name}</h3>
+            <span className={styles.result}>
+              <Line
+                percent={(points / maxPoints) * 100}
+                strokeWidth="8"
+                strokeColor="#222f3e"
+                trailColor="#222f3e"
+              />
+              <div>{`Postęp: ${points}/${maxPoints}`}</div>
+            </span>
+          </div>
           <TasksList tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]} />
         </div>
       )}

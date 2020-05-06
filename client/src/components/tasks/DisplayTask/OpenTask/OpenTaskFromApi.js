@@ -8,6 +8,7 @@ import Messages from "../Messages/Messages";
 import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import ReviewTask from "../ReviewTask/ReviewTask";
+import BackArrow from "../BackArrow/BackArrow";
 import MathJax from "../../MathJax";
 import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
@@ -77,6 +78,7 @@ const OpenTask = ({
         <>
           {correctAnswer == null &&
             setCorrectAnswer(data.data.groups[group].answer)}
+          {accountType === "student" && <BackArrow />}
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>
@@ -103,7 +105,7 @@ const OpenTask = ({
               ...data.data.additionalVariables,
             ]}
           />
-          <h4>Miejsce na link z rozwiązaniem</h4>
+          <h4>Załącznik</h4>
           <TextareaAutosize
             maxcols="15"
             mincols="5"

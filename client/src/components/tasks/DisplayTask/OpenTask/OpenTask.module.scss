@@ -2,6 +2,7 @@
 @import "../../../../styles/global.scss";
 
 .root {
+  min-height: 80vh;
   padding: 10px;
   margin: 10px;
   position: relative;
@@ -41,5 +42,17 @@
 
   .success {
     color: $color-success;
+  }
+}
+
+@media (max-width: 576px) {
+  .root {
+    padding: 5px;
+    margin: 0;
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

@@ -73,7 +73,7 @@ const OpenTaskDumm = ({
               ...data.data.additionalVariables,
             ]}
           />
-          <h4>Miejsce na link z rozwiązaniem</h4>
+          <h4>Załącznik</h4>
           <TextareaAutosize
             maxcols="15"
             mincols="5"

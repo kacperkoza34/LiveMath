@@ -30,6 +30,12 @@ router.post(
       let teacherProfile = await TeacherProfile.findOne({
         user: req.user.id,
       }).populate("classes.class");
+
+      if (teacherProfile.classes.length === 10)
+        return res
+          .status(400)
+          .send({ err: [{ msg: "Możesz mieć maksymalnie 10 klasy" }] });
+
       let titleAlredyExist = false;
       if (teacherProfile.classes.length) {
         teacherProfile.classes.forEach((item, i) => {
@@ -41,7 +47,7 @@ router.post(
 
       if (titleAlredyExist)
         return res
-          .status(401)
+          .status(400)
           .send({ err: [{ msg: "Masz już klase o tej nazwie" }] });
 
       let newClass = new Class({
@@ -102,7 +108,7 @@ router.get("/my", authTeacher, async (req, res) => {
     res.json(allClasses);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ err: "Server error" });
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -116,7 +122,7 @@ router.put("/:id", authTeacher, async (req, res) => {
     res.json(response);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -138,7 +144,7 @@ router.get("/:id", authTeacher, async (req, res) => {
     res.json(classView);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 
@@ -156,7 +162,7 @@ router.get("/studentview/:id", authStudent, async (req, res) => {
     res.json(classView);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send({ err: [{ msg: "Server error" }] });
   }
 });
 

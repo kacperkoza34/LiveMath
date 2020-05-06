@@ -13,7 +13,11 @@ const DisplayContent = ({ content, variables, group }) => {
       const re = new RegExp(`{${currentVar}}`, "g");
       content = content.replace(re, "`" + group[currentVar] + "`");
     }
-    return <MathJax content={content} />;
+    return (
+      <pre>
+        <MathJax content={content} />
+      </pre>
+    );
   };
 
   return <>{displayContent(contentCopy, variablesCopy, groupCopy)}</>;

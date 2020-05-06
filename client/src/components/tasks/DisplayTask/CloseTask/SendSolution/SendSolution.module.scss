@@ -22,6 +22,11 @@
     color: $color-to-update;
   }
 
+  .send {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 5px 0;
+  }
   .error {
     color: $color-alert;
   }

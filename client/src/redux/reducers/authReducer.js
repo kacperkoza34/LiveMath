@@ -4,8 +4,9 @@ import {
   LOGIN_SUCCESS,
   AUTH_ERROR,
   ALREDY_LOGGED,
-  LOGOUT
-} from '../actions/auth';
+  LOGOUT,
+  CLEAR_ERRORS,
+} from "../actions/auth";
 
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
@@ -13,33 +14,38 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         isFetching: true,
-        errors: false
-      }
+        errors: false,
+      };
 
     case ALREDY_LOGGED:
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...statePart,
         isFetching: false,
         isAuthenticated: true,
         token: action.payload.token,
-        errors: false
-      }
+        errors: false,
+      };
     case AUTH_ERROR:
       return {
         ...statePart,
         isFetching: false,
-        errors: action.payload
-      }
+        errors: action.payload,
+      };
     case LOGOUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...statePart,
         isAuthenticated: false,
-        token: null
-      }
+        token: null,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...statePart,
+        errors: false,
+      };
     default:
       return statePart;
   }

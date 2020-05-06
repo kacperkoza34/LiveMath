@@ -12,6 +12,7 @@ import SelectClass from "../SelectClass/SelectClass";
 import SelectDeadLine from "../SelectDeadLine/SelectDeadLine";
 import SelectPrompt from "../SelectPrompt/SelectPrompt";
 import SelectDescription from "../SelectDescription/SelectDescription";
+import SetMessage from "../SetMessage/SetMessage";
 
 const AddTaskToClass = ({
   taskId,
@@ -24,7 +25,13 @@ const AddTaskToClass = ({
   success,
   clearTask,
 }) => {
-  const { descriptionRequired, promptsAllowed, deadLine, classes } = taskParams;
+  const {
+    descriptionRequired,
+    promptsAllowed,
+    deadLine,
+    classes,
+    message,
+  } = taskParams;
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -41,6 +48,7 @@ const AddTaskToClass = ({
         deadLine,
         classes,
         points,
+        message,
       });
     } else setError(true);
   };
@@ -54,6 +62,7 @@ const AddTaskToClass = ({
         points,
         deadLine,
         classes,
+        message,
       });
     } else setError(true);
   };
@@ -88,6 +97,7 @@ const AddTaskToClass = ({
       <SelectDeadLine />
       {taskType === "openTask" && (
         <>
+          <SetMessage />
           <h4>Wybierz dodatkowe parametry</h4>
           <SelectPrompt />
           <SelectDescription />
@@ -101,6 +111,7 @@ const AddTaskToClass = ({
       )}
       {taskType === "closeTask" && (
         <>
+          <SetMessage />
           <h4>Wybierz dodatkowe parametry</h4>
           <SelectDescription />
           <div>

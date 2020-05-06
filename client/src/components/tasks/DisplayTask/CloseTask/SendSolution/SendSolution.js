@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Errors from "../../../../layout/Errors/Errors";
 import styles from "./SendSolution.module.scss";
 
 const SendSolution = ({
@@ -10,6 +11,7 @@ const SendSolution = ({
   sendSolution,
   resolved,
   error,
+  apiErrors,
   toUpdate,
   checkAnswers,
   setChekAnswers,
@@ -35,6 +37,7 @@ const SendSolution = ({
         <>
           {!toUpdate && accountType === "student" && checkAnswers ? (
             <>
+              {apiErrors && <Errors errors={apiErrors.data.err} />}
               {error.length > 0 && <div className={styles.error}>{error}</div>}
               {Object.keys(answers).length === result ? (
                 <div>
@@ -44,7 +47,7 @@ const SendSolution = ({
                   </button>
                 </div>
               ) : (
-                <div>
+                <div className={styles.send}>
                   <button onClick={() => sendSolution(result)}>Prześlij</button>
                   <button onClick={() => sendSolution(result, true)}>
                     Wyślij prośbe o weryfikacje
@@ -73,7 +76,7 @@ const SendSolution = ({
 
 SendSolution.propTypes = {
   result: PropTypes.number.isRequired,
-  taskStatus: PropTypes.object.isRequired,
+  taskStatus: PropTypes.object,
   answers: PropTypes.object.isRequired,
   description: PropTypes.string.isRequired,
   sendSolution: PropTypes.func.isRequired,

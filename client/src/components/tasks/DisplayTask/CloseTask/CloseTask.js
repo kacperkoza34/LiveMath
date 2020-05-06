@@ -22,7 +22,7 @@ const CloseTask = ({
 
 CloseTask.propTypes = {
   match: PropTypes.object.isRequired,
-  task: PropTypes.object.isRequired,
+  task: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

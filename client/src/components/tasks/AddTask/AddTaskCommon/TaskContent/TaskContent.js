@@ -26,6 +26,7 @@ const TaskContent = ({ addTaskContent, addTaskName, name, content }) => {
       <div>
         <h3>Treść</h3>
         <TextareaAutosize
+          styles="white-space: pre-line;"
           placeholder="Dodaj treść zadania"
           onChange={(e) => {
             addTaskContent(e.target.value);

@@ -2,17 +2,22 @@
 @import "../../../../styles/global.scss";
 
 .root {
+  min-height: 80vh;
   padding: 10px;
   margin: 10px;
   position: relative;
 
-  .points {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-weight: 600;
-  }
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
+    p {
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+    }
+  }
   .description {
     display: flex;
     flex-direction: column;
@@ -60,5 +65,17 @@
   .result {
     margin: 10px 0;
     font-weight: 700;
+  }
+}
+
+@media (max-width: 576px) {
+  .root {
+    padding: 5px;
+    margin: 0;
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

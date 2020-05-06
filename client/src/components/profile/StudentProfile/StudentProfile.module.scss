@@ -1,4 +1,13 @@
 @import "../../../styles/settings.scss";
 
 .root {
+  .profile {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .result {
+    display: block;
+    width: 100px;
+  }
 }

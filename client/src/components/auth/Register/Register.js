@@ -5,18 +5,24 @@ import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
 import Errors from "../../layout/Errors/Errors";
 import { connect } from "react-redux";
-import { register, alreadyLogged } from "../../../redux/actions/auth";
+import {
+  register,
+  alreadyLogged,
+  clearErrors,
+} from "../../../redux/actions/auth";
 
 const Register = ({
   auth: { isAuthenticated, isFetching, errors },
   register,
   alreadyLogged,
   match,
+  clearErrors,
 }) => {
   useEffect(() => {
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
+    return () => clearErrors();
   }, [alreadyLogged]);
 
   const [formData, setFormData] = useState({
@@ -95,15 +101,7 @@ const Register = ({
               required
             />
           </div>
-          {isFetching ? (
-            <BeatLoader size={30} />
-          ) : (
-            <input
-              type="submit"
-              className="btn btn-primary"
-              value="Zarejestruj się"
-            />
-          )}
+          {isFetching ? <BeatLoader size={30} /> : <button>Zarejestruj</button>}
         </form>
         <p className="my-1">
           Masz juz konto?{" "}
@@ -111,7 +109,8 @@ const Register = ({
             Zaloguj się
           </Link>
         </p>
-        {errors && <Errors errors={[...errors.data.err, ...passwordsErr]} />}
+        {passwordsErr.length > 0 && <Errors errors={[...passwordsErr]} />}
+        {errors && <Errors errors={[...errors.data.err]} />}
       </div>
     </div>
   );
@@ -128,4 +127,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { register, alreadyLogged })(Register);
+export default connect(mapStateToProps, {
+  register,
+  alreadyLogged,
+  clearErrors,
+})(Register);

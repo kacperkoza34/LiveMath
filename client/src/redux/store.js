@@ -91,6 +91,7 @@ const initialState = {
       deadLine: "",
       promptsAllowed: false,
       descriptionRequired: false,
+      message: "",
     },
     isFetching: false,
     errors: false,

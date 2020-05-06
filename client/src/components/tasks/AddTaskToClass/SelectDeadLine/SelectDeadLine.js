@@ -22,7 +22,11 @@ class SelectDeadLine extends React.Component {
     return (
       <div className={styles.root}>
         <h4 className={styles.title}>Wybierz termin wykonania</h4>
-        <DateTimePicker onChange={this.onChange} value={this.state.date} />
+        <DateTimePicker
+          minDate={new Date()}
+          onChange={this.onChange}
+          value={this.state.date}
+        />
       </div>
     );
   }

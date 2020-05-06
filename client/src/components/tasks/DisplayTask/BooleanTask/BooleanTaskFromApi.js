@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
+import Errors from "../../../layout/Errors/Errors";
+import BackArrow from "../BackArrow/BackArrow";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -78,24 +80,33 @@ const BooleanTaskFromApi = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <h4>{data.name}</h4>
-          <p>{data.description}</p>
-          <p className={styles.points}>Punkty: {data.points}</p>
+          {accountType === "student" && <BackArrow />}
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <pre>{data.content}</pre>
+            </div>
+            <p className={styles.points}>Punkty: {data.points}</p>
+          </div>
           <ul>
             {data.data.map(({ content, answer: correctAnswer }, i) => (
               <li key={i} className={styles.item}>
-                {`${i + 1}). `}
-                {content + "   "}
-                <select
-                  className={styles.select}
-                  name={`${i}`}
-                  value={answer[`${i}`]}
-                  onChange={(e) => onChange(e)}
-                >
-                  <option value={""}>Wybierz odpowiedz</option>
-                  <option value={true}>Prawda</option>
-                  <option value={false}>Fałsz</option>
-                </select>
+                <div className={styles.questionBox}>
+                  <div>
+                    {`${i + 1}). `}
+                    {content + "   "}
+                  </div>
+                  <select
+                    className={styles.select}
+                    name={`${i}`}
+                    value={answer[`${i}`]}
+                    onChange={(e) => onChange(e)}
+                  >
+                    <option value={""}>Wybierz odpowiedz</option>
+                    <option value={true}>Prawda</option>
+                    <option value={false}>Fałsz</option>
+                  </select>
+                </div>
                 {resolved ? (
                   correctAnswer === answer[`${i}`] ? (
                     <div className={styles.success}>Dobrze</div>
@@ -108,6 +119,7 @@ const BooleanTaskFromApi = ({
               </li>
             ))}
           </ul>
+          {errors && <Errors errors={errors.data.err} />}
           {resolved ? (
             <div className={styles.result}>{displayResult()}</div>
           ) : (

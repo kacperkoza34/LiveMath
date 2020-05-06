@@ -6,6 +6,7 @@ export const ALREDY_LOGGED = "[auth] ALREDY_LOGGED";
 export const LOGOUT = "[auth] LOGOUT";
 export const AUTH_LOADING = "[auth] AUTH_LOADING";
 export const AUTH_ERROR = "[auth] AUTH_ERROR";
+export const CLEAR_ERRORS = "[auth] CLEAR_ERRORS";
 
 export const loading = () => ({
   type: AUTH_LOADING,
@@ -43,4 +44,8 @@ export const alreadyLogged = (payload) => ({
 
 export const logout = () => ({
   type: LOGOUT,
+});
+
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS,
 });

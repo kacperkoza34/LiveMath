@@ -50,9 +50,13 @@ const CloseTaskDumm = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <h4>{data.name}</h4>
-          <p>{data.content}</p>
-          <p className={styles.points}>Punkty: {data.points}</p>
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <pre>{data.content}</pre>
+            </div>
+            <p>Punkty: {data.points}</p>
+          </div>
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
@@ -87,7 +91,7 @@ const CloseTaskDumm = ({
             </ul>
           )}
           <div className={styles.description}>
-            <h4>Miejsce na link z rozwiązaniem</h4>
+            <h4>Załącznik</h4>
             <TextareaAutosize
               maxcols="15"
               mincols="5"
@@ -115,7 +119,7 @@ CloseTaskDumm.propTypes = {
   getCloseTask: PropTypes.func.isRequired,
   accountType: PropTypes.string.isRequired,
   setTaskConfig: PropTypes.func.isRequired,
-  task: PropTypes.object.isRequired,
+  task: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

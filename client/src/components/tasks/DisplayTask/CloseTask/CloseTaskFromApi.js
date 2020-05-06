@@ -6,6 +6,7 @@ import MathJax from "../../MathJax";
 import SendSolution from "./SendSolution/SendSolution";
 import TextareaAutosize from "react-textarea-autosize";
 import ReviewTask from "../ReviewTask/ReviewTask";
+import BackArrow from "../BackArrow/BackArrow";
 import Messages from "../Messages/Messages";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -85,9 +86,14 @@ const CloseTaskFromApi = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <h4>{data.name}</h4>
-          <p>{data.content}</p>
-          <p className={styles.points}>Punkty: {data.points}</p>
+          {accountType === "student" && <BackArrow />}
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <pre>{data.content}</pre>
+            </div>
+            <p>Punkty: {data.points}</p>
+          </div>
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer: correctAnswer }, i) => (
@@ -122,7 +128,7 @@ const CloseTaskFromApi = ({
             </ul>
           )}
           <div className={styles.description}>
-            <h4>Miejsce na link z rozwiązaniem</h4>
+            <h4>Załącznik</h4>
             <TextareaAutosize
               maxcols="15"
               mincols="5"
@@ -138,6 +144,7 @@ const CloseTaskFromApi = ({
             sendSolution={sendSolution}
             resolved={resolved}
             error={error}
+            apiErrors={errors}
             toUpdate={toUpdate}
             result={result}
             answers={answer}

@@ -5,17 +5,19 @@ import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
 import Errors from "../../layout/Errors/Errors";
 import { connect } from "react-redux";
-import { login, alreadyLogged } from "../../../redux/actions/auth";
+import { login, alreadyLogged, clearErrors } from "../../../redux/actions/auth";
 
 const Login = ({
   login,
   alreadyLogged,
   auth: { isAuthenticated, isFetching, errors },
+  clearErrors,
 }) => {
   useEffect(() => {
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
+    return () => clearErrors();
   }, [alreadyLogged]);
 
   const [formData, setFormData] = useState({
@@ -86,4 +88,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { login, alreadyLogged })(Login);
+export default connect(mapStateToProps, { login, alreadyLogged, clearErrors })(
+  Login
+);

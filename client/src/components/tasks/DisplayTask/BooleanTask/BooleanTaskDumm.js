@@ -53,25 +53,33 @@ const BooleanTaskDumm = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <h4>{data.name}</h4>
-          <p>{data.description}</p>
-          <p className={styles.points}>Punkty: {data.points}</p>
+          <div className={styles.header}>
+            <div>
+              <h4>{data.name}</h4>
+              <pre>{data.content}</pre>
+            </div>
+            <p className={styles.points}>Punkty: {data.points}</p>
+          </div>
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
                 <li key={i} className={styles.item}>
-                  {`${i + 1}). `}
-                  {content + "   "}
-                  <select
-                    className={styles.select}
-                    name={`${i}`}
-                    value={taskStatus[`${i}`]}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value={""}>Wybierz odpowiedz</option>
-                    <option value={true}>Prawda</option>
-                    <option value={false}>Fałsz</option>
-                  </select>
+                  <div className={styles.questionBox}>
+                    <div>
+                      {`${i + 1}). `}
+                      {content + "   "}
+                    </div>
+                    <select
+                      className={styles.select}
+                      name={`${i}`}
+                      value={taskStatus[`${i}`]}
+                      onChange={(e) => onChange(e)}
+                    >
+                      <option value={""}>Wybierz odpowiedz</option>
+                      <option value={true}>Prawda</option>
+                      <option value={false}>Fałsz</option>
+                    </select>
+                  </div>
                   {checkAnswers &&
                     (answer === taskStatus[`${i}`] ? (
                       <div className={styles.success}>Dobrze</div>

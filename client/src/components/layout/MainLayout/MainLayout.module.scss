@@ -22,3 +22,12 @@
     }
   }
 }
+
+@media (max-width: 576px) {
+  .root {
+    .wrapper {
+      margin: 0;
+      padding: 5px;
+    }
+  }
+}

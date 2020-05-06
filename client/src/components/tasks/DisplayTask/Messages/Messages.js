@@ -13,7 +13,7 @@ const Messages = ({ messages }) => {
             <ul>
               {messages.map((message, index) => (
                 <li key={index} className={styles.message}>
-                  {message}
+                  <pre>{message}</pre>
                 </li>
               ))}
             </ul>

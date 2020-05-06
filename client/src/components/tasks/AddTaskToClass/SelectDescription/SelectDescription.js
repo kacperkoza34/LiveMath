@@ -19,7 +19,7 @@ const SelectDescription = ({ setDescription }) => {
           onClick={(e) => onClick(e.target.name)}
           name="description"
         />
-        <label>Wymagany opis</label>
+        <label>Wymagany załącznik</label>
       </div>
     </div>
   );

@@ -293,7 +293,7 @@ router.post(
             descriptionRequired: req.body.descriptionRequired,
             task: req.body.taskId,
             group: getRandomIntInclusive(0, groupsLength - 1),
-            messages: [],
+            messages: req.body.message.length > 0 ? [req.body.message] : [],
           });
           await studentProfile.save();
         });
@@ -352,7 +352,7 @@ router.post(
             deadLine: req.body.deadLine,
             task: req.body.taskId,
             descriptionRequired: req.body.descriptionRequired,
-            messages: [],
+            messages: req.body.message.length > 0 ? [req.body.message] : [],
           });
           await studentProfile.save();
         });

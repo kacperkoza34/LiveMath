@@ -8,6 +8,8 @@
   .student {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 50px;
   }
 
   .light {
@@ -23,5 +25,9 @@
   }
   .toUpdate {
     background: $color-to-update;
+  }
+  .result {
+    display: block;
+    width: 100px;
   }
 }

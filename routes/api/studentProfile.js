@@ -318,6 +318,7 @@ router.put(
         if (req.body.task_id.toString() === item._id.toString()) {
           if (req.body.accept) {
             item.result = item.task.points;
+            profile.points = profile.points + item.task.points;
           } else {
             item.resolved = false;
           }

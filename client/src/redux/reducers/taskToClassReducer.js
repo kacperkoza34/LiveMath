@@ -6,6 +6,7 @@ import {
   ADD_TASK_ERROR,
   ADD_TASK_SUCCESS,
   CLEAR_TASK,
+  SET_MESSAGE,
 } from "../actions/taskToClass";
 
 export default function reducer(statePart = [], action = {}) {
@@ -42,6 +43,14 @@ export default function reducer(statePart = [], action = {}) {
           descriptionRequired: action.payload,
         },
       };
+    case SET_MESSAGE:
+      return {
+        ...statePart,
+        data: {
+          ...statePart.data,
+          message: action.payload,
+        },
+      };
     case ADD_TASK_SUCCESS:
       return {
         ...statePart,
@@ -59,6 +68,7 @@ export default function reducer(statePart = [], action = {}) {
           deadLine: "",
           promptsAllowed: false,
           descriptionRequired: false,
+          message: "",
         },
         isFetching: false,
         errors: false,

@@ -12,10 +12,12 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <section className={styles.root}>
       <div className={styles.wrapper}>
-        <h1>Witaj w LiveMath!</h1>
-        <Link to="/login" className={styles.btnLogin}>
-          <h4>Zaloguj się</h4>
-        </Link>
+        <div className={styles.welcome}>
+          <h1>Witaj w LiveMath!</h1>
+          <Link to="/login" className={styles.btnLogin}>
+            <h4>Zaloguj się</h4>
+          </Link>
+        </div>
       </div>
     </section>
   );
