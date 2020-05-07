@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
 
 const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
@@ -34,16 +35,15 @@ router.post(
     const { name, email, password } = req.body;
 
     try {
-      let teacher = await Teacher.findOne({ _id: req.params.id });
-      if (!teacher.verified)
-        return res.status(401).json({
-          err: [{ msg: "Link jest nieaktywny" }],
-        });
-
       // See if user exist
       let user = await Teacher.findOne({ email });
-      if (req.params.id.toString() !== "firstline")
+      if (req.params.id.toString() !== "firstline") {
+        if (!teacher.verified)
+          return res.status(401).json({
+            err: [{ msg: "Link jest nieaktywny" }],
+          });
         await Teacher.findOne({ _id: req.params.id });
+      }
 
       if (user) {
         return res.status(400).json({
@@ -75,10 +75,12 @@ router.post(
         await inviterProfile.save();
       }
 
+      const inviterId =
+        req.params.id.toString() === "firstline" ? user._id : req.params.id;
       userProfile = new TeacherProfile({
         user: user._id,
         name,
-        inviter: req.params.id == "firstline" ? user._id : req.params.id,
+        inviter: inviterId,
         invitedByMe: [],
         classes: [],
         students: [],
@@ -104,8 +106,6 @@ router.post(
         expiresIn: 360000,
       });
 
-      console.log("after:", verifyToken);
-
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -114,14 +114,35 @@ router.post(
         },
       });
 
-      let info = await transporter.sendMail({
+      const handlebarOptions = {
+        viewEngine: {
+          extName: ".hbs",
+          partialsDir: "mailingViews",
+          layoutsDir: "mailingViews",
+          defaultLayout: "verification.hbs",
+        },
+        viewPath: "mailingViews",
+        extName: ".hbs",
+      };
+
+      transporter.use("compile", hbs(handlebarOptions));
+
+      let info = {
         from: '"LiveMath" <foo@example.com>', // sender address
         to: email, // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
-        html: `<b>Hello world?</b>
-        <b>Token veryfikacyjny:${verifyToken}</b>
-        `, // html body
+        subject: "Potwierdź wiadomość ✔", // Subject line
+        text: `Tekst`,
+        template: "verification",
+        context: {
+          link: `http://localhost:3000/verify/${verifyToken}`,
+        },
+      };
+
+      transporter.sendMail(info, function (err, data) {
+        if (err) console.log(err);
+        else {
+          console.log("success");
+        }
       });
 
       // Return jsonwebtoken

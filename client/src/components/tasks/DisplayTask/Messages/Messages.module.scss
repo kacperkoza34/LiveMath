@@ -7,9 +7,10 @@
   background-color: $color-light;
   border: 1px solid;
 
+  pre {
+    padding: 20px;
+  }
   .message {
-    margin: 5px;
-    padding: 5px;
     background: $color-background;
   }
 }

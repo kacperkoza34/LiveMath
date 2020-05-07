@@ -13,6 +13,7 @@ const SendTask = ({ newTask, send, apiErrors }) => {
     if (!content.trim().length) errors.push("Nie podano treści");
     if (!name.trim().length) errors.push("Nie podano nazwy zadania");
     if (!groups.length) errors.push("Nie podano grup");
+    if (groups.length > 20) errors.push("Maksymalnie 20 zadań");
     if (!section.length || !classNew.length) errors.push("Nie wybrano działu");
     if (!errors.length) {
       setErrors([]);

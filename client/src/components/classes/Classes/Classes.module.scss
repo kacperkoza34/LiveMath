@@ -5,5 +5,10 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .root {
+    flex-wrap: wrap;
+  }
 }

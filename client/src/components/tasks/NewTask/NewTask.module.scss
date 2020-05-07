@@ -4,10 +4,33 @@
 .root {
   display: flex;
   margin: 10px;
-  height: 30px;
+
+  button,
+  select {
+    height: 30px;
+  }
+
+  .wrapper {
+    display: flex;
+  }
 
   .warning {
     color: $color-alert;
     margin-left: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .root {
+    .wrapper {
+      flex-direction: column;
+      div {
+        width: 100%;
+      }
+    }
+    .warning {
+      margin-left: 0;
+      margin-top: 5px;
+    }
   }
 }

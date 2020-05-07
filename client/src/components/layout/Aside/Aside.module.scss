@@ -1,0 +1,47 @@
+@import "../../../styles/settings.scss";
+
+.asideWrapper {
+  width: 20%;
+  min-width: 200px;
+  background: #fff;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid;
+  transition: 0.4s;
+  transform: translateX(0);
+  position: relative;
+
+  .control {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .asideWrapper {
+    margin: 0;
+    width: 50%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 222;
+
+    .control {
+      display: block;
+      position: absolute;
+      top: 40%;
+      bottom: 60%;
+      right: 0;
+      transform: translateX(100%);
+      width: 20px;
+      height: 20px;
+      border-top: 40px solid transparent;
+      border-left: 30px solid $color-primary;
+      border-bottom: 40px solid transparent;
+    }
+  }
+
+  .hidden {
+    background: red;
+  }
+}

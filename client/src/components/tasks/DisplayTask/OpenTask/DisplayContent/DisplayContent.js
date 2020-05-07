@@ -14,9 +14,9 @@ const DisplayContent = ({ content, variables, group }) => {
       content = content.replace(re, "`" + group[currentVar] + "`");
     }
     return (
-      <pre>
+      <p>
         <MathJax content={content} />
-      </pre>
+      </p>
     );
   };
 

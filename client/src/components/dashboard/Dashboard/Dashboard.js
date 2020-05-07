@@ -7,7 +7,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 const Dashboard = ({ user: { data, isFetching, errors } }) => {
   const content = isFetching ? (
-    <BeatLoader size={50} />
+    <BeatLoader size={25} />
   ) : (
     <>
       {data.accountType === "student" ? (

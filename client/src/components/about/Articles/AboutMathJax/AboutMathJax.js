@@ -17,7 +17,7 @@ const AboutMathJax = () => {
           <button onClick={() => setContent(content)}>{title}</button>
         ))}
       </div>
-      <TextareaAutosize
+      <input
         value={content}
         placeholder="Sprawdź z czego możesz skorzystać"
         onChange={(e) => {
@@ -39,9 +39,5 @@ const AboutMathJax = () => {
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  accountType: state.user.accountType,
-});
 
 export default AboutMathJax;

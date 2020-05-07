@@ -24,6 +24,7 @@ const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
     if (!variables.length) errors.push("Nie podano zmiennych");
     if (!model.trim().length) errors.push("Nie podano wzoru");
     if (!groups.length) errors.push("Nie podano grup");
+    if (groups.length > 20) errors.push("Maksymalnie 20 grup");
     if (!section.length || !classNew.length) errors.push("Nie wybrano działu");
     if (!points) errors.push("Nie wybrano punktów");
     if (!errors.length) {

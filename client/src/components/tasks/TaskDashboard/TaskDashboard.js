@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./TaskDashboard.module.scss";
 import TasksList from "../TasksList/TasksList";
 import NewTask from "../NewTask/NewTask";
+import Aside from "../../layout/Aside/Aside";
 import { availableClasses } from "../../../data/TaskDashboardConfig.js";
 import { taskSuccess } from "../../../redux/actions/tasks";
 import { connect } from "react-redux";
@@ -28,7 +29,7 @@ const TaskDashboard = ({ taskSuccess }) => {
     <div className={styles.root}>
       <NewTask />
       <div className={styles.wrapper}>
-        <div className={styles.asideWrapper}>
+        <Aside>
           <h2>Zadania</h2>
           <ul>
             {availableClasses.map(({ name, id, sections }, index) => (
@@ -63,7 +64,7 @@ const TaskDashboard = ({ taskSuccess }) => {
               </div>
             ))}
           </ul>
-        </div>
+        </Aside>
         <div className={styles.contentWrapper}>
           <TasksList classId={activeList} sectionId={activeSection} />
         </div>

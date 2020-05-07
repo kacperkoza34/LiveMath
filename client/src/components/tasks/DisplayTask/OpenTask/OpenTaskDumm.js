@@ -60,7 +60,7 @@ const OpenTaskDumm = ({
                 group={data.data.groups[randomIndex]}
               />
             </div>
-            <p>
+            <p className={styles.points}>
               <span>Punkty: {data.points}</span>
               <span>Ilość grup: {data.data.groups.length}</span>
             </p>

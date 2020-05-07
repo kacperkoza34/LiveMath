@@ -8,6 +8,7 @@ import TasksList from "../TasksList/TasksList.js";
 import ClassStatus from "../ClassStatus/ClassStatus.js";
 import SelectSection from "../SelectSection/SelectSection.js";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
+import Aside from "../../layout/Aside/Aside";
 import { connect } from "react-redux";
 import { getClasses } from "../../../redux/actions/classes";
 
@@ -29,7 +30,7 @@ const Classes = ({
         <BeatLoader />
       ) : (
         <div className={styles.root}>
-          <div className={styles.asideWrapper}>
+          <Aside>
             <h2>Klasy</h2>
             <ul>
               {classes.map(({ title, _id }, index) => (
@@ -47,7 +48,7 @@ const Classes = ({
               ))}
             </ul>
             <AddClass />
-          </div>
+          </Aside>
           <div className={styles.contentWrapper}>
             <div>
               {activeClass == null ? (

@@ -58,7 +58,7 @@ const DashboardTeacher = ({
               ))}
 
             {isFetching ? (
-              <BeatLoader size={50} />
+              <BeatLoader size={25} />
             ) : (
               <div className={styles.groups}>
                 {verified ? (

@@ -2,6 +2,11 @@
 @import "../../../styles/global.scss";
 
 .root {
+  color: $color-light;
+  z-index: 9999999999;
+  width: 100%;
+  position: static;
+
   .header {
     min-height: 60px;
     background: $color-primary;
@@ -13,6 +18,7 @@
   span:active {
     color: $color-light;
   }
+
   .navLinks {
     background: $color-primary;
     display: flex;

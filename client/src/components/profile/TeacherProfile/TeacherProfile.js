@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import styles from "./TeacherProfile.module.scss";
 import { connect } from "react-redux";
 import { getTeacher } from "../../../redux/actions/teacher";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -9,7 +10,7 @@ const TeacherProfile = ({ id, teacher: { isFetching, data }, getTeacher }) => {
     getTeacher(id);
   }, [id, getTeacher]);
   return (
-    <>
+    <div className={styles.root}>
       {isFetching ? (
         <BeatLoader />
       ) : (
@@ -20,7 +21,7 @@ const TeacherProfile = ({ id, teacher: { isFetching, data }, getTeacher }) => {
           <h3>Ilość klas: {data.classes}</h3>
         </>
       )}
-    </>
+    </div>
   );
 };
 

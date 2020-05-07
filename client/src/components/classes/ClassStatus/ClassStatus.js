@@ -11,7 +11,7 @@ const ClassStatus = ({ myId, classId, open, openClass, closeClass }) => {
     <div className={styles.root}>
       <div className={styles.wrapper}>
         {open ? (
-          <>
+          <div className={styles.status}>
             <div className={styles.copy}>
               <h5>Link do klasy</h5>
               <span>
@@ -25,11 +25,11 @@ const ClassStatus = ({ myId, classId, open, openClass, closeClass }) => {
                 />
               </span>
             </div>
-            <div className={styles.link}>
-              <h6>{`${window.location.origin}/register/${myId}/${classId}`}</h6>
-            </div>
+            <h5 className={styles.link}>
+              <span>{`${window.location.origin}/register/${myId}/${classId}`}</span>
+            </h5>
             <button onClick={() => closeClass(classId)}>Zamknij klase</button>
-          </>
+          </div>
         ) : (
           <button onClick={() => openClass(classId)}>Otwórz klase</button>
         )}

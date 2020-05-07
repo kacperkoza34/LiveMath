@@ -16,22 +16,28 @@ const NewTask = () => {
 
   return (
     <div className={styles.root}>
-      <button onClick={() => addTask()}>Dodaj zadanie</button>
-      <select
-        value={taskType}
-        onChange={(e) => {
-          setError(false);
-          setTaskType(e.target.value);
-        }}
-      >
-        <option value={""}>---</option>
-        <option value={"openTask"}>Zadanie otwarte</option>
-        <option value={"closeTask"}>Zadanie zamknięte</option>
-        <option value={"booleanTask"}>Zadanie prawda fałsz</option>
-      </select>
-      {valiadtionError && (
-        <div className={styles.warning}>Wybierz rodzaj zadania</div>
-      )}
+      <div className={styles.wrapper}>
+        <div>
+          <button onClick={() => addTask()}>Dodaj zadanie</button>
+          <select
+            value={taskType}
+            onChange={(e) => {
+              setError(false);
+              setTaskType(e.target.value);
+            }}
+          >
+            <option value={""}>---</option>
+            <option value={"openTask"}>Zadanie otwarte</option>
+            <option value={"closeTask"}>Zadanie zamknięte</option>
+            <option value={"booleanTask"}>Zadanie prawda fałsz</option>
+          </select>
+        </div>
+        <div>
+          {valiadtionError && (
+            <div className={styles.warning}>Wybierz rodzaj zadania</div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

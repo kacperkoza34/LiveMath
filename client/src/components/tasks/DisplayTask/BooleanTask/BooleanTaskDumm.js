@@ -56,7 +56,7 @@ const BooleanTaskDumm = ({
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>
-              <pre>{data.content}</pre>
+              <p>{data.content}</p>
             </div>
             <p className={styles.points}>Punkty: {data.points}</p>
           </div>

@@ -19,11 +19,10 @@ const Nav = ({
   const [mobileNav, setMobile] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth < 576) setMobile(true);
+    if (window.innerWidth < 768) setMobile(true);
     else setMobile(false);
     window.addEventListener("resize", () => {
-      console.log(window.innerWidth);
-      if (window.innerWidth < 576) setMobile(true);
+      if (window.innerWidth < 768) setMobile(true);
       else setMobile(false);
     });
   }, []);

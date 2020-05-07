@@ -88,7 +88,7 @@ const OpenTask = ({
                 group={data.data.groups[group]}
               />
             </div>
-            <p>
+            <p className={styles.points}>
               <span>Punkty: {countPoints(data.points)}</span>
             </p>
           </div>
