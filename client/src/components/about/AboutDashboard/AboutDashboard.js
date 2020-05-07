@@ -7,9 +7,9 @@ import AboutMathJax from "../Articles/AboutMathJax/AboutMathJax";
 const menuConfig = [
   { allowStudents: true, component: AboutMathJax, title: "MathJax" },
   { allowStudents: true, component: AboutMathJax, title: "MathJax" },
-  { allowStudents: true, component: AboutMathJax, title: "MathJax" },
-  { allowStudents: true, component: AboutMathJax, title: "MathJax" },
-  { allowStudents: true, component: AboutMathJax, title: "MathJax" },
+  { allowStudents: false, component: AboutMathJax, title: "MathJax" },
+  { allowStudents: false, component: AboutMathJax, title: "MathJax" },
+  { allowStudents: false, component: AboutMathJax, title: "MathJax" },
 ];
 
 const AboutDashboard = ({ accountType }) => {
@@ -84,7 +84,7 @@ AboutDashboard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  accountType: state.user.accountType,
+  accountType: state.user.data.accountType,
 });
 
 export default connect(mapStateToProps)(AboutDashboard);

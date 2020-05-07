@@ -6,10 +6,12 @@ import {
   LOGIN_SUCCESS,
   ALREDY_LOGGED,
   LOGOUT,
+  VERIFY_EMAIL,
   authError,
   loginSuccess,
   registerSuccess,
   loading,
+  verifySuccess,
 } from "../actions/auth";
 
 import { getUser, clearUser } from "../actions/user";
@@ -57,6 +59,21 @@ const auth = ({ dispatch }) => (next) => (action) => {
         "POST",
         url,
         loginSuccess,
+        authError,
+        action.payload,
+        configJson
+      )
+    );
+  }
+
+  if (action.type === VERIFY_EMAIL) {
+    const url = `/api/users/${action.payload}`;
+    dispatch(loading());
+    dispatch(
+      apiRequest(
+        "POST",
+        url,
+        verifySuccess,
         authError,
         action.payload,
         configJson

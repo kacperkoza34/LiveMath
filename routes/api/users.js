@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
+const nodemailer = require("nodemailer");
 
 const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
@@ -33,6 +34,12 @@ router.post(
     const { name, email, password } = req.body;
 
     try {
+      let teacher = await Teacher.findOne({ _id: req.params.id });
+      if (!teacher.verified)
+        return res.status(401).json({
+          err: [{ msg: "Link jest nieaktywny" }],
+        });
+
       // See if user exist
       let user = await Teacher.findOne({ email });
       if (req.params.id.toString() !== "firstline")
@@ -44,7 +51,7 @@ router.post(
         });
       }
 
-      // Get user gravatar
+      //Get user gravatar
 
       const avatar = gravatar.url(email, {
         s: "200",
@@ -85,6 +92,38 @@ router.post(
       await user.save();
       await userProfile.save();
 
+      //      let testAccount = await nodemailer.createTestAccount();
+
+      const tokenData = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      let verifyToken = await jwt.sign(tokenData, config.get("jwtSecret"), {
+        expiresIn: 360000,
+      });
+
+      console.log("after:", verifyToken);
+
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: config.get("email"), // generated ethereal user
+          pass: config.get("password"), // generated ethereal password
+        },
+      });
+
+      let info = await transporter.sendMail({
+        from: '"LiveMath" <foo@example.com>', // sender address
+        to: email, // list of receivers
+        subject: "Hello ✔", // Subject line
+        text: "Hello world?", // plain text body
+        html: `<b>Hello world?</b>
+        <b>Token veryfikacyjny:${verifyToken}</b>
+        `, // html body
+      });
+
       // Return jsonwebtoken
       const payload = {
         user: {
@@ -106,7 +145,7 @@ router.post(
       console.error(err);
       if (err.kind == "ObjectId")
         return res.status(400).json({ err: [{ msg: "Błędny link" }] });
-      res.status(500).send({ errors: [{ msg: "Błąd servera" }] });
+      res.status(500).send({ err: [{ msg: "Błąd servera" }] });
     }
   }
 );
@@ -130,6 +169,12 @@ router.post(
 
     try {
       // See if user exist
+      let teacher = await Teacher.findOne({ _id: req.params.id });
+      if (!teacher.verified)
+        return res.status(401).json({
+          err: [{ msg: "Link jest nieaktywny" }],
+        });
+
       let user = await Student.findOne({ email });
 
       if (user) {
@@ -214,5 +259,22 @@ router.post(
     }
   }
 );
+
+/// create profile if email verified
+router.post("/:token", async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.params.token, config.get("jwtSecret"));
+    let user = await Teacher.findOneAndUpdate(
+      { _id: decoded.user.id },
+      { verified: true }
+    );
+    res.json(decoded);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId")
+      return res.status(400).json({ err: [{ msg: "Błedny link" }] });
+    res.status(500).send({ err: [{ msg: "Server error" }] });
+  }
+});
 
 module.exports = router;

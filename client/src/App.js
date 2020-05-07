@@ -16,6 +16,7 @@ import AddOpenTask from "./components/tasks/AddTask/OpenTask/OpenTask";
 import AddCloseTask from "./components/tasks/AddTask/CloseTask/CloseTask";
 import AddBooleanTask from "./components/tasks/AddTask/BooleanTask/BooleanTask";
 import AboutDashboard from "./components/about/AboutDashboard/AboutDashboard";
+import VerifyEmail from "./components/auth/VerifyEmail/VerifyEmail";
 
 // Redux
 import { Provider } from "react-redux";
@@ -34,6 +35,7 @@ const App = () => {
             />
             <Route exact path="/register/:teacher" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/verify/:token" component={VerifyEmail} />
             <PrivateRoute exact path="/about" component={AboutDashboard} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <TeacherRoute exact path="/classes" component={Classes} />

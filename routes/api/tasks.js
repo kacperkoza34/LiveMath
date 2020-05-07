@@ -14,6 +14,7 @@ const StudentProfile = require("../../models/StudentProfile");
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
 const auth = require("../../middleware/auth");
+const verifiedTeacher = require("../../middleware/verifiedTeacher");
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -26,6 +27,7 @@ router.post(
   "/open",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("name", "Podaj zadania").not().isEmpty(),
       check("class", "Podaj klase od 1 do 8")
@@ -80,6 +82,7 @@ router.post(
   "/close",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("name", "Podaj zadania").not().isEmpty(),
       check("class", "Podaj klase od 1 do 8")
@@ -126,6 +129,7 @@ router.post(
   "/boolean",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("name", "Podaj zadania").not().isEmpty(),
       check("class", "Podaj klase od 1 do 8")
@@ -255,6 +259,7 @@ router.post(
   "/addOpenTask",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("classes", "Nie wybrano klas!").not().isEmpty(),
       check("taskId", "Nie wybrano zadania!").not().isEmpty(),
@@ -312,6 +317,7 @@ router.post(
   "/addCloseTask",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("classes", "Nie wybrano klas!").not().isEmpty(),
       check("taskId", "Nie wybrano zadania!").not().isEmpty(),
@@ -371,6 +377,7 @@ router.post(
   "/addBooleanTask",
   [
     authTeacher,
+    verifiedTeacher,
     [
       check("classes", "Nie wybrano klas!").not().isEmpty(),
       check("taskId", "Nie wybrano zadania!").not().isEmpty(),

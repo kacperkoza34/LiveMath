@@ -55,6 +55,8 @@ textarea {
   margin: 10px;
   padding: 20px;
   border: 1px solid;
+  transition: 0.4s;
+  transform: translateX(0);
 }
 
 .contentWrapper {
@@ -64,6 +66,7 @@ textarea {
   margin: 10px;
   padding: 20px;
   border: 1px solid;
+  transition: 0.4s;
 }
 
 .openTask {

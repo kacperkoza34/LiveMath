@@ -1,0 +1,25 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .wrapper {
+    min-height: 400px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+
+  h1 {
+    margin: 20px;
+  }
+
+  .btnRedirect {
+    text-decoration: underline;
+  }
+}

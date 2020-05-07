@@ -7,6 +7,8 @@ export const LOGOUT = "[auth] LOGOUT";
 export const AUTH_LOADING = "[auth] AUTH_LOADING";
 export const AUTH_ERROR = "[auth] AUTH_ERROR";
 export const CLEAR_ERRORS = "[auth] CLEAR_ERRORS";
+export const VERIFY_EMAIL = "[auth] VERIFY_EMAIL";
+export const VERIFY_SUCCESS = "[auth] VERIFY_SUCCESS";
 
 export const loading = () => ({
   type: AUTH_LOADING,
@@ -44,6 +46,15 @@ export const alreadyLogged = (payload) => ({
 
 export const logout = () => ({
   type: LOGOUT,
+});
+
+export const verifyEmail = (payload) => ({
+  type: VERIFY_EMAIL,
+  payload,
+});
+
+export const verifySuccess = () => ({
+  type: VERIFY_SUCCESS,
 });
 
 export const clearErrors = () => ({

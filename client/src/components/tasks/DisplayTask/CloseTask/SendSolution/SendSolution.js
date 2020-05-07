@@ -48,10 +48,16 @@ const SendSolution = ({
                 </div>
               ) : (
                 <div className={styles.send}>
-                  <button onClick={() => sendSolution(result)}>Prześlij</button>
-                  <button onClick={() => sendSolution(result, true)}>
-                    Wyślij prośbe o weryfikacje
-                  </button>
+                  <div>
+                    <button onClick={() => sendSolution(result)}>
+                      Prześlij
+                    </button>
+                  </div>
+                  <div>
+                    <button onClick={() => sendSolution(result, true)}>
+                      Wyślij prośbe o weryfikacje
+                    </button>
+                  </div>
                 </div>
               )}
             </>

@@ -6,6 +6,7 @@ import {
   ALREDY_LOGGED,
   LOGOUT,
   CLEAR_ERRORS,
+  VERIFY_SUCCESS,
 } from "../actions/auth";
 
 export default function reducer(statePart = [], action = {}) {
@@ -44,6 +45,12 @@ export default function reducer(statePart = [], action = {}) {
     case CLEAR_ERRORS:
       return {
         ...statePart,
+        errors: false,
+      };
+    case VERIFY_SUCCESS:
+      return {
+        ...statePart,
+        isFetching: false,
         errors: false,
       };
     default:

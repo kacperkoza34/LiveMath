@@ -27,6 +27,14 @@ router.post(
     }
 
     try {
+      let teacher = await Teacher.findOne({ _id: req.user.id });
+      if (!teacher.verified)
+        return res
+          .status(401)
+          .json({
+            err: [{ msg: "Konto nie zweryfikowane, potwierdź link w emailu" }],
+          });
+
       let teacherProfile = await TeacherProfile.findOne({
         user: req.user.id,
       }).populate("classes.class");
