@@ -3,15 +3,14 @@ import styles from "./BackArrow.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { withRouter } from "react-router";
 
-const BackArrow = () => {
+const BackArrow = ({ history }) => {
   return (
-    <div className={styles.root}>
-      <Link to="/dashboard">
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </Link>
+    <div onClick={() => history.goBack()} className={styles.root}>
+      <FontAwesomeIcon icon={faArrowLeft} />
     </div>
   );
 };
 
-export default BackArrow;
+export default withRouter(BackArrow);

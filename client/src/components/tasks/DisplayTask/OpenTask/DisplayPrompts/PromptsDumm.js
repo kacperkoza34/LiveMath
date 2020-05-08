@@ -23,9 +23,12 @@ const PromptsDumm = ({ model, variables }) => {
 
           <ul>
             {variables.map(({ variable, description }, index) => (
-              <li key={index}>
-                {variable + "  -  "}
-                {description}
+              <li className={styles.item} key={index}>
+                <div>
+                  <MathJax content={"`" + variable + "`"} />
+                  {" - "}
+                </div>{" "}
+                <MathJax content={description} />
               </li>
             ))}
           </ul>

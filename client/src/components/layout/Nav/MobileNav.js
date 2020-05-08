@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./MobileNav.module.scss";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,13 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const MobileNav = ({ navLinks, logo }) => {
   const [hidden, hide] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      hide(true);
+    });
+  }, []);
+
   return (
     <nav className={styles.root}>
       <div className={styles.header}>

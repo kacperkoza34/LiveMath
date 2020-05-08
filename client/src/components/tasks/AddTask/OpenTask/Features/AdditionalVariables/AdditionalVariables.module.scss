@@ -16,6 +16,12 @@
     border: 1px solid;
   }
 
+  .box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
   input {
     resize: none;
     width: 100%;
@@ -24,6 +30,10 @@
 
   table {
     width: 100%;
+  }
+
+  button {
+    margin-left: 10px;
   }
 
   .variable {

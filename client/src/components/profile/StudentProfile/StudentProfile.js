@@ -4,6 +4,7 @@ import styles from "./StudentProfile.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import { Line } from "rc-progress";
 import TasksList from "./TasksList";
+import BackArrow from "../../features/BackArrow/BackArrow";
 import { connect } from "react-redux";
 import { getStudent } from "../../../redux/actions/student";
 
@@ -13,20 +14,21 @@ const StudentProfile = ({
     isFetching,
     data: { name, tasksOpen, tasksBoolean, tasksClose, points, maxPoints },
   },
-  user,
+  user: { _id, accountType },
   getStudent,
   match,
 }) => {
   useEffect(() => {
     if (match) getStudent(match.params.id);
-    else getStudent(user);
-  }, [id, getStudent, user, match]);
+    else getStudent(_id);
+  }, [id, getStudent, _id, match]);
   return (
     <div className={styles.root}>
       {isFetching ? (
         <BeatLoader />
       ) : (
         <div>
+          {accountType == "teacher" && <BackArrow />}
           <div className={styles.profile}>
             <h3>{name}</h3>
             <span className={styles.result}>
@@ -56,7 +58,7 @@ StudentProfile.propTypes = {
 
 const mapStateToProps = (state) => ({
   student: state.student,
-  user: state.user.data._id,
+  user: state.user.data,
 });
 
 export default connect(mapStateToProps, { getStudent })(StudentProfile);

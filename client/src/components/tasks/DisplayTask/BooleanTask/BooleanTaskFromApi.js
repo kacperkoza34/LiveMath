@@ -4,7 +4,7 @@ import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import Errors from "../../../layout/Errors/Errors";
-import BackArrow from "../BackArrow/BackArrow";
+import BackArrow from "../../../features/BackArrow/BackArrow";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -80,7 +80,7 @@ const BooleanTaskFromApi = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          {accountType === "student" && <BackArrow />}
+          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>

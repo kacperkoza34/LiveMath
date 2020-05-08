@@ -5,11 +5,6 @@
     width: 100%;
   }
 
-  .status {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1;
-  }
   .link {
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -18,7 +13,6 @@
   }
 
   .copy {
-    width: 50%;
     display: flex;
     padding: 10px 0 10px 0;
 

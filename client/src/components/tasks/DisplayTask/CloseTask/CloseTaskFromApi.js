@@ -6,7 +6,7 @@ import MathJax from "../../MathJax";
 import SendSolution from "./SendSolution/SendSolution";
 import TextareaAutosize from "react-textarea-autosize";
 import ReviewTask from "../ReviewTask/ReviewTask";
-import BackArrow from "../BackArrow/BackArrow";
+import BackArrow from "../../../features/BackArrow/BackArrow";
 import Messages from "../Messages/Messages";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -86,7 +86,7 @@ const CloseTaskFromApi = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          {accountType === "student" && <BackArrow />}
+          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>

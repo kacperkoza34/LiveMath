@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
+import BackArrow from "../../../features/BackArrow/BackArrow";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -53,6 +54,7 @@ const BooleanTaskDumm = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
+          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>

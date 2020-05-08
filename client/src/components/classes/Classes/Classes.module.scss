@@ -2,9 +2,11 @@
 @import "../../../styles/global.scss";
 
 .root {
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  word-break: break-word;
 }
 
 @media (max-width: 768px) {

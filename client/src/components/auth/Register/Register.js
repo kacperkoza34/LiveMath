@@ -58,6 +58,7 @@ const Register = ({
           <div className="form-group">
             <h4>Podaj swoją nazwe</h4>
             <input
+              autocomplete="off"
               type="text"
               placeholder="Name"
               name="name"
@@ -69,6 +70,7 @@ const Register = ({
           <div className="form-group">
             <h4>Email</h4>
             <input
+              autocomplete="off"
               type="email"
               placeholder="Email Address"
               name="email"
@@ -80,6 +82,7 @@ const Register = ({
           <div className="form-group">
             <h4>Hasło</h4>
             <input
+              autocomplete="off"
               type="password"
               placeholder="Password"
               name="password"
@@ -92,6 +95,7 @@ const Register = ({
           <div className="form-group">
             <h4>Potwierdź hasło</h4>
             <input
+              autocomplete="off"
               type="password"
               placeholder="Confirm Password"
               name="password2"

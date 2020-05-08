@@ -11,7 +11,7 @@ const ClassStatus = ({ myId, classId, open, openClass, closeClass }) => {
     <div className={styles.root}>
       <div className={styles.wrapper}>
         {open ? (
-          <div className={styles.status}>
+          <div>
             <div className={styles.copy}>
               <h5>Link do klasy</h5>
               <span>

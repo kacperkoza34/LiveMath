@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./AboutDashboard.module.scss";
 import { connect } from "react-redux";
@@ -24,8 +24,12 @@ const menuConfig = [
   { allowStudents: false, component: AboutMathJax, title: "MathJax" },
 ];
 
-const AboutDashboard = ({ accountType }) => {
+const AboutDashboard = ({ accountType, match }) => {
   const [activePage, setActivePage] = useState(0);
+
+  useEffect(() => {
+    setActivePage(match.params.page - 1);
+  }, []);
 
   const renderArticle = (block, index) => {
     if (typeof block.component !== "undefined") {

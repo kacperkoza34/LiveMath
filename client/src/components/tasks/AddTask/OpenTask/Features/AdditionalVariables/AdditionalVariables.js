@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./AdditionalVariables.module.scss";
+import MathJax from "../../../../MathJax";
 import { connect } from "react-redux";
 import {
   addAddVariable,
@@ -50,7 +51,18 @@ const AdditionalVariables = ({
   return (
     variables.length > 0 && (
       <div className={styles.root}>
-        <h3>Dodaj pomocnicze zmienne</h3>
+        <h3>
+          Dodaj pomocnicze zmienne{" "}
+          <button
+            onClick={() =>
+              setFormData({
+                description: formData.description + "`" + "2/3+(3*3)/9" + "`",
+              })
+            }
+          >
+            Umieść wzór w opisie
+          </button>
+        </h3>
         <form className={styles.addFrom} onSubmit={(e) => onSubmit(e)}>
           <table>
             <thead>
@@ -61,11 +73,10 @@ const AdditionalVariables = ({
             </thead>
           </table>
           <table>
-            <tbody>
+            <thead>
               <tr>
                 <td className={styles.variable}>
                   <input
-                    className={styles.variable}
                     name={"variable"}
                     placeholder="Zmienna"
                     value={formData.variable}
@@ -74,7 +85,6 @@ const AdditionalVariables = ({
                   />
                 </td>
                 <td>
-                  {" "}
                   <input
                     name={"description"}
                     placeholder="Opis"
@@ -84,8 +94,11 @@ const AdditionalVariables = ({
                   />
                 </td>
               </tr>
-            </tbody>
+            </thead>
           </table>
+          <div className={styles.box}>
+            <MathJax content={formData.description} />
+          </div>
           <button>Dodaj</button>
         </form>
         {error.length > 0 && error}
@@ -107,7 +120,9 @@ const AdditionalVariables = ({
                     <tbody>
                       <tr>
                         <td className={styles.variable}>{variable}</td>
-                        <td className={styles.description}>{description}</td>
+                        <td className={styles.description}>
+                          <MathJax content={description} />
+                        </td>
                       </tr>
                       <tr>
                         <button

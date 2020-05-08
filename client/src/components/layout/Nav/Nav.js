@@ -31,7 +31,7 @@ const Nav = ({
     accountType === "teacher" ? (
       <>
         <li>
-          <Link to="/about">Pomoc</Link>
+          <Link to="/about/1">Pomoc</Link>
         </li>
         <li>
           <Link to="/classes">Klasy</Link>
@@ -51,7 +51,7 @@ const Nav = ({
     ) : (
       <>
         <li>
-          <Link to="/about">Pomoc</Link>
+          <Link to="/about/1">Pomoc</Link>
         </li>
         <li>
           <Link to="/dashboard">Zadania </Link>

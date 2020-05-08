@@ -1,0 +1,11 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
+
+.root {
+  padding: 5px;
+  margin: 5px;
+  font-size: 20px;
+}
+.root:hover {
+  cursor: pointer;
+}
