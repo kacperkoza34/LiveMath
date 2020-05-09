@@ -18,6 +18,7 @@
 
   .box {
     width: 100%;
+    margin: 10px 0;
     display: flex;
     justify-content: space-between;
   }
@@ -33,15 +34,10 @@
   }
 
   button {
-    margin-left: 10px;
   }
 
   .variable {
     width: 65px;
-  }
-
-  .description {
-    border-bottom: 1px solid;
   }
 
   .varList {
@@ -49,6 +45,7 @@
   }
 
   .listElement {
+    margin: 20px 0;
     position: relative;
   }
   .delete {

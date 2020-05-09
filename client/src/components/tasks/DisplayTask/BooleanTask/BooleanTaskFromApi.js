@@ -4,7 +4,6 @@ import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import Errors from "../../../layout/Errors/Errors";
-import BackArrow from "../../../features/BackArrow/BackArrow";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -80,7 +79,6 @@ const BooleanTaskFromApi = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>
@@ -90,7 +88,16 @@ const BooleanTaskFromApi = ({
           </div>
           <ul>
             {data.data.map(({ content, answer: correctAnswer }, i) => (
-              <li key={i} className={styles.item}>
+              <li
+                key={i}
+                className={
+                  resolved
+                    ? answer[`${i}`] === correctAnswer
+                      ? [styles.item, styles.succesBgColor].join(" ")
+                      : [styles.item, styles.failBgColor].join(" ")
+                    : styles.item
+                }
+              >
                 <div className={styles.questionBox}>
                   <div>
                     {`${i + 1}). `}

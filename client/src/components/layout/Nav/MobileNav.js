@@ -16,16 +16,19 @@ const MobileNav = ({ navLinks, logo }) => {
   return (
     <nav className={styles.root}>
       <div className={styles.header}>
-        <h3>{logo}</h3>
+        <h3 onClick={() => hide(true)}>{logo}</h3>
         <span>
           <FontAwesomeIcon icon={faBars} onClick={() => hide(!hidden)} />
         </span>
       </div>
-      {!hidden && (
-        <ul onClick={() => hide(true)} className={styles.navLinks}>
-          {navLinks}
-        </ul>
-      )}
+      <ul
+        onClick={() => hide(true)}
+        className={
+          !hidden ? [styles.navLinks, styles.active].join(" ") : styles.navLinks
+        }
+      >
+        {navLinks}
+      </ul>
     </nav>
   );
 };

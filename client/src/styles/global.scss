@@ -33,6 +33,22 @@ textarea {
   border-bottom: 1px solid;
 }
 
+#topl,
+#topr {
+  -webkit-position: relative;
+  position: relative;
+  -webkit-z-index: 1;
+  z-index: 1;
+}
+
+.spaceBetween {
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .btnList {
   padding: 6px;
   margin: 2px;
@@ -47,6 +63,14 @@ textarea {
   margin: 2px;
   cursor: pointer;
   background: $color-background;
+}
+
+.failBgColor {
+  background: $task-fail-bg;
+}
+
+.succesBgColor {
+  background: $task-success-bg;
 }
 
 .contentWrapper {

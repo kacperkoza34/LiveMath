@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
-import BackArrow from "../../../features/BackArrow/BackArrow";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -54,7 +53,6 @@ const BooleanTaskDumm = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>
@@ -65,7 +63,16 @@ const BooleanTaskDumm = ({
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
-                <li key={i} className={styles.item}>
+                <li
+                  key={i}
+                  className={
+                    checkAnswers
+                      ? answer === taskStatus[`${i}`]
+                        ? [styles.item, styles.succesBgColor].join(" ")
+                        : [styles.item, styles.failBgColor].join(" ")
+                      : styles.item
+                  }
+                >
                   <div className={styles.questionBox}>
                     <div>
                       {`${i + 1}). `}

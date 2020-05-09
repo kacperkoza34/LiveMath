@@ -5,7 +5,6 @@ import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from "./DisplayContent/DisplayContent";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import PromptsDumm from "./DisplayPrompts/PromptsDumm";
-import BackArrow from "../../../features/BackArrow/BackArrow";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
@@ -52,7 +51,6 @@ const OpenTaskDumm = ({
         <BeatLoader size={20} />
       ) : (
         <>
-          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>

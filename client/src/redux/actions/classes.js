@@ -8,6 +8,7 @@ export const UPDATE_CLASS = "[class] UPDATE_CLASS";
 export const ADD_CLASS = "[class] ADD_CLASS";
 export const ADD_CLASS_TO_STATE = "[class] ADD_CLASS_TO_STATE";
 export const CLEAR_CLASSES = "[class] CLEAR_CLASSES";
+export const SET_CURRENT_CLASS = "[class] SET_CURRENT_CLASS";
 
 export const getClasses = () => ({
   type: GET_CLASSES,
@@ -49,6 +50,11 @@ export const addClass = (payload) => ({
 
 export const addClassToState = (payload) => ({
   type: ADD_CLASS_TO_STATE,
+  payload,
+});
+
+export const setCurrentClass = (payload) => ({
+  type: SET_CURRENT_CLASS,
   payload,
 });
 

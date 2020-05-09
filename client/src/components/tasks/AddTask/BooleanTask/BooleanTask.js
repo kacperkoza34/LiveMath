@@ -7,6 +7,9 @@ import Success from "../AddTaskCommon/Success/Success.js";
 import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
 
 import AddQuestion from "./AddQuestion.js";
+
+import BackArrow from "../../../features/BackArrow/BackArrow.js";
+
 import { connect } from "react-redux";
 import { clearTask, sendBooleanTask } from "../../../../redux/actions/newTask";
 import { clearTasks } from "../../../../redux/actions/tasks";
@@ -22,6 +25,7 @@ const CloseTask = ({ clearTask, clearTasks, success, sendBooleanTask }) => {
         <Success success={success} clearTasks={clearTasks} />
       ) : (
         <>
+          <BackArrow />
           <TaskContent />
           <AddQuestion />
           <SelectSection />

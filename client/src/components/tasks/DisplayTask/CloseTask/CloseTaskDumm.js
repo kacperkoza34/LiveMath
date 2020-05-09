@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./CloseTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
-import BackArrow from "../../../features/BackArrow/BackArrow";
 import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import TextareaAutosize from "react-textarea-autosize";
@@ -51,7 +50,6 @@ const CloseTaskDumm = ({
       ) : (
         <>
           {taskStatus === null && prepareState()}
-          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>
@@ -62,7 +60,16 @@ const CloseTaskDumm = ({
           {taskStatus && (
             <ul>
               {data.data.map(({ content, answer }, i) => (
-                <li key={i} className={styles.listElement}>
+                <li
+                  key={i}
+                  className={
+                    checkAnswers
+                      ? taskStatus[`${i}`] === answer
+                        ? [styles.listElement, styles.succesBgColor].join(" ")
+                        : [styles.listElement, styles.failBgColor].join(" ")
+                      : styles.listElement
+                  }
+                >
                   <div className={styles.order}>
                     {`${i + 1}). `}
                     <MathJax content={"`" + content + "`"} />

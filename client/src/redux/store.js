@@ -56,6 +56,7 @@ const initialState = {
     data: [],
     isFetching: true,
     errors: false,
+    currentClass: null,
   },
   smallLoading: false,
   student: {
@@ -68,6 +69,7 @@ const initialState = {
     taskConfig: {},
     isFetching: false,
     errors: false,
+    currentTasks: { class: null, section: null },
   },
   newTask: {
     data: {

@@ -8,7 +8,6 @@ import Messages from "../Messages/Messages";
 import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import ReviewTask from "../ReviewTask/ReviewTask";
-import BackArrow from "../../../features/BackArrow/BackArrow";
 import MathJax from "../../MathJax";
 import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
@@ -78,7 +77,6 @@ const OpenTask = ({
         <>
           {correctAnswer == null &&
             setCorrectAnswer(data.data.groups[group].answer)}
-          <BackArrow />
           <div className={styles.header}>
             <div>
               <h4>{data.name}</h4>

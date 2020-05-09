@@ -1,58 +1,80 @@
 @import "../../../styles/settings.scss";
 
-.root {
-  z-index: 999999;
-  .asideWrapper {
-    width: 200px;
-    height: 500px;
-    background: #fff;
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid;
-    position: relative;
-    .list {
-      height: 100%;
-      width: 100%;
-      overflow-y: scroll;
-      overflow-x: hidden;
+.aside {
+  .root {
+    z-index: 999999;
+    transition: 0.4s;
+
+    .asideWrapper {
+      width: 200px;
+      height: 500px;
+      background: #fff;
+      margin: 10px;
+      padding: 20px;
+      border: 1px solid;
+      position: relative;
+      .list {
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+    }
+
+    .control {
+      display: none;
+      transition: 0.4s;
+    }
+
+    .controlActive {
+      transition: 0.4s;
     }
   }
-  .control {
-    display: none;
+
+  .active {
     transition: 0.4s;
   }
 }
 
 @media (max-width: 768px) {
-  .root {
-    position: fixed;
-    left: -200px;
-    top: 0;
-    bottom: 0;
+  .aside {
+    .root {
+      position: fixed;
+      left: -200px;
+      top: 0;
+      bottom: 0;
 
-    .asideWrapper {
-      position: relative;
-      height: 100vh;
-      margin: 0;
-      z-index: 222;
+      .asideWrapper {
+        position: relative;
+        height: 100vh;
+        margin: 0;
+        z-index: 222;
+      }
+      .control {
+        display: block;
+        position: absolute;
+        top: 30%;
+        bottom: 70%;
+        right: -20px;
+        width: 20px;
+        height: 40vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+      }
+
+      .control:hover {
+        cursor: pointer;
+        color: $color-primary;
+      }
     }
-    .control {
-      display: block;
-      position: absolute;
-      top: 30%;
-      bottom: 70%;
-      right: 0;
-      width: 20px;
-      height: 40vh;
+    .active {
       transform: translateX(100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
     }
 
-    .control:hover {
-      cursor: pointer;
+    .controlActive {
+      transform: rotate(180deg);
     }
   }
 }

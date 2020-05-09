@@ -56,6 +56,7 @@ const AdditionalVariables = ({
           <button
             onClick={() =>
               setFormData({
+                ...formData,
                 description: formData.description + "`" + "2/3+(3*3)/9" + "`",
               })
             }
@@ -96,9 +97,22 @@ const AdditionalVariables = ({
               </tr>
             </thead>
           </table>
-          <div className={styles.box}>
-            <MathJax content={formData.description} />
-          </div>
+          {formData.description.length > 0 && (
+            <div className={styles.varList}>
+              <div className={styles.listElement}>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className={styles.variable}>{formData.variable}</td>
+                      <td className={styles.description}>
+                        <MathJax content={formData.description} />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
           <button>Dodaj</button>
         </form>
         {error.length > 0 && error}
@@ -120,7 +134,7 @@ const AdditionalVariables = ({
                     <tbody>
                       <tr>
                         <td className={styles.variable}>{variable}</td>
-                        <td className={styles.description}>
+                        <td>
                           <MathJax content={description} />
                         </td>
                       </tr>

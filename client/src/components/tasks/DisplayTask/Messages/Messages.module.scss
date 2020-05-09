@@ -7,10 +7,11 @@
   background-color: $color-light;
   border: 1px solid;
 
-  pre {
-    padding: 20px;
-  }
   .message {
     background: $color-background;
+    pre {
+      white-space: pre-wrap;
+      padding: 20px;
+    }
   }
 }

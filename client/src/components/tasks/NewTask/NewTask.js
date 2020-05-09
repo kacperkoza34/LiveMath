@@ -12,7 +12,7 @@ const NewTask = () => {
     else setError(true);
   };
 
-  if (taskType && redirect) return <Redirect to={`/add/${taskType}`} />;
+  if (taskType && redirect) return <Redirect push to={`/add/${taskType}`} />;
 
   return (
     <div className={styles.root}>

@@ -31,9 +31,9 @@ const DisplayPrompts = ({
               <ul>
                 {variables.map(({ variable, description }, index) => (
                   <li className={styles.item} key={index}>
-                    <div>
+                    <div className={styles.varName}>
                       <MathJax content={"`" + variable + "`"} />
-                      {" - "}
+                      <div style={{ margin: "0 8px 0 8px" }}>{"  -  "}</div>
                     </div>
                     <MathJax content={description} />
                   </li>
@@ -42,11 +42,11 @@ const DisplayPrompts = ({
             </>
           )}
           {usedPrompts === 2 && (
-            <>
+            <div className={styles.item}>
               {" "}
               <h4>Wzór:</h4>
               <MathJax content={"`" + model + "`"} />
-            </>
+            </div>
           )}
         </div>
       )}

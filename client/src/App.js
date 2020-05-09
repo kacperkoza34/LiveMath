@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout/MainLayout";
 import Login from "./components/auth/Login/Login";

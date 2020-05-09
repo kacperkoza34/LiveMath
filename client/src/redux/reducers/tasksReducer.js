@@ -4,6 +4,8 @@ import {
   TASKS_ERROR,
   CLEAR_TASKS,
   SET_TASK_CONFIG,
+  SET_CURRENT_CLASS,
+  SET_CURRENT_SECTION,
 } from "../actions/tasks";
 
 import {
@@ -86,6 +88,23 @@ export default function reducer(statePart = [], action = {}) {
           toUpdate: false,
           resolved: action.payload.resolved ? true : false,
           messages: [...statePart.taskConfig.messages, action.payload.message],
+        },
+      };
+
+    case SET_CURRENT_CLASS:
+      return {
+        ...statePart,
+        currentTasks: {
+          ...statePart.currentTasks,
+          class: action.payload,
+        },
+      };
+    case SET_CURRENT_SECTION:
+      return {
+        ...statePart,
+        currentTasks: {
+          ...statePart.currentTasks,
+          section: action.payload,
         },
       };
     default:

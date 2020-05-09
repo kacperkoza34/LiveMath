@@ -5,6 +5,7 @@ import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
 import SelectSection from "../AddTaskCommon/SelectSection/SelectSection.js";
 import Success from "../AddTaskCommon/Success/Success.js";
 
+import BackArrow from "../../../features/BackArrow/BackArrow.js";
 import VariabelsList from "./Features/VariabelsList/VariabelsList.js";
 import Model from "./Features/Model/Model.js";
 import AdditionalVariables from "./Features/AdditionalVariables/AdditionalVariables.js";
@@ -27,6 +28,7 @@ const OpenTask = ({ clearTask, clearTasks, success }) => {
         <Success success={success} clearTasks={clearTasks} />
       ) : (
         <>
+          <BackArrow />
           <TaskContent />
           <VariabelsList />
           <AdditionalVariables />

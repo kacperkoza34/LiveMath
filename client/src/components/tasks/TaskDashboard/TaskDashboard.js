@@ -5,25 +5,32 @@ import TasksList from "../TasksList/TasksList";
 import NewTask from "../NewTask/NewTask";
 import Aside from "../../layout/Aside/Aside";
 import { availableClasses } from "../../../data/TaskDashboardConfig.js";
-import { taskSuccess } from "../../../redux/actions/tasks";
 import { connect } from "react-redux";
+import {
+  taskSuccess,
+  setCurrentClass,
+  setCurrentSection,
+} from "../../../redux/actions/tasks";
 
-const TaskDashboard = ({ taskSuccess }) => {
+const TaskDashboard = ({
+  taskSuccess,
+  currentSection,
+  currentClass,
+  setCurrentClass,
+  setCurrentSection,
+}) => {
   useEffect(() => {
     taskSuccess({});
   }, [taskSuccess]);
 
-  const [activeList, setActiveList] = useState(null);
-  const [activeSection, setActiveSection] = useState(null);
-
   const hideSections = () => {
-    setActiveList(null);
-    setActiveSection(null);
+    setCurrentClass(null);
+    setCurrentSection(null);
   };
 
   const setList = (id) => {
-    setActiveList(id);
-    setActiveSection(null);
+    setCurrentClass(id);
+    setCurrentSection(null);
   };
   return (
     <div className={styles.root}>
@@ -36,25 +43,25 @@ const TaskDashboard = ({ taskSuccess }) => {
               <div key={index}>
                 <li
                   className={
-                    id === activeList ? styles.btnListActive : styles.btnList
+                    id === currentClass ? styles.btnListActive : styles.btnList
                   }
                   onClick={() => {
-                    id === activeList ? hideSections() : setList(id);
+                    id === currentClass ? hideSections() : setList(id);
                   }}
                 >
                   <span>{name}</span>
                 </li>
-                {id === activeList && (
+                {id === currentClass && (
                   <ul className={styles.subList}>
                     {sections.map((section, index) => (
                       <li
                         key={index}
                         className={
-                          activeSection === section.id
+                          currentSection === section.id
                             ? styles.btnListActive
                             : styles.btnList
                         }
-                        onClick={() => setActiveSection(section.id)}
+                        onClick={() => setCurrentSection(section.id)}
                       >
                         {section.name}
                       </li>
@@ -66,7 +73,7 @@ const TaskDashboard = ({ taskSuccess }) => {
           </ul>
         </Aside>
         <div className={styles.contentWrapper}>
-          <TasksList classId={activeList} sectionId={activeSection} />
+          <TasksList classId={currentClass} sectionId={currentSection} />
         </div>
       </div>
     </div>
@@ -75,6 +82,17 @@ const TaskDashboard = ({ taskSuccess }) => {
 
 TaskDashboard.propTypes = {
   taskSuccess: PropTypes.func.isRequired,
+  currentClass: PropTypes.string,
+  currentSection: PropTypes.string,
 };
 
-export default connect(null, { taskSuccess })(TaskDashboard);
+const mapStateToProps = (state) => ({
+  currentSection: state.tasks.currentTasks.section,
+  currentClass: state.tasks.currentTasks.class,
+});
+
+export default connect(mapStateToProps, {
+  taskSuccess,
+  setCurrentClass,
+  setCurrentSection,
+})(TaskDashboard);

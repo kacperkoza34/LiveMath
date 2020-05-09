@@ -63,6 +63,7 @@ export default function reducer(statePart = [], action = {}) {
       };
     case CLEAR_TASK:
       return {
+        ...statePart,
         data: {
           classes: [],
           deadLine: "",

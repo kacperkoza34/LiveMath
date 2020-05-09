@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BooleanTaskDumm from "./BooleanTaskDumm";
 import BooleanTaskFromApi from "./BooleanTaskFromApi";
+import BackArrow from "../../../features/BackArrow/BackArrow";
+import Help from "../../../features/Help/Help";
+
 import { connect } from "react-redux";
 
 const BooleanTask = ({
@@ -11,6 +14,10 @@ const BooleanTask = ({
 }) => {
   return (
     <div className={styles.root}>
+      <div className={styles.spaceBetween}>
+        <BackArrow />
+        <Help id={4} />
+      </div>
       {Object.keys(taskConfig).length > 0 ? (
         <BooleanTaskFromApi match={match} />
       ) : (

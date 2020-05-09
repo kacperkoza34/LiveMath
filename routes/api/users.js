@@ -38,11 +38,12 @@ router.post(
       // See if user exist
       let user = await Teacher.findOne({ email });
       if (req.params.id.toString() !== "firstline") {
-        if (!teacher.verified)
-          return res.status(401).json({
-            err: [{ msg: "Link jest nieaktywny" }],
-          });
-        await Teacher.findOne({ _id: req.params.id });
+        if (user) {
+          if (!user.verified)
+            return res.status(401).json({
+              err: [{ msg: "Link jest nieaktywny" }],
+            });
+        }
       }
 
       if (user) {
@@ -159,7 +160,7 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, accountType: "teacher" });
         }
       );
     } catch (err) {
@@ -269,7 +270,7 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, accountType: "student" });
         }
       );
     } catch (err) {

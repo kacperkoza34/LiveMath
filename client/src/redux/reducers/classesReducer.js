@@ -5,6 +5,7 @@ import {
   UPDATE_CLASS,
   ADD_CLASS_TO_STATE,
   CLEAR_CLASSES,
+  SET_CURRENT_CLASS,
 } from "../actions/classes";
 
 export default function reducer(statePart = [], action = {}) {
@@ -46,6 +47,11 @@ export default function reducer(statePart = [], action = {}) {
         loading: false,
         data: [...statePart.data, action.payload],
         errors: false,
+      };
+    case SET_CURRENT_CLASS:
+      return {
+        ...statePart,
+        currentClass: action.payload,
       };
     case CLEAR_CLASSES:
       return {

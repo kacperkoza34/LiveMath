@@ -11,6 +11,7 @@ const ReviewTask = ({
   dispatch,
   correctAnswer,
   correctAnswers,
+  studentAnswers,
 }) => {
   const [message, setMessage] = useState("");
   const [accept, setAccept] = useState(false);
@@ -36,7 +37,16 @@ const ReviewTask = ({
             <h5>Poprawne odpowiedzi: </h5>
             <ul>
               {correctAnswers.map(({ answer }, index) => (
-                <li key={index}>{`${index + 1}. ${answer}`}</li>
+                <li
+                  className={
+                    answer === studentAnswers[index]
+                      ? styles.succesBgColor
+                      : styles.failBgColor
+                  }
+                  key={index}
+                >{`${index + 1}.  ${answer} => uczeń: ${
+                  studentAnswers[index]
+                }`}</li>
               ))}
             </ul>
           </>

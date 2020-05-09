@@ -10,18 +10,18 @@ import SelectSection from "../SelectSection/SelectSection.js";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
 import Aside from "../../layout/Aside/Aside";
 import { connect } from "react-redux";
-import { getClasses } from "../../../redux/actions/classes";
+import { getClasses, setCurrentClass } from "../../../redux/actions/classes";
 
 const Classes = ({
   getClasses,
-  classes: { isFetching, data: classes, errors },
+  classes: { isFetching, data: classes, errors, currentClass },
   myId,
+  setCurrentClass,
 }) => {
   useEffect(() => {
     getClasses();
   }, [getClasses]);
 
-  const [activeClass, setActiveClass] = useState(null);
   const [activePage, setActivePage] = useState(1);
 
   return (
@@ -37,10 +37,10 @@ const Classes = ({
                 <li
                   key={index}
                   className={
-                    activeClass === _id ? styles.btnListActive : styles.btnList
+                    currentClass === _id ? styles.btnListActive : styles.btnList
                   }
                   onClick={() => {
-                    setActiveClass(_id);
+                    setCurrentClass(_id);
                   }}
                 >
                   {title}
@@ -51,7 +51,7 @@ const Classes = ({
           </Aside>
           <div className={styles.contentWrapper}>
             <div>
-              {activeClass == null ? (
+              {currentClass == null ? (
                 <h5>Wybierz klase...</h5>
               ) : (
                 <>
@@ -69,7 +69,7 @@ const Classes = ({
                       },
                       index
                     ) =>
-                      _id === activeClass && (
+                      _id === currentClass && (
                         <div key={index}>
                           <h3>{title}</h3>
                           {students.length === maxStudentsAmount ? (
@@ -123,4 +123,6 @@ const mapStateToProps = (state) => ({
   myId: state.user.data._id,
 });
 
-export default connect(mapStateToProps, { getClasses })(Classes);
+export default connect(mapStateToProps, { getClasses, setCurrentClass })(
+  Classes
+);
