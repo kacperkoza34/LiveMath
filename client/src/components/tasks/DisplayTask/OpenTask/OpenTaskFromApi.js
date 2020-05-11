@@ -61,11 +61,12 @@ const OpenTask = ({
     if (usedPrompts === 2) return (points / 4).toPrecision(2);
   };
 
-  const sendSolution = (toUpdate = false) => {
+  const sendSolution = (toUpdate = false, message) => {
     if (descriptionRequired && !description.length) setError("Wymagany opis!");
     else {
-      if (toUpdate) sendOpenTaskResolution({ ...taskConfig, toUpdate: true });
-      else sendOpenTaskResolution({ ...taskConfig });
+      if (toUpdate)
+        sendOpenTaskResolution({ ...taskConfig, toUpdate: true, message });
+      else sendOpenTaskResolution({ ...taskConfig, message });
     }
   };
 

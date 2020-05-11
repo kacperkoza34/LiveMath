@@ -275,6 +275,7 @@ router.post(
     }
 
     try {
+      let teacher = await Teacher.findOne({ _id: req.user.id });
       let task = await TaskOpen.findOne({ _id: req.body.taskId });
       const groupsLength = task.data.groups.length;
 
@@ -298,7 +299,10 @@ router.post(
             descriptionRequired: req.body.descriptionRequired,
             task: req.body.taskId,
             group: getRandomIntInclusive(0, groupsLength - 1),
-            messages: req.body.message.length > 0 ? [req.body.message] : [],
+            messages:
+              req.body.message.length > 0
+                ? [{ message: req.body.message, author: teacher.name }]
+                : [],
           });
           await studentProfile.save();
         });
@@ -332,6 +336,9 @@ router.post(
     }
 
     try {
+      let teacher = await Teacher.findOne({ _id: req.user.id });
+      console.log(teacher);
+      console.log(req.user.id);
       let task = await TaskClose.findOne({ _id: req.body.taskId });
 
       const answers = {};
@@ -358,7 +365,10 @@ router.post(
             deadLine: req.body.deadLine,
             task: req.body.taskId,
             descriptionRequired: req.body.descriptionRequired,
-            messages: req.body.message.length > 0 ? [req.body.message] : [],
+            messages:
+              req.body.message.length > 0
+                ? [{ message: req.body.message, author: teacher.name }]
+                : [],
           });
           await studentProfile.save();
         });
@@ -434,7 +444,6 @@ router.post(
 router.put("/:taskId", authStudent, async (req, res) => {
   try {
     let profile = await StudentProfile.findOne({ user: req.user.id });
-    console.log(profile.tasksOpen);
     profile.tasksOpen.map((item) => {
       if (item._id.toString() === req.params.taskId.toString()) {
         item.usedPrompts++;

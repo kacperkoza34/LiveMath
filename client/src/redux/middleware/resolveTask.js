@@ -9,7 +9,7 @@ import {
   REVIEW_OPEN_TASK,
   REVIEW_OPEN_TASK_SUCCESS,
   REVIEW_CLOSE_TASK,
-  REVIEW_CLOSE_TASK_SUCCESS,
+  REVIEW_TASK_SUCCESS,
   updatePrompt,
   taskResolved,
   reviewOpenTaskSuccess,
@@ -109,8 +109,7 @@ const resolveTask = ({ dispatch }) => (next) => (action) => {
     action.type === UPDATE_PROMPT ||
     action.type === TASKS_ERROR ||
     action.type === TASKS_RESOLVED ||
-    action.type === REVIEW_OPEN_TASK_SUCCESS ||
-    action.type === REVIEW_CLOSE_TASK_SUCCESS
+    action.type === REVIEW_TASK_SUCCESS
   ) {
     dispatch(smallLoadingStop());
   }

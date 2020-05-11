@@ -69,12 +69,13 @@ const CloseTaskFromApi = ({
     return `Wynik: ${result}/${Object.keys(taskStatus).length}`;
   };
 
-  const sendSolution = (result, toUpdate = false) => {
+  const sendSolution = (result, toUpdate = false, message) => {
     if (descriptionRequired && !description.length) setError("Wymagany opis!");
     else {
       if (toUpdate)
-        sendCloseTaskResolution({ ...taskConfig, toUpdate, result });
-      else sendCloseTaskResolution({ ...taskConfig, toUpdate, result });
+        sendCloseTaskResolution({ ...taskConfig, toUpdate, result, message });
+      else
+        sendCloseTaskResolution({ ...taskConfig, toUpdate, result, message });
     }
   };
 

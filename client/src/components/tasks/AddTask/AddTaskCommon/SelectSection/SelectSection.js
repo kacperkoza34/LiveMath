@@ -20,7 +20,8 @@ const SelectSection = ({ addClass, addSection }) => {
     setCurrentSection(e.target.value);
     addSection(e.target.value);
   };
-
+  console.log(currentClass);
+  console.log(currentSection);
   return (
     <div className={styles.root}>
       <h5>Wybierz klase i dział</h5>
@@ -46,7 +47,7 @@ const SelectSection = ({ addClass, addSection }) => {
       >
         <option value={""}>---</option>
         {currentClass &&
-          availableClasses[currentClass - 1].sections.map(({ name, id }) => (
+          availableClasses[currentClass].sections.map(({ name, id }) => (
             <option key={id} value={id}>
               {name}
             </option>

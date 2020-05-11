@@ -11,11 +11,9 @@ export const SEND_BOOLEAN_TASK_RESOLUTION =
   "[RESOLVE_TASK] SEND_BOOLEAN_TASK_RESOLUTION";
 export const TASKS_RESOLVED = "[RESOLVE_TASK] TASKS_RESOLVED";
 export const REVIEW_OPEN_TASK = "[RESOLVE_TASK] REVIEW_OPEN_TASK";
-export const REVIEW_OPEN_TASK_SUCCESS =
-  "[RESOLVE_TASK] REVIEW_OPEN_TASK_SUCCESS";
 export const REVIEW_CLOSE_TASK = "[RESOLVE_TASK] REVIEW_CLOSE_TASK";
-export const REVIEW_CLOSE_TASK_SUCCESS =
-  "[RESOLVE_TASK] REVIEW_CLOSE_TASK_SUCCESS";
+
+export const REVIEW_TASK_SUCCESS = "[RESOLVE_TASK] REVIEW_CLOSE_TASK_SUCCESS";
 
 export const useOnePrompt = (payload) => ({
   type: USE_PROMPT,
@@ -67,17 +65,12 @@ export const reviewOpenTask = (payload) => ({
   payload,
 });
 
-export const reviewOpenTaskSuccess = (payload) => ({
-  type: REVIEW_OPEN_TASK_SUCCESS,
-  payload,
-});
-
 export const reviewCloseTask = (payload) => ({
   type: REVIEW_CLOSE_TASK,
   payload,
 });
 
-export const reviewCloseTaskSuccess = (payload) => ({
-  type: REVIEW_CLOSE_TASK_SUCCESS,
+export const reviewOpenTaskSuccess = (payload) => ({
+  type: REVIEW_TASK_SUCCESS,
   payload,
 });

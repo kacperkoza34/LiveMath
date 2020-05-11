@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import TextareaAutosize from "react-textarea-autosize";
 import styles from "./SendSolution.module.scss";
 
 const SendSolutionApi = ({
@@ -13,6 +14,7 @@ const SendSolutionApi = ({
   sendSolution,
   toUpdate,
 }) => {
+  const [message, setMessage] = useState("");
   return (
     <div className={styles.root}>
       {resolved ? (
@@ -31,20 +33,30 @@ const SendSolutionApi = ({
         <>
           {checkAnswer && (
             <>
+              <h4>Wiadomość:</h4>
+              <TextareaAutosize
+                required
+                maxcols="15"
+                mincols="5"
+                maxrows="15"
+                minrows="5"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
               {error.length > 0 && <div className={styles.error}>{error}</div>}
               {correctAnswer === answer ? (
                 <div>
                   <p className={styles.statusBox + " " + styles.success}>
                     Dobra odpowiedź
                   </p>
-                  <button onClick={() => sendSolution()}>
+                  <button onClick={() => sendSolution(false, message)}>
                     Prześlij rozwiązanie
                   </button>
                 </div>
               ) : (
                 <div>
                   <p className={styles.error}>Zła odpowiedź</p>
-                  <button onClick={() => sendSolution(true)}>
+                  <button onClick={() => sendSolution(true, message)}>
                     Prześlij z prośbą o weryfikacje
                   </button>
                 </div>

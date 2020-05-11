@@ -6,7 +6,7 @@
     transition: 0.4s;
 
     .asideWrapper {
-      width: 200px;
+      width: 250px;
       height: 500px;
       background: #fff;
       margin: 10px;
@@ -16,7 +16,7 @@
       .list {
         height: 100%;
         width: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
       }
     }
@@ -40,7 +40,7 @@
   .aside {
     .root {
       position: fixed;
-      left: -200px;
+      left: -250px;
       top: 0;
       bottom: 0;
 

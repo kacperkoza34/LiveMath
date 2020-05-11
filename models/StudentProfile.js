@@ -81,7 +81,8 @@ const StudentProfileSchema = new Schema({
       },
       messages: [
         {
-          type: String,
+          author: { type: String },
+          message: { type: String },
         },
       ],
       task: {
@@ -128,7 +129,8 @@ const StudentProfileSchema = new Schema({
       },
       messages: [
         {
-          type: String,
+          author: { type: String },
+          message: { type: String },
         },
       ],
       task: {

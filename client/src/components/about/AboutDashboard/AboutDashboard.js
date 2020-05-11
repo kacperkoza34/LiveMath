@@ -12,12 +12,12 @@ const menuConfig = [
   { allowStudents: true, component: AboutMathJax, title: "MathJax" },
   { allowStudents: true, component: AboutOpenTask, title: "Zadania otwarte" },
   {
-    allowStudents: false,
+    allowStudents: true,
     component: AboutCloseTask,
     title: "Zadania zamknięte",
   },
   {
-    allowStudents: false,
+    allowStudents: true,
     component: AboutBooleanTask,
     title: "Zadanie prawda fałsz",
   },

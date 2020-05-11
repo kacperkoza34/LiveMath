@@ -8,6 +8,9 @@
   padding: 10px;
   font-size: 20px;
 
+  textarea {
+    resize: none;
+  }
   .model {
     background: $color-light;
     border: 1px solid;

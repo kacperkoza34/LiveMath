@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Model.module.scss";
 import PropTypes from "prop-types";
 import MathJax from "../../../../MathJax";
+import TextareaAutosize from "react-textarea-autosize";
 import { addTaskModel } from "../../../../../../redux/actions/newTask";
 import { connect } from "react-redux";
 
@@ -9,7 +10,7 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
   return (
     <div className={styles.root}>
       <h3>Wzór</h3>
-      <input
+      <TextareaAutosize
         placeholder="Podaj wzór"
         value={modelFromState}
         onChange={(e) => {

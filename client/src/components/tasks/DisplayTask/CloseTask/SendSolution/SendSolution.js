@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Errors from "../../../../layout/Errors/Errors";
+import TextareaAutosize from "react-textarea-autosize";
 import styles from "./SendSolution.module.scss";
 
 const SendSolution = ({
@@ -17,6 +18,7 @@ const SendSolution = ({
   setChekAnswers,
   accountType,
 }) => {
+  const [message, setMessage] = useState("");
   return (
     <div className={styles.root}>
       {resolved ? (
@@ -37,29 +39,30 @@ const SendSolution = ({
         <>
           {!toUpdate && accountType === "student" && checkAnswers ? (
             <>
+              <h4>Wiadomość:</h4>
+              <TextareaAutosize
+                required
+                maxcols="15"
+                mincols="5"
+                maxrows="15"
+                minrows="5"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
               {apiErrors && <Errors errors={apiErrors.data.err} />}
               {error.length > 0 && <div className={styles.error}>{error}</div>}
-              {Object.keys(answers).length === result ? (
+              <div className={styles.send}>
                 <div>
-                  <p className={styles.success}>Dobra odpowiedź</p>
-                  <button onClick={() => sendSolution(result)}>
+                  <button onClick={() => sendSolution(result, false, message)}>
                     Prześlij rozwiązanie
                   </button>
                 </div>
-              ) : (
-                <div className={styles.send}>
-                  <div>
-                    <button onClick={() => sendSolution(result)}>
-                      Prześlij
-                    </button>
-                  </div>
-                  <div>
-                    <button onClick={() => sendSolution(result, true)}>
-                      Wyślij prośbe o weryfikacje
-                    </button>
-                  </div>
+                <div>
+                  <button onClick={() => sendSolution(result, true, message)}>
+                    Wyślij prośbe o weryfikacje
+                  </button>
                 </div>
-              )}
+              </div>
             </>
           ) : (
             ""

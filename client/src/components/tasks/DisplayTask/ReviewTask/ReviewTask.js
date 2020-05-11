@@ -20,7 +20,6 @@ const ReviewTask = ({
     e.preventDefault();
     reduxAction({
       message,
-      accept,
       student_id: studentId,
       task_id: taskId,
     });
@@ -61,16 +60,6 @@ const ReviewTask = ({
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <h4>Wybierz status</h4>
-        <select
-          value={accept}
-          onChange={(e) => {
-            setAccept(e.target.value === "true" ? true : false);
-          }}
-        >
-          <option value={false}>Do poprawy</option>
-          <option value={true}>Rozwiązane</option>
-        </select>
         <button>Potwierdź</button>
       </form>
     </div>

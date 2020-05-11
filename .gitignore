@@ -3,7 +3,7 @@
 # dependencies
 /client/node_modules
 /.pnp
-/config
+/config/default.json
 .pnp.js
 
 # testing

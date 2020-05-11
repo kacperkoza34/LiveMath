@@ -9,9 +9,13 @@
 
   .message {
     background: $color-background;
+
+    h4 {
+      margin: 8px;
+    }
     pre {
       white-space: pre-wrap;
-      padding: 20px;
+      margin: 8px;
     }
   }
 }

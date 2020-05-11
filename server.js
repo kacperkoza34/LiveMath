@@ -1,11 +1,29 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const path = require('path');
+const express = require("express");
+const connectDB = require("./config/db");
+const path = require("path");
 const app = express();
+const cors = require("cors");
 
-// connect database
+const config = require("config");
+const domain = config.get("domain");
 
 connectDB();
+
+app.use(
+  cors({
+    origin: domain, //origin sets domains that we approve
+    methods: "GET,POST,DELETE,PUT",
+  })
+);
+
+app.enable("trust proxy");
+
+// app.use(function (req, res, next) {
+//   if (!req.secure) {
+//     return res.redirect(["https://", req.get("Host"), req.url].join(""));
+//   }
+//   next();
+// });
 
 // Init Middleware
 
@@ -13,26 +31,25 @@ app.use(express.json({ extended: false }));
 
 // Define Routes
 
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
 
-app.use('/api/teacher/profile', require('./routes/api/teacherProfile'));
-app.use('/api/student/profile', require('./routes/api/studentProfile'));
+app.use("/api/teacher/profile", require("./routes/api/teacherProfile"));
+app.use("/api/student/profile", require("./routes/api/studentProfile"));
 
-app.use('/api/tasks', require('./routes/api/tasks'));
+app.use("/api/tasks", require("./routes/api/tasks"));
 
-
-app.use('/api/class', require('./routes/api/class'));
+app.use("/api/class", require("./routes/api/class"));
 
 // Server static assets in production
 
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 
-  app.get('*', (req,res) =>{
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-};
+}
 
 const PORT = process.env.PORT || 5000;
 

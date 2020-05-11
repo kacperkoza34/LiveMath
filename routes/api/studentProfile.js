@@ -84,7 +84,7 @@ router.put(
     try {
       let profile = await StudentProfile.findOne({
         user: req.user.id,
-      }).populate("tasksOpen.task", "points");
+      }).populate("tasksOpen.task", "points name");
 
       if (req.body.toUpdate) profile.needReview = true;
 
@@ -102,7 +102,11 @@ router.put(
             profile.points = parseFloat(profile.points) + pointsForTask;
             item.result = pointsForTask;
           }
-
+          if (req.body.message.length)
+            item.messages.push({
+              message: req.body.message,
+              author: profile.name,
+            });
           item.answer = req.body.answer;
           item.description = req.body.description;
           item.resolved = true;
@@ -110,7 +114,13 @@ router.put(
         }
       });
       await profile.save();
-      res.json(req.body.toUpdate);
+      res.json({
+        toUpdate: req.body.toUpdate,
+        message: {
+          message: req.body.message,
+          author: profile.name,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send({ err: [{ msg: "Server error" }] });
@@ -158,7 +168,7 @@ router.put(
     try {
       let profile = await StudentProfile.findOne({
         user: req.user.id,
-      }).populate("tasksOpen.task", "points");
+      }).populate("tasksOpen.task", "points name");
 
       profile.tasksClose.map((item) => {
         if (req.body._id.toString() === item._id.toString()) {
@@ -170,6 +180,11 @@ router.put(
             item.toUpdate = true;
             profile.needReview = true;
           }
+          if (req.body.message.length)
+            item.messages.push({
+              message: req.body.message,
+              author: profile.name,
+            });
           item.description = req.body.description;
           item.answer = req.body.answer;
           item.resolved = true;
@@ -177,7 +192,13 @@ router.put(
         return item;
       });
       await profile.save();
-      res.json(req.body.toUpdate);
+      res.json({
+        toUpdate: req.body.toUpdate,
+        message: {
+          message: req.body.message,
+          author: profile.name,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send({ err: [{ msg: "Server error" }] });
@@ -244,7 +265,6 @@ router.put(
       check("task_id", "Nie określono statusu zadania").not().isEmpty(),
       check("student_id", "Nie określono statusu zadania").not().isEmpty(),
       check("message", "Nie określono statusu zadania").not().isEmpty(),
-      check("accept", "Nie określono statusu zadania").not().isEmpty(),
     ],
   ],
 
@@ -254,26 +274,19 @@ router.put(
       return res.status(400).json({ err: erros.array() });
     }
     try {
+      let teacher = await Teacher.findOne({ _id: req.user.id });
       let profile = await StudentProfile.findOne({
         _id: req.body.student_id,
       }).populate("tasksOpen.task", "points");
 
       profile.tasksOpen.map((item) => {
         if (req.body.task_id.toString() === item._id.toString()) {
-          if (req.body.accept) {
-            let foo = 1;
-            if (parseInt(item.usedPrompts) === 1) foo = 2;
-            if (parseInt(item.usedPrompts) === 2) foo = 4;
-            let pointsForTask = parseFloat(
-              (item.task.points / foo).toPrecision(2)
-            );
-            profile.points = parseFloat(profile.points) + pointsForTask;
-            item.result = pointsForTask;
-          } else {
-            item.resolved = false;
-          }
+          item.resolved = false;
           item.toUpdate = false;
-          item.messages.push(req.body.message);
+          item.messages.push({
+            message: req.body.message,
+            author: teacher.name,
+          });
         }
       });
 
@@ -282,7 +295,13 @@ router.put(
       );
 
       await profile.save();
-      res.json({ resolved: req.body.accept, message: req.body.message });
+      res.json({
+        resolved: false,
+        message: {
+          message: req.body.message,
+          author: teacher.name,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send({ err: [{ msg: "Server error" }] });
@@ -301,7 +320,6 @@ router.put(
       check("task_id", "Nie określono statusu zadania").not().isEmpty(),
       check("student_id", "Nie określono statusu zadania").not().isEmpty(),
       check("message", "Nie określono statusu zadania").not().isEmpty(),
-      check("accept", "Nie określono statusu zadania").not().isEmpty(),
     ],
   ],
 
@@ -311,19 +329,18 @@ router.put(
       return res.status(400).json({ err: erros.array() });
     }
     try {
+      let teacher = await Teacher.findOne({ _id: req.user.id });
       let profile = await StudentProfile.findOne({
         _id: req.body.student_id,
       }).populate("tasksClose.task", "points");
       profile.tasksClose.map((item) => {
         if (req.body.task_id.toString() === item._id.toString()) {
-          if (req.body.accept) {
-            item.result = item.task.points;
-            profile.points = profile.points + item.task.points;
-          } else {
-            item.resolved = false;
-          }
+          item.resolved = false;
           item.toUpdate = false;
-          item.messages.push(req.body.message);
+          item.messages.push({
+            message: req.body.message,
+            author: teacher.name,
+          });
         }
       });
 
@@ -332,7 +349,13 @@ router.put(
       );
 
       await profile.save();
-      res.json({ resolved: req.body.accept, message: req.body.message });
+      res.json({
+        resolved: req.body.accept,
+        message: {
+          message: req.body.message,
+          author: teacher.name,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send({ err: [{ msg: "Server error" }] });

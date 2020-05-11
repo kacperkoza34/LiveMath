@@ -4,6 +4,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+//const domain = config.get("domain");
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
@@ -127,9 +128,8 @@ router.post(
       };
 
       transporter.use("compile", hbs(handlebarOptions));
-
       let info = {
-        from: '"LiveMath" <foo@example.com>', // sender address
+        from: '"LiveMath" <kacperkoza34@gmail.com>', // sender address
         to: email, // list of receivers
         subject: "Potwierdź wiadomość ✔", // Subject line
         text: `Tekst`,

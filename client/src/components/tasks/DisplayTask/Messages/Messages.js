@@ -8,11 +8,12 @@ const Messages = ({ messages }) => {
       {messages.length > 0 && (
         <div className={styles.root}>
           <>
-            <h4>Informacje od nauczyciela</h4>
+            <h4>Dyskusja</h4>
 
             <ul>
-              {messages.map((message, index) => (
+              {messages.map(({ message, author }, index) => (
                 <li key={index} className={styles.message}>
+                  <h4>{author}</h4>
                   <pre>{message}</pre>
                 </li>
               ))}
