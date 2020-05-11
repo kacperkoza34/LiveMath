@@ -122,7 +122,7 @@ router.post(
       let transporter = nodemailer.createTransport(nodemailMailgun(auth));
 
       let info = {
-        from: '"LiveMath" <no-reply@livemath.pl>', // sender address
+        from: '"LiveMath" <no-reply@livemath.com>', // sender address
         to: email, // list of receivers
         subject: "Potwierdź wiadomość ✔", // Subject line
         template: {
