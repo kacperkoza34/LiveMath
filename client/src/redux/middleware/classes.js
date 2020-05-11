@@ -69,7 +69,6 @@ const classes = ({ dispatch }) => (next) => (action) => {
     dispatch(smallLoadingStop());
   }
   if (action.type === ADD_CLASS) {
-    console.log(action.payload);
     dispatch(smallLoadingStart());
     dispatch(
       apiRequest(

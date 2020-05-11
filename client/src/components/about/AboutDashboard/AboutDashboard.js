@@ -21,7 +21,6 @@ const menuConfig = [
     component: AboutBooleanTask,
     title: "Zadanie prawda fałsz",
   },
-  { allowStudents: false, component: AboutMathJax, title: "MathJax" },
 ];
 
 const AboutDashboard = ({ accountType, match }) => {

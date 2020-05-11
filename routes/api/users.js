@@ -4,9 +4,9 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-//const domain = config.get("domain");
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
+const nodemailMailgun = require("nodemailer-mailgun-transport");
 const hbs = require("nodemailer-express-handlebars");
 
 const Teacher = require("../../models/Teacher");
@@ -104,38 +104,33 @@ router.post(
         },
       };
 
-      let verifyToken = await jwt.sign(tokenData, config.get("jwtSecret"), {
-        expiresIn: 360000,
-      });
+      let verifyToken = await jwt.sign(
+        tokenData,
+        config.get("verifyJwtSecret"),
+        {
+          expiresIn: 360000,
+        }
+      );
 
-      let transporter = nodemailer.createTransport({
-        service: "gmail",
+      const auth = {
         auth: {
-          user: config.get("email"), // generated ethereal user
-          pass: config.get("password"), // generated ethereal password
+          api_key: config.get("api_key_mail_gun"),
+          domain: config.get("mail_gun_domain"),
         },
-      });
-
-      const handlebarOptions = {
-        viewEngine: {
-          extName: ".hbs",
-          partialsDir: "mailingViews",
-          layoutsDir: "mailingViews",
-          defaultLayout: "verification.hbs",
-        },
-        viewPath: "mailingViews",
-        extName: ".hbs",
       };
 
-      transporter.use("compile", hbs(handlebarOptions));
+      let transporter = nodemailer.createTransport(nodemailMailgun(auth));
+
       let info = {
-        from: '"LiveMath" <kacperkoza34@gmail.com>', // sender address
+        from: '"LiveMath" <no-reply@livemath.com>', // sender address
         to: email, // list of receivers
         subject: "Potwierdź wiadomość ✔", // Subject line
-        text: `Tekst`,
-        template: "verification",
-        context: {
-          link: `http://localhost:3000/verify/${verifyToken}`,
+        template: {
+          name: "mailingViews/verification.hbs",
+          engine: "handlebars",
+          context: {
+            link: `${config.get("domain")}/verify/${verifyToken}`,
+          },
         },
       };
 
@@ -285,7 +280,7 @@ router.post(
 /// create profile if email verified
 router.post("/:token", async (req, res) => {
   try {
-    const decoded = jwt.verify(req.params.token, config.get("jwtSecret"));
+    const decoded = jwt.verify(req.params.token, config.get("verifyJwtSecret"));
     let user = await Teacher.findOneAndUpdate(
       { _id: decoded.user.id },
       { verified: true }

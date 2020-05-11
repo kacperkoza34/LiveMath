@@ -18,13 +18,14 @@ app.use(
 
 app.enable("trust proxy");
 
-// app.use(function (req, res, next) {
-//   if (!req.secure) {
-//     return res.redirect(["https://", req.get("Host"), req.url].join(""));
-//   }
-//   next();
-// });
-
+if (process.env.NODE_ENV === "production") {
+  app.use(function (req, res, next) {
+    if (!req.secure) {
+      return res.redirect(["https://", req.get("Host"), req.url].join(""));
+    }
+    next();
+  });
+}
 // Init Middleware
 
 app.use(express.json({ extended: false }));
