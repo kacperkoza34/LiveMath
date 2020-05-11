@@ -114,7 +114,7 @@ router.post(
 
       const auth = {
         auth: {
-          apiKey: config.get("api_key_mail_gun"),
+          api_key: config.get("api_key_mail_gun"),
           domain: config.get("mail_gun_domain"),
         },
       };
