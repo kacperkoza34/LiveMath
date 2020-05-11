@@ -29,7 +29,7 @@ export const availableClasses = [
   },
   {
     name: "KLASY 6",
-    id: 2,
+    id: 3,
     sections: [
       { name: "LICZBY NATURALNE I UŁAMKI ", id: 1 },
       { name: "FIGURY NA PŁASZCZYŹNIE", id: 2 },
@@ -44,7 +44,7 @@ export const availableClasses = [
   },
   {
     name: "KLASY 7",
-    id: 3,
+    id: 4,
     sections: [
       { name: "LICZBY I DZIAŁANIA", id: 1 },
       { name: "PROCENTY", id: 2 },
@@ -58,7 +58,7 @@ export const availableClasses = [
   },
   {
     name: "KLASY 8",
-    id: 4,
+    id: 5,
     sections: [
       { name: "LICZBY I DZIAŁANIA", id: 1 },
       { name: "WYRAŻENIA ALGEBRAICZNE I RÓWNANIA", id: 2 },
