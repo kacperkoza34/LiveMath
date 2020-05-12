@@ -96,8 +96,6 @@ router.post(
       await user.save();
       await userProfile.save();
 
-      //      let testAccount = await nodemailer.createTestAccount();
-
       const tokenData = {
         user: {
           id: user.id,

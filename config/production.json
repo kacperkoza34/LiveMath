@@ -4,7 +4,7 @@
   "verifyJwtSecret": "whitecube222",
   "githubClientId": "86c330d2b0706e43ad8f",
   "githubSecret": "3dcd30848002ecebdb82d9f01ba65c77b7199170",
-  "domain": "https://livemath.pl",
+  "domain": "https://www.livemath.pl",
   "api_key_mail_gun": "0119d089ec9fbbfbed4e5d78f6ae437f-3e51f8d2-323df296",
   "mail_gun_domain": "livemath.pl",
   "host": "api.eu.mailgun.net"
