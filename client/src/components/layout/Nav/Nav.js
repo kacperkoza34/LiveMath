@@ -74,7 +74,9 @@ const Nav = ({
 
   const logo = (
     <>
-      <Link to="/">LiveMath</Link>
+      <Link to="/">
+        <img src={"/liveMathLogo.png"} />
+      </Link>
       {fetching && <ClipLoader size={25} />}
     </>
   );
@@ -87,7 +89,7 @@ const Nav = ({
         />
       ) : (
         <nav className={styles.root}>
-          <h1>{logo}</h1>
+          <div className={styles.logo}>{logo}</div>
           {isFetching ? (
             ""
           ) : isAuthenticated ? (

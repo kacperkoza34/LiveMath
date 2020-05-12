@@ -16,7 +16,9 @@ const MobileNav = ({ navLinks, logo }) => {
   return (
     <nav className={styles.root}>
       <div className={styles.header}>
-        <h3 onClick={() => hide(true)}>{logo}</h3>
+        <div className={styles.logo} onClick={() => hide(true)}>
+          {logo}
+        </div>
         <span>
           <FontAwesomeIcon icon={faBars} onClick={() => hide(!hidden)} />
         </span>

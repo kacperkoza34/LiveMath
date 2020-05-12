@@ -54,4 +54,13 @@
   .active {
     transform: translateY(100%);
   }
+
+  .logo {
+    height: 30px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+    }
+  }
 }
