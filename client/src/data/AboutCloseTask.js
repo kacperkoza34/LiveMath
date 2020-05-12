@@ -4,8 +4,7 @@ export const aboutCloseTask = {
   subArticles: [
     {
       subtitle: "Podstawowe informacje",
-      content:
-        "Zadania zamknięte polegają na wyświetlaniu listy rownań do obliczenia",
+      content: "Zadania zamknięte polegają na rozwiązaniu listy7 równań",
     },
     {
       subtitle: "Załączniki",
@@ -13,9 +12,9 @@ export const aboutCloseTask = {
         "W zadaniu zamknietym może pojawic się konieczność dodania załącznika przed wysłałaniem zadania. W załączniku umieszczaj link do zdjęcia z rozwiązaniem!",
     },
     {
-      subtitle: "Prośba o weryfikacje",
+      subtitle: "Prośba o sprawdzenie",
       content:
-        "Zadanie możemy przesłać jako rozwiązanie zaliczając tylko część podpunktów. W przypadku niejasności możemy przesłać prośbe o weryfikacje",
+        "Zadanie możemy przesłać jako rozwiązanie zaliczając tylko część podpunktów. W przypadku niejasności możemy przesłać prośbe o sprawdzenie",
     },
   ],
 };

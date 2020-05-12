@@ -18,9 +18,9 @@ export const aboutOpenTask = {
         "W zadaniu otwartym może pojawic się konieczność dodania załącznika przed wysłałaniem zadania. W załączniku umieszczaj link do zdjęcia z rozwiązaniem!",
     },
     {
-      subtitle: "Prośba o weryfikacje",
+      subtitle: "Prośba o sprawdzenie",
       content:
-        "W sytuacji gdy nasza odpowiedź nie jest poprawna, a my jesteśmy przekonani że mamy racje możemy przesłać zadanie z prośbą o weryfikacje. Jeśli prosisz o weryfikacje pamiętaj o dodaniu załącznika",
+        "W sytuacji gdy nasza odpowiedź nie jest poprawna, a my jesteśmy przekonani że mamy racje możemy przesłać zadanie z prośbą o sprawdzenie. Jeśli prosisz o weryfikacje pamiętaj o dodaniu załącznika",
     },
   ],
 };

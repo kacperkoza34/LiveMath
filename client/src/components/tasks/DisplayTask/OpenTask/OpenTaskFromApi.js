@@ -62,7 +62,8 @@ const OpenTask = ({
   };
 
   const sendSolution = (toUpdate = false, message) => {
-    if (descriptionRequired && !description.length) setError("Wymagany opis!");
+    if (descriptionRequired && !description.length)
+      setError("Wymagane zdjęcie!");
     else {
       if (toUpdate)
         sendOpenTaskResolution({ ...taskConfig, toUpdate: true, message });
@@ -104,7 +105,7 @@ const OpenTask = ({
               ...data.data.additionalVariables,
             ]}
           />
-          <h4>Załącznik</h4>
+          <h4>Link do zdjęcia</h4>
           <TextareaAutosize
             maxcols="15"
             mincols="5"

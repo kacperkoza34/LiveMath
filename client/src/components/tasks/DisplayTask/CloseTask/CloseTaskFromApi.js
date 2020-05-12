@@ -70,7 +70,8 @@ const CloseTaskFromApi = ({
   };
 
   const sendSolution = (result, toUpdate = false, message) => {
-    if (descriptionRequired && !description.length) setError("Wymagany opis!");
+    if (descriptionRequired && !description.length)
+      setError("Wymagane zdjęcie!");
     else {
       if (toUpdate)
         sendCloseTaskResolution({ ...taskConfig, toUpdate, result, message });
@@ -136,7 +137,7 @@ const CloseTaskFromApi = ({
             </ul>
           )}
           <div className={styles.description}>
-            <h4>Załącznik</h4>
+            <h4>Link do zdjęcia</h4>
             <TextareaAutosize
               maxcols="15"
               mincols="5"
