@@ -10,10 +10,10 @@ const SelectSection = ({ addClass, addSection }) => {
   const [currentSection, setCurrentSection] = useState("");
 
   const setClass = (e) => {
-    setCurrentClass(e.target.value);
-    addClass(e.target.value);
     setCurrentSection("");
     addSection("");
+    setCurrentClass(e.target.value);
+    addClass(e.target.value);
   };
 
   const setSection = (e) => {
