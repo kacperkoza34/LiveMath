@@ -237,6 +237,10 @@ router.put(
 
       profile.tasksBoolean.map((item) => {
         if (req.body._id.toString() === item._id.toString()) {
+          if (item.resolved)
+            return res
+              .status(400)
+              .json({ err: [{ msg: "Zadanie jest już rozwiązane" }] });
           profile.points =
             parseFloat(profile.points) + parseFloat(req.body.result);
           item.result = req.body.result;
@@ -246,7 +250,13 @@ router.put(
         return item;
       });
       await profile.save();
-      res.json(false);
+      res.json({
+        toUpdate: false,
+        message: {
+          message: "",
+          author: profile.name,
+        },
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send({ err: [{ msg: "Server error" }] });
