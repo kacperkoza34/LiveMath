@@ -116,6 +116,7 @@ router.post(
         auth: {
           apiKey: config.get("api_key_mail_gun"),
           domain: config.get("mail_gun_domain"),
+          host: "api.eu.mailgun.net",
         },
       };
 
