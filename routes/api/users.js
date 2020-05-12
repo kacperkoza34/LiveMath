@@ -112,19 +112,12 @@ router.post(
         }
       );
 
-      const auth = {
-        auth: {
-          apiKey: config.get("api_key_mail_gun"),
-          domain: config.get("mail_gun_domain"),
-        },
-      };
-
-      const mailgun = require("mailgun-js");
-      const DOMAIN = "YOUR_DOMAIN_NAME";
-      const mg = mailgun({
+      const mailgun = require("mailgun-js")({
         apiKey: config.get("api_key_mail_gun"),
         domain: config.get("mail_gun_domain"),
+        host: config.get("host"),
       });
+
       const data = {
         from: '"LiveMath" <no-reply@livemath.com>', // sender address
         to: email, // list of receivers
@@ -144,9 +137,8 @@ router.post(
           </body>
         </html>`,
       };
-      mg.messages().send(data, function (error, body) {
-        console.log(body);
-      });
+
+      await mailgun.messages().send(data);
 
       // Return jsonwebtoken
       const payload = {
