@@ -53,9 +53,9 @@ const Register = ({
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
-        <h1 className="large text-primary">Stwórz konto</h1>
-        <form className="form" onSubmit={(e) => onSubmit(e)}>
-          <div className="form-group">
+        <h1>Stwórz konto</h1>
+        <form onSubmit={(e) => onSubmit(e)}>
+          <div>
             <h4>Podaj swoją nazwe</h4>
             <input
               autocomplete="off"
@@ -67,7 +67,7 @@ const Register = ({
               required
             />
           </div>
-          <div className="form-group">
+          <div>
             <h4>Email</h4>
             <input
               autocomplete="off"
@@ -79,7 +79,7 @@ const Register = ({
               required
             />
           </div>
-          <div className="form-group">
+          <div>
             <h4>Hasło</h4>
             <input
               autocomplete="off"
@@ -92,7 +92,7 @@ const Register = ({
               required
             />
           </div>
-          <div className="form-group">
+          <div>
             <h4>Potwierdź hasło</h4>
             <input
               autocomplete="off"
@@ -107,12 +107,6 @@ const Register = ({
           </div>
           {isFetching ? <BeatLoader size={30} /> : <button>Zarejestruj</button>}
         </form>
-        <p className="my-1">
-          Masz juz konto?{" "}
-          <Link to="/login" className={styles.btnRedirect}>
-            Zaloguj się
-          </Link>
-        </p>
         {passwordsErr.length > 0 && <Errors errors={[...passwordsErr]} />}
         {errors && <Errors errors={[...errors.data.err]} />}
       </div>

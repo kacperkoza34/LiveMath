@@ -26,12 +26,13 @@
     margin-left: 20px;
   }
   .item {
-    height: 80px;
+    height: 100%;
     padding: 10px;
     margin: 10px 0;
   }
 
   .questionBox {
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,6 +65,15 @@
     }
     .points {
       margin: 0;
+    }
+    .questionBox {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .select {
+      margin: 10px 0;
     }
   }
 }
