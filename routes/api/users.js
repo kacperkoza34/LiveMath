@@ -119,26 +119,33 @@ router.post(
         },
       };
 
-      let transporter = nodemailer.createTransport(nodemailMailgun(auth));
-
-      let info = {
+      const mailgun = require("mailgun-js");
+      const DOMAIN = "YOUR_DOMAIN_NAME";
+      const mg = mailgun({
+        apiKey: config.get("api_key_mail_gun"),
+        domain: config.get("mail_gun_domain"),
+      });
+      const data = {
         from: '"LiveMath" <no-reply@livemath.com>', // sender address
         to: email, // list of receivers
         subject: "Potwierdź wiadomość ✔", // Subject line
-        template: {
-          name: "mailingViews/verification.hbs",
-          engine: "handlebars",
-          context: {
-            link: `${config.get("domain")}/verify/${verifyToken}`,
-          },
-        },
+        html: `<!DOCTYPE html>
+        <html lang="en" dir="ltr">
+          <head>
+            <meta charset="utf-8">
+            <title></title>
+          </head>
+          <body>
+            <h4>Witaj w LiveMath</h4>
+            <p>Kliknij w link aby potwierdzić email</p>
+            <a href="${config.get(
+              "domain"
+            )}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
+          </body>
+        </html>`,
       };
-
-      transporter.sendMail(info, function (err, data) {
-        if (err) console.log(err);
-        else {
-          console.log("success");
-        }
+      mg.messages().send(data, function (error, body) {
+        console.log(body);
       });
 
       // Return jsonwebtoken
