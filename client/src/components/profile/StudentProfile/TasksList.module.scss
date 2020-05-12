@@ -10,21 +10,20 @@
       justify-content: space-between;
     }
   }
-  .status {
-    text-decoration: underline;
-  }
-  .status:hover {
-    cursor: pointer;
-    transform: scale(1.2);
-    font-weight: 600;
-  }
 
   .statusBox {
     background: $color-light;
     padding: 5px;
     border: 1px solid black;
     font-weight: 700;
+    transition: 0.4;
   }
+  .statusBox:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    font-weight: 600;
+  }
+
   .success {
     color: $color-success;
   }

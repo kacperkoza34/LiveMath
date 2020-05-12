@@ -95,7 +95,6 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   });
                 }}
                 to={`/display/openTask/${task._id}`}
-                className={styles.status}
               >
                 {displayStatus(deadLine, resolved, description, toUpdate)}
               </Link>
@@ -154,7 +153,6 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   });
                 }}
                 to={`/display/closeTask/${task._id}`}
-                className={styles.status}
               >
                 {displayStatus(deadLine, resolved, description, toUpdate)}
               </Link>
@@ -188,7 +186,6 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   setTaskConfig({ deadLine, resolved, answer, _id });
                 }}
                 to={`/display/booleanTask/${task._id}`}
-                className={styles.status}
               >
                 {displayStatus(deadLine, resolved)}
               </Link>
