@@ -47,7 +47,7 @@ const SelectSection = ({ addClass, addSection }) => {
       >
         <option value={""}>---</option>
         {currentClass &&
-          availableClasses[currentClass].sections.map(({ name, id }) => (
+          availableClasses[currentClass - 1].sections.map(({ name, id }) => (
             <option key={id} value={id}>
               {name}
             </option>
