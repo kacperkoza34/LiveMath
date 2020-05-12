@@ -50,7 +50,7 @@ const CloseTaskFromApi = ({
 
   const prepareState = () => {
     data.data.forEach((item, i) => {
-      answers[`${i}`] = "";
+      answers[`${i}`] = answer[i];
     });
     setTaskStatus({ ...answers });
   };
