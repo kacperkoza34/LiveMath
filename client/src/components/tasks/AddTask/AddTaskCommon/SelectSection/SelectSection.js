@@ -20,8 +20,6 @@ const SelectSection = ({ addClass, addSection }) => {
     setCurrentSection(e.target.value);
     addSection(e.target.value);
   };
-  console.log(currentClass);
-  console.log(currentSection);
   return (
     <div className={styles.root}>
       <h5>Wybierz klase i dział</h5>

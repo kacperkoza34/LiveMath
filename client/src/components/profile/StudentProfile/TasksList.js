@@ -26,7 +26,7 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
     if (resolved && toUpdate)
       return (
         <div className={styles.statusBox + " " + styles.toUpdate}>
-          Prośba o weryfikacje
+          Do sprawdzenia
         </div>
       );
     if (resolved)
@@ -61,7 +61,22 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
       <table>
         <tbody>
           <tr>
-            <td className={styles.name}>
+            <td>{task.name}</td>
+            <td>
+              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {promptsAllowed
+                ? `Wykorzystane podpowiedzi: ${usedPrompts}`
+                : "Podpowiedzi niedostępne"}
+            </td>
+            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+          </tr>
+          <tr>
+            <td>
+              {" "}
               <Link
                 onClick={() => {
                   clearTasks();
@@ -80,24 +95,11 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   });
                 }}
                 to={`/display/openTask/${task._id}`}
+                className={styles.status}
               >
-                {task.name}
+                {displayStatus(deadLine, resolved, description, toUpdate)}
               </Link>
             </td>
-            <td>
-              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {promptsAllowed
-                ? `Wykorzystane podpowiedzi: ${usedPrompts}`
-                : "Podpowiedzi niedostępne"}
-            </td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
-          </tr>
-          <tr>
-            <td>{displayStatus(deadLine, resolved, description, toUpdate)}</td>
             <td>Wynik: {`${result}/${task.points}`}</td>
           </tr>
         </tbody>
@@ -124,7 +126,18 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
       <table>
         <tbody>
           <tr>
-            <td className={styles.name}>
+            <td>{task.name}</td>
+            <td>
+              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+          </tr>
+          <tr>
+            <td>
+              {" "}
               <Link
                 onClick={() => {
                   clearTasks();
@@ -141,20 +154,11 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                   });
                 }}
                 to={`/display/closeTask/${task._id}`}
+                className={styles.status}
               >
-                {task.name}
+                {displayStatus(deadLine, resolved, description, toUpdate)}
               </Link>
             </td>
-            <td>
-              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
-          </tr>
-          <tr>
-            <td>{displayStatus(deadLine, resolved, description, toUpdate)}</td>
             <td>Wynik: {`${result}/${task.points}`}</td>
           </tr>
         </tbody>
@@ -170,23 +174,25 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
       <table>
         <tbody>
           <tr>
-            <td className={styles.name}>
+            <td>{task.name}</td>
+            <td>
+              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {" "}
               <Link
                 onClick={() => {
                   clearTasks();
                   setTaskConfig({ deadLine, resolved, answer, _id });
                 }}
                 to={`/display/booleanTask/${task._id}`}
+                className={styles.status}
               >
-                {task.name}
+                {displayStatus(deadLine, resolved)}
               </Link>
             </td>
-            <td>
-              {"Termin: "} <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
-            </td>
-          </tr>
-          <tr>
-            <td> {displayStatus(deadLine, resolved)}</td>
             <td>Wynik: {`${result}/${task.points}`}</td>
           </tr>
         </tbody>

@@ -27,7 +27,7 @@ const ReviewTask = ({
   return (
     <div className={styles.root}>
       <form onSubmit={(e) => send(e)}>
-        <h4>Panel weryfikacyjny</h4>
+        <h4>Panel sprawdzający</h4>
 
         {correctAnswer ? (
           <h5>Poprawna odpowiedź: {correctAnswer}</h5>

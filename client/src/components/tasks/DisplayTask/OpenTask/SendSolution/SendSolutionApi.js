@@ -21,7 +21,7 @@ const SendSolutionApi = ({
         <>
           {toUpdate ? (
             <p className={styles.statusBox + " " + styles.toUpdate}>
-              Zadanie wysłano do weryfikacji
+              Zadanie wysłano do sprawdzenia
             </p>
           ) : (
             <p className={styles.statusBox + " " + styles.success}>
@@ -33,7 +33,7 @@ const SendSolutionApi = ({
         <>
           {checkAnswer && (
             <>
-              <h4>Wiadomość:</h4>
+              <h4>Wiadomość do nauczyciela:</h4>
               <TextareaAutosize
                 required
                 maxcols="15"
@@ -57,7 +57,7 @@ const SendSolutionApi = ({
                 <div>
                   <p className={styles.error}>Zła odpowiedź</p>
                   <button onClick={() => sendSolution(true, message)}>
-                    Prześlij z prośbą o weryfikacje
+                    Prześlij z prośbą o sprawdzenie
                   </button>
                 </div>
               )}

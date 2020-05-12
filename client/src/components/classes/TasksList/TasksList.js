@@ -10,7 +10,7 @@ const TasksList = ({ tasks, clearTasks }) => {
   const compare = (a, b) => {
     return Date.parse(b.date) - Date.parse(a.date);
   };
-  const sortedTasks = [...tasks].sort(compare);
+  const sortedTasks = tasks.sort(compare);
 
   const displayOpenTask = (
     { task, deadLine, promptsAllowed, descriptionRequired },

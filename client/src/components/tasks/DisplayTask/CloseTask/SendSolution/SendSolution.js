@@ -25,7 +25,7 @@ const SendSolution = ({
         <div>
           {toUpdate ? (
             <p className={styles.statusBox + " " + styles.toUpdate}>
-              Zadanie wysłano do weryfikacji
+              Zadanie wysłano do sprawdzenia
             </p>
           ) : (
             <>
@@ -39,7 +39,7 @@ const SendSolution = ({
         <>
           {!toUpdate && accountType === "student" && checkAnswers ? (
             <>
-              <h4>Wiadomość:</h4>
+              <h4>Wiadomość do nauczyciela:</h4>
               <TextareaAutosize
                 required
                 maxcols="15"
@@ -59,7 +59,7 @@ const SendSolution = ({
                 </div>
                 <div>
                   <button onClick={() => sendSolution(result, true, message)}>
-                    Wyślij prośbe o weryfikacje
+                    Wyślij prośbe o sprawdzenie
                   </button>
                 </div>
               </div>
