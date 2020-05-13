@@ -17,6 +17,7 @@ import AddCloseTask from "./components/tasks/AddTask/CloseTask/CloseTask";
 import AddBooleanTask from "./components/tasks/AddTask/BooleanTask/BooleanTask";
 import AboutDashboard from "./components/about/AboutDashboard/AboutDashboard";
 import VerifyEmail from "./components/auth/VerifyEmail/VerifyEmail";
+import NotFound from "./components/layout/NotFound/NotFound";
 
 // Redux
 import { Provider } from "react-redux";
@@ -75,6 +76,7 @@ const App = () => {
               path="/add/booleanTask"
               component={AddBooleanTask}
             />
+            <Route path="*" component={NotFound} />
           </Switch>
         </MainLayout>
       </Router>

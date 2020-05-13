@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./Landing.module.scss";
 import { connect } from "react-redux";
 
+import { ReactComponent as Animation } from "./Animation.svg";
+import gsap from "gsap";
+
 const Landing = ({ isAuthenticated }) => {
+  // const animation = useRef(null);
+  //
+  // useEffect(() => {
+  //   const [elements] = animation.current.children;
+  // }, []);
+
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }

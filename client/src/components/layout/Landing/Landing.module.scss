@@ -4,25 +4,27 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: url("hero.jpeg");
-  background-size: cover;
+  background: $color-light;
 
   .wrapper {
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
   }
 
   .welcome {
-    margin: 15vh;
     height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     z-index: 2222;
     padding: 100px;
+
+    h1 {
+      font-size: 35px;
+    }
   }
 
   .btnLogin {
@@ -30,13 +32,25 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
-    border-radius: 18px;
-    transition: 0.4s;
-    box-shadow: 10px 4px 59px -22px rgba(0, 0, 0, 0.75);
-    background-color: $color-secondary;
+    border: solid 2px black;
+    transition: 0.3s;
   }
   .btnLogin:hover {
     background-color: $color-primary;
+  }
+
+  .animation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
