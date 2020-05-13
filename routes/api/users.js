@@ -39,11 +39,13 @@ router.post(
       //see if inviter is verified
 
       let inviterData = await Teacher.findOne({ _id: req.params.id });
-      if (!inviterData.verified)
-        return res.status(401).json({
-          err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
-        });
 
+      if (inviterData) {
+        if (!inviterData.verified)
+          return res.status(401).json({
+            err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
+          });
+      }
       // See if user exist
       let user = await Teacher.findOne({ email });
 
