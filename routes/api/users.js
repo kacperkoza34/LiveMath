@@ -37,27 +37,28 @@ router.post(
 
     try {
       //see if inviter is verified
+      if (req.params.id.toString() !== "firstline") {
+        let inviterData = await Teacher.findOne({ _id: req.params.id });
 
-      let inviterData = await Teacher.findOne({ _id: req.params.id });
-
-      if (inviterData) {
-        if (!inviterData.verified)
+        if (inviterData) {
+          if (!inviterData.verified)
+            return res.status(401).json({
+              err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
+            });
+        } else {
           return res.status(401).json({
-            err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
+            err: [{ msg: "Błędny link" }],
           });
-      } else {
-        return res.status(401).json({
-          err: [{ msg: "Błędny link" }],
-        });
+        }
       }
-
       // See if user exist
       let user = await Teacher.findOne({ email });
 
       if (user) {
-        return res.status(400).json({
-          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
-        });
+        if (req.params.id.toString() !== "firstline")
+          return res.status(400).json({
+            err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+          });
       }
 
       //Get user gravatar
