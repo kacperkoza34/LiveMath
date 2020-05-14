@@ -4,6 +4,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const ObjectId = require("mongoose").Types.ObjectId;
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
 const nodemailMailgun = require("nodemailer-mailgun-transport");
@@ -38,6 +39,11 @@ router.post(
     try {
       //see if inviter is verified
       if (req.params.id.toString() !== "firstline") {
+        if (!ObjectId.isValid(req.params.id.toString()))
+          res.status(401).json({
+            err: [{ msg: "Błędny link" }],
+          });
+
         let inviterData = await Teacher.findOne({ _id: req.params.id });
 
         if (inviterData) {
