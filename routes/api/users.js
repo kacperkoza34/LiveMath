@@ -55,10 +55,9 @@ router.post(
       let user = await Teacher.findOne({ email });
 
       if (user) {
-        if (req.params.id.toString() !== "firstline")
-          return res.status(400).json({
-            err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
-          });
+        return res.status(400).json({
+          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+        });
       }
 
       //Get user gravatar
@@ -79,10 +78,16 @@ router.post(
       let inviterProfile;
       if (req.params.id.toString() !== "firstline") {
         inviterProfile = await TeacherProfile.findOne({ user: req.params.id });
-        inviterProfile.invitedByMe.push({
-          user: user._id,
-        });
-        await inviterProfile.save();
+
+        if (inviterProfile) {
+          inviterProfile.invitedByMe.push({
+            user: user._id,
+          });
+          await inviterProfile.save();
+        } else
+          return res.status(400).json({
+            err: [{ msg: "Błędny link" }],
+          });
       }
 
       const inviterId =
