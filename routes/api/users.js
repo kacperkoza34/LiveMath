@@ -45,7 +45,12 @@ router.post(
           return res.status(401).json({
             err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
           });
+      } else {
+        return res.status(401).json({
+          err: [{ msg: "Błędny link" }],
+        });
       }
+
       // See if user exist
       let user = await Teacher.findOne({ email });
 
