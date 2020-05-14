@@ -8,6 +8,7 @@ import Messages from "../Messages/Messages";
 import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import ReviewTask from "../ReviewTask/ReviewTask";
+import TakePhoto from "../TakePhoto/TakePhoto";
 import MathJax from "../../MathJax";
 import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
@@ -106,6 +107,7 @@ const OpenTask = ({
             ]}
           />
           <h4>Link do zdjęcia</h4>
+          <TakePhoto/>
           <TextareaAutosize
             maxcols="15"
             mincols="5"

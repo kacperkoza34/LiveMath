@@ -27,6 +27,7 @@
     "nodemailer-mailgun-transport": "^2.0.0",
     "rc-progress": "^2.5.3",
     "react-html-parser": "^2.0.2",
+    "react-html5-camera-photo": "^1.5.4",
     "react-spinners": "^0.8.1",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.2",

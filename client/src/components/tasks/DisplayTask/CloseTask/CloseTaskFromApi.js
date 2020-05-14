@@ -6,6 +6,7 @@ import MathJax from "../../MathJax";
 import SendSolution from "./SendSolution/SendSolution";
 import TextareaAutosize from "react-textarea-autosize";
 import ReviewTask from "../ReviewTask/ReviewTask";
+import TakePhoto from "../TakePhoto/TakePhoto";
 import Messages from "../Messages/Messages";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -138,6 +139,7 @@ const CloseTaskFromApi = ({
           )}
           <div className={styles.description}>
             <h4>Link do zdjęcia</h4>
+            <TakePhoto/>
             <TextareaAutosize
               maxcols="15"
               mincols="5"
