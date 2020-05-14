@@ -74,7 +74,6 @@ router.post(
         email,
         avatar,
         password,
-        verified: true,
       });
 
       let inviterProfile;
