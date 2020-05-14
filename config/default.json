@@ -1,0 +1,11 @@
+{
+  "mongoURI": "mongodb+srv://koza1234:koza1234@cluster0-kmwdr.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "verifyJwtSecret": "mysecrettoken22",
+  "githubClientId": "86c330d2b0706e43ad8f",
+  "githubSecret": "3dcd30848002ecebdb82d9f01ba65c77b7199170",
+  "domain": "http://localhost:3000",
+  "api_key_mail_gun": "key-441abca515a83274e72a4c783a37f102",
+  "mail_gun_domain": "sandboxfd718df479d84e82a62d9bb2fb6006f2.mailgun.org",
+  "host": "api.mailgun.net"
+}
