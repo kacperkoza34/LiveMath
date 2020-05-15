@@ -42,11 +42,13 @@ const DisplayPrompts = ({
             </>
           )}
           {usedPrompts === 2 && (
-            <div className={styles.item}>
-              {" "}
+            <>
               <h4>Wzór:</h4>
-              <MathJax content={"`" + model + "`"} />
-            </div>
+              <div className={styles.item}>
+                {" "}
+                <MathJax content={"`" + model + "`"} />
+              </div>
+            </>
           )}
         </div>
       )}
