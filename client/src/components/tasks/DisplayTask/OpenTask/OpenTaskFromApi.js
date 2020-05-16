@@ -5,6 +5,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import DisplayContent from "./DisplayContent/DisplayContent";
 import DisplayPromptsFromApi from "./DisplayPrompts/DisplayPromptsFromApi";
 import Messages from "../Messages/Messages";
+import LinkBlank from "../../../features/LinkBlank/LinkBlank";
 import SendSolutionApi from "./SendSolution/SendSolutionApi";
 import SendSolutionDumm from "./SendSolution/SendSolutionDumm";
 import ReviewTask from "../ReviewTask/ReviewTask";
@@ -77,82 +78,90 @@ const OpenTask = ({
         <BeatLoader size={20} />
       ) : (
         <>
-          {correctAnswer == null &&
-            setCorrectAnswer(data.data.groups[group].answer)}
-          <div className={styles.header}>
-            <div>
-              <h4>{data.name}</h4>
-              <DisplayContent
-                content={data.data.content}
-                variables={data.data.variables}
-                group={data.data.groups[group]}
-              />
+          <div
+            className={
+              accountType === "teacher" || resolved ? styles.overlay : ""
+            }
+          >
+            {" "}
+            {correctAnswer == null &&
+              setCorrectAnswer(data.data.groups[group].answer)}
+            <div className={styles.header}>
+              <div>
+                <h4>{data.name}</h4>
+                <DisplayContent
+                  content={data.data.content}
+                  variables={data.data.variables}
+                  group={data.data.groups[group]}
+                />
+              </div>
+              <p className={styles.points}>
+                <span>Punkty: {countPoints(data.points)}</span>
+              </p>
             </div>
-            <p className={styles.points}>
-              <span>Punkty: {countPoints(data.points)}</span>
-            </p>
-          </div>
-          <DisplayPromptsFromApi
-            resolved={resolved}
-            promptsAllowed={promptsAllowed}
-            usedPrompts={usedPrompts}
-            action={useOnePrompt}
-            accountType={accountType}
-            taskId={_id}
-            model={data.data.model}
-            variables={[
-              ...data.data.variables,
-              ...data.data.additionalVariables,
-            ]}
-          />
-          <h4>Link do zdjęcia</h4>
-          <TextareaAutosize
-            maxcols="15"
-            mincols="5"
-            value={description}
-            onChange={(e) => {
-              setError("");
-              updateDescription(e.target.value);
-            }}
-          ></TextareaAutosize>
-          <div className={styles.answer}>
-            <h4>Odpowiedź:</h4>
-            <input
-              value={answer}
+            <DisplayPromptsFromApi
+              resolved={resolved}
+              promptsAllowed={promptsAllowed}
+              usedPrompts={usedPrompts}
+              action={useOnePrompt}
+              accountType={accountType}
+              taskId={_id}
+              model={data.data.model}
+              variables={[
+                ...data.data.variables,
+                ...data.data.additionalVariables,
+              ]}
+            />
+            <h4>Link do zdjęcia</h4>
+            <TextareaAutosize
+              maxcols="15"
+              mincols="5"
+              value={description}
               onChange={(e) => {
-                updateAnswer(e.target.value);
-                check(false);
+                setError("");
+                updateDescription(e.target.value);
               }}
-            ></input>
-          </div>
-          <div className={styles.answer}>
-            <h4>Twoja odpowiedź:</h4>
-            <div className={styles.result}>
-              <MathJax content={"`" + answer + "`"} />
+            ></TextareaAutosize>
+            <div className={styles.answer}>
+              <h4>Odpowiedź:</h4>
+              <input
+                value={answer}
+                onChange={(e) => {
+                  updateAnswer(e.target.value);
+                  check(false);
+                }}
+              ></input>
             </div>
-          </div>
-          {accountType === "student" ? (
-            <>
-              {errors && <Errors errors={errors.data.err} />}
-              <SendSolutionApi
-                check={check}
+            <div className={styles.answer}>
+              <h4>Twoja odpowiedź:</h4>
+              <div className={styles.result}>
+                <MathJax content={"`" + answer + "`"} />
+              </div>
+            </div>
+            {accountType === "student" ? (
+              <>
+                {errors && <Errors errors={errors.data.err} />}
+                <SendSolutionApi
+                  check={check}
+                  checkAnswer={checkAnswer}
+                  answer={answer}
+                  correctAnswer={correctAnswer}
+                  error={error}
+                  resolved={resolved}
+                  sendSolution={sendSolution}
+                  toUpdate={toUpdate}
+                />
+              </>
+            ) : (
+              <SendSolutionDumm
                 checkAnswer={checkAnswer}
                 answer={answer}
                 correctAnswer={correctAnswer}
-                error={error}
-                resolved={resolved}
-                sendSolution={sendSolution}
-                toUpdate={toUpdate}
+                check={check}
               />
-            </>
-          ) : (
-            <SendSolutionDumm
-              checkAnswer={checkAnswer}
-              answer={answer}
-              correctAnswer={correctAnswer}
-              check={check}
-            />
-          )}
+            )}
+          </div>
+          {description.length && <LinkBlank url={description} />}
           {accountType === "teacher" && toUpdate ? (
             <ReviewTask
               correctAnswer={correctAnswer}

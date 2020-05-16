@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import styles from "./OpenTask.module.scss";
 
 import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
 import SelectSection from "../AddTaskCommon/SelectSection/SelectSection.js";
@@ -12,6 +13,7 @@ import AdditionalVariables from "./Features/AdditionalVariables/AdditionalVariab
 import AddGroups from "./Features/AddGroups/AddGroups.js";
 import Points from "./Features/Points/Points.js";
 import SendOpenTask from "./Features/SendOpenTask/SendOpenTask.js";
+import Help from "../../../features/Help/Help";
 
 import { clearTask } from "../../../../redux/actions/newTask";
 import { clearTasks } from "../../../../redux/actions/tasks";
@@ -28,7 +30,10 @@ const OpenTask = ({ clearTask, clearTasks, success }) => {
         <Success success={success} clearTasks={clearTasks} />
       ) : (
         <>
-          <BackArrow />
+          <div className={styles.spaceBetween}>
+            <BackArrow />
+            <Help id={5} />
+          </div>
           <TaskContent />
           <VariabelsList />
           <AdditionalVariables />

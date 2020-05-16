@@ -34,7 +34,9 @@ const TasksList = ({ tasks, clearTasks }) => {
           </tr>
           <tr>
             <td>Podpowiedzi:{promptsAllowed ? " dostępne" : " niedostępne"}</td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+            <td>
+              Załącznik: {descriptionRequired ? "wymagany" : "niewymagany"}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -60,7 +62,9 @@ const TasksList = ({ tasks, clearTasks }) => {
           </tr>
           <tr>
             <td></td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+            <td>
+              Załącznik: {descriptionRequired ? "wymagany" : "niewymagany"}
+            </td>
           </tr>
         </tbody>
       </table>

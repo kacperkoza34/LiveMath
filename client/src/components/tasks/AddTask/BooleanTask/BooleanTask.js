@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-
+import styles from "./AddQuestion.module.scss";
 import SelectSection from "../AddTaskCommon/SelectSection/SelectSection.js";
 import SendTask from "../AddTaskCommon/SendTask/SendTask.js";
 import Success from "../AddTaskCommon/Success/Success.js";
@@ -9,6 +9,7 @@ import TaskContent from "../AddTaskCommon/TaskContent/TaskContent.js";
 import AddQuestion from "./AddQuestion.js";
 
 import BackArrow from "../../../features/BackArrow/BackArrow.js";
+import Help from "../../../features/Help/Help";
 
 import { connect } from "react-redux";
 import { clearTask, sendBooleanTask } from "../../../../redux/actions/newTask";
@@ -25,7 +26,10 @@ const CloseTask = ({ clearTask, clearTasks, success, sendBooleanTask }) => {
         <Success success={success} clearTasks={clearTasks} />
       ) : (
         <>
-          <BackArrow />
+          <div className={styles.spaceBetween}>
+            <BackArrow />
+            <Help id={7} />
+          </div>
           <TaskContent />
           <AddQuestion />
           <SelectSection />

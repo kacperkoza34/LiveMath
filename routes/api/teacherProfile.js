@@ -28,7 +28,7 @@ router.get("/me", authTeacher, async (req, res) => {
     res.json(teacher);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ msg: "Server error" });
+    res.status(500).send({ errors: [{ msg: "Uzytkownik nie istnieje" }] });
   }
 });
 

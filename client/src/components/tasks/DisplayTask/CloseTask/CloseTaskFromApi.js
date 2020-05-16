@@ -5,6 +5,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
 import SendSolution from "./SendSolution/SendSolution";
 import TextareaAutosize from "react-textarea-autosize";
+import LinkBlank from "../../../features/LinkBlank/LinkBlank";
 import ReviewTask from "../ReviewTask/ReviewTask";
 import Messages from "../Messages/Messages";
 import { connect } from "react-redux";
@@ -86,80 +87,90 @@ const CloseTaskFromApi = ({
         <BeatLoader size={20} />
       ) : (
         <>
-          {taskStatus === null && prepareState()}
-          <div className={styles.header}>
-            <div>
-              <h4>{data.name}</h4>
-              <p>{data.content}</p>
+          <div
+            className={
+              accountType === "teacher" || resolved ? styles.overlay : ""
+            }
+          >
+            {" "}
+            {taskStatus === null && prepareState()}
+            <div className={styles.header}>
+              <div>
+                <h4>{data.name}</h4>
+                <p>{data.content}</p>
+              </div>
+              <p className={styles.points}>Punkty: {data.points}</p>
             </div>
-            <p className={styles.points}>Punkty: {data.points}</p>
-          </div>
-          {taskStatus && (
-            <ul>
-              {data.data.map(({ content, answer: correctAnswer }, i) => (
-                <li
-                  key={i}
-                  className={
-                    checkAnswers || resolved
-                      ? answer[`${i}`] === correctAnswer
-                        ? [styles.listElement, styles.succesBgColor].join(" ")
-                        : [styles.listElement, styles.failBgColor].join(" ")
-                      : styles.listElement
-                  }
-                >
-                  <div className={styles.order}>
-                    {`${i + 1}). `}
-                    <MathJax content={"`" + content + "`"} />
-                  </div>
-                  Podaj odpowiedz:
-                  <div className={styles.item}>
-                    <input
-                      autoComplete="off"
-                      name={`${i}`}
-                      value={answer[`${i}`]}
-                      onChange={(e) => onChange(e)}
-                    ></input>
-                    <div>
-                      <span>Twoja odpowiedz:</span>
-                      <div className={styles.result}>
-                        <MathJax content={"`" + answer[`${i}`] + "`"} />
+            {taskStatus && (
+              <ul>
+                {data.data.map(({ content, answer: correctAnswer }, i) => (
+                  <li
+                    key={i}
+                    className={
+                      checkAnswers || resolved
+                        ? answer[`${i}`] === correctAnswer
+                          ? [styles.listElement, styles.succesBgColor].join(" ")
+                          : [styles.listElement, styles.failBgColor].join(" ")
+                        : styles.listElement
+                    }
+                  >
+                    <div className={styles.order}>
+                      {`${i + 1})`}
+                      <div style={{ marginLeft: "5px" }}>
+                        <MathJax content={"`" + content + "`"} />
                       </div>
                     </div>
-                    {checkAnswers &&
-                      (answer[`${i}`] === correctAnswer ? (
-                        <div className={styles.success}>Ok</div>
-                      ) : (
-                        <div className={styles.fail}>Źle</div>
-                      ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className={styles.description}>
-            <h4>Link do zdjęcia</h4>
-            <TextareaAutosize
-              maxcols="15"
-              mincols="5"
-              value={description}
-              onChange={(e) => updateDescription(e.target.value)}
-            ></TextareaAutosize>
+                    Podaj odpowiedz:
+                    <div className={styles.item}>
+                      <input
+                        autoComplete="off"
+                        name={`${i}`}
+                        value={answer[`${i}`]}
+                        onChange={(e) => onChange(e)}
+                      ></input>
+                      <div>
+                        <span>Twoja odpowiedz:</span>
+                        <div className={styles.result}>
+                          <MathJax content={"`" + answer[`${i}`] + "`"} />
+                        </div>
+                      </div>
+                      {checkAnswers &&
+                        (answer[`${i}`] === correctAnswer ? (
+                          <div className={styles.success}>Ok</div>
+                        ) : (
+                          <div className={styles.fail}>Źle</div>
+                        ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className={styles.description}>
+              <h4>Link do zdjęcia</h4>
+              <TextareaAutosize
+                maxcols="15"
+                mincols="5"
+                value={description}
+                onChange={(e) => updateDescription(e.target.value)}
+              ></TextareaAutosize>
+            </div>
+            {checkAnswers && displayResult()}
+            <SendSolution
+              setChekAnswers={setChekAnswers}
+              checkAnswers={checkAnswers}
+              displayResult={displayResult}
+              sendSolution={sendSolution}
+              resolved={resolved}
+              error={error}
+              apiErrors={errors}
+              toUpdate={toUpdate}
+              result={result}
+              answers={answer}
+              description={description}
+              accountType={accountType}
+            />
           </div>
-          {checkAnswers && displayResult()}
-          <SendSolution
-            setChekAnswers={setChekAnswers}
-            checkAnswers={checkAnswers}
-            displayResult={displayResult}
-            sendSolution={sendSolution}
-            resolved={resolved}
-            error={error}
-            apiErrors={errors}
-            toUpdate={toUpdate}
-            result={result}
-            answers={answer}
-            description={description}
-            accountType={accountType}
-          />
+          {description.length && <LinkBlank url={description} />}
           {accountType === "teacher" && toUpdate ? (
             <ReviewTask
               correctAnswers={data.data}

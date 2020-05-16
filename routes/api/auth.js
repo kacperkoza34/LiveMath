@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+const sanitize = require("../../middleware/sanitize");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
@@ -29,6 +30,7 @@ router.get("/", auth, async (req, res) => {
 
 router.post(
   "/",
+  sanitize,
   [
     check("email", "Email jest wymagany").isEmail(),
     check("accountType", "Niepoprawne dane").exists(),

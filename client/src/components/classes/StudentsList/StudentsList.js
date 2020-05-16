@@ -19,43 +19,51 @@ const StudentsList = ({ students }) => {
 
   return (
     <div className={styles.root}>
-      {students
-        .sort(compare)
-        .map(
-          (
-            { studentProfile: { user, name, points, maxPoints, needReview } },
-            index
-          ) => (
-            <Link
-              key={index}
-              className={
-                index % 2 !== 0
-                  ? [styles.btnList, styles.student].join(" ")
-                  : [styles.btnList, styles.student, styles.light].join(" ")
-              }
-              to={`/student/${user}`}
-            >
-              <span>
-                {`${index + 1}. ${name}  `}{" "}
-                {needReview && (
-                  <FontAwesomeIcon
-                    className={styles.review}
-                    icon={faQuestion}
-                  />
-                )}
-              </span>
-              <span className={styles.result}>
-                <Line
-                  percent={(points / maxPoints) * 100}
-                  strokeWidth="8"
-                  strokeColor="#222f3e"
-                  trailColor="#222f3e"
-                />
-                <div>{`${points}/${maxPoints}`}</div>
-              </span>
-            </Link>
-          )
-        )}
+      {students.length ? (
+        <>
+          {students
+            .sort(compare)
+            .map(
+              (
+                {
+                  studentProfile: { user, name, points, maxPoints, needReview },
+                },
+                index
+              ) => (
+                <Link
+                  key={index}
+                  className={
+                    index % 2 !== 0
+                      ? [styles.btnList, styles.student].join(" ")
+                      : [styles.btnList, styles.student, styles.light].join(" ")
+                  }
+                  to={`/student/${user}`}
+                >
+                  <span>
+                    {`${index + 1}. ${name}  `}{" "}
+                    {needReview && (
+                      <FontAwesomeIcon
+                        className={styles.review}
+                        icon={faQuestion}
+                      />
+                    )}
+                  </span>
+                  <span className={styles.result}>
+                    <Line
+                      percent={(points / maxPoints) * 100}
+                      strokeWidth="8"
+                      strokeColor="#222f3e"
+                      trailColor="#222f3e"
+                    />
+                    <div>{`${points}/${maxPoints}`}</div>
+                  </span>
+                </Link>
+              )
+            )}
+        </>
+      ) : (
+        <>Otwórz klasę i wyślij link do uczniów</>
+      )}
     </div>
   );
 };

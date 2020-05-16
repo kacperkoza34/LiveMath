@@ -16,6 +16,7 @@ const TaskClose = require("../../models/TaskClose");
 
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
+const sanitize = require("../../middleware/sanitize");
 
 // @route   GET api/profile/student/:id
 // @access  Private
@@ -49,6 +50,7 @@ router.get("/me", auth, async (req, res) => {
 router.put(
   "/resolve/open",
   [
+    sanitize,
     authStudent,
     [
       check("resolved", "Nie określono statusu zadania").exists(),
@@ -133,6 +135,7 @@ router.put(
   "/resolve/close",
   [
     authStudent,
+    sanitize,
     [
       check("resolved", "Nie określono statusu zadania").exists(),
       check("descriptionRequired", "Nie określono statusu zadania")
@@ -271,6 +274,7 @@ router.put(
   "/resolve/open/update",
   [
     authTeacher,
+    sanitize,
     [
       check("task_id", "Nie określono statusu zadania").not().isEmpty(),
       check("student_id", "Nie określono statusu zadania").not().isEmpty(),
@@ -326,6 +330,7 @@ router.put(
   "/resolve/close/update",
   [
     authTeacher,
+    sanitize,
     [
       check("task_id", "Nie określono statusu zadania").not().isEmpty(),
       check("student_id", "Nie określono statusu zadania").not().isEmpty(),

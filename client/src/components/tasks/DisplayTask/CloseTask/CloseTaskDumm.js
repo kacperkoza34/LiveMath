@@ -71,8 +71,10 @@ const CloseTaskDumm = ({
                   }
                 >
                   <div className={styles.order}>
-                    {`${i + 1}). `}
-                    <MathJax content={"`" + content + "`"} />
+                    {`${i + 1})`}
+                    <div style={{ marginLeft: "5px" }}>
+                      <MathJax content={"`" + content + "`"} />
+                    </div>
                   </div>
                   Podaj odpowiedz:
                   <div className={styles.item}>

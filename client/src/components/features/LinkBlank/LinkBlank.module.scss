@@ -1,0 +1,13 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
+
+.root {
+  margin: 20px 0;
+
+  a {
+    text-decoration: underline;
+  }
+  a:hover {
+    color: $color-primary;
+  }
+}

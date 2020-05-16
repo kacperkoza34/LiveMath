@@ -15,6 +15,7 @@ const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
 const auth = require("../../middleware/auth");
 const verifiedTeacher = require("../../middleware/verifiedTeacher");
+const sanitize = require("../../middleware/sanitize");
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -26,18 +27,21 @@ const getRandomIntInclusive = (min, max) => {
 router.post(
   "/open",
   [
+    sanitize,
     authTeacher,
     verifiedTeacher,
     [
-      check("name", "Podaj zadania").not().isEmpty(),
+      check("name", "Podaj nazwę zadania").not().isEmpty(),
       check("class", "Podaj klase od 1 do 8")
         .not()
         .isEmpty()
         .isInt({ min: 1, max: 8 }),
-      check("section", "Podaj dział").not().isEmpty(),
+      check("section", "Podaj dział").not().isEmpty().isInt(),
       check("content", "Podaj treść zadania").not().isEmpty(),
       check("model", "Podaj wzór").not().isEmpty(),
-      check("points", "Podaj ilość punktów").not().isEmpty(),
+      check("points", "Podaj ilość punktów").not().isEmpty().isInt(),
+      check("groups", "Podaj grupy").not().isEmpty(),
+      check("variables", "Podaj zmienne").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -81,6 +85,7 @@ router.post(
 router.post(
   "/close",
   [
+    sanitize,
     authTeacher,
     verifiedTeacher,
     [
@@ -258,6 +263,7 @@ router.get("/search/:class/:section", authTeacher, async (req, res) => {
 router.post(
   "/addOpenTask",
   [
+    sanitize,
     authTeacher,
     verifiedTeacher,
     [
@@ -320,6 +326,7 @@ router.post(
 router.post(
   "/addCloseTask",
   [
+    sanitize,
     authTeacher,
     verifiedTeacher,
     [

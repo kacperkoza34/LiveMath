@@ -78,54 +78,61 @@ const BooleanTaskFromApi = ({
         <BeatLoader size={20} />
       ) : (
         <>
-          {taskStatus === null && prepareState()}
-          <div className={styles.header}>
-            <div>
-              <h4>{data.name}</h4>
-              <p>{data.content}</p>
+          <div
+            className={
+              accountType === "teacher" || resolved ? styles.overlay : ""
+            }
+          >
+            {taskStatus === null && prepareState()}
+
+            <div className={styles.header}>
+              <div>
+                <h4>{data.name}</h4>
+                <p>{data.content}</p>
+              </div>
+              <p className={styles.points}>Punkty: {data.points}</p>
             </div>
-            <p className={styles.points}>Punkty: {data.points}</p>
-          </div>
-          <ul>
-            {data.data.map(({ content, answer: correctAnswer }, i) => (
-              <li
-                key={i}
-                className={
-                  resolved
-                    ? answer[`${i}`] === correctAnswer
-                      ? [styles.item, styles.succesBgColor].join(" ")
-                      : [styles.item, styles.failBgColor].join(" ")
-                    : styles.item
-                }
-              >
-                <div className={styles.questionBox}>
-                  <div>
-                    {`${i + 1}). `}
-                    {content + "   "}
+            <ul>
+              {data.data.map(({ content, answer: correctAnswer }, i) => (
+                <li
+                  key={i}
+                  className={
+                    resolved
+                      ? answer[`${i}`] === correctAnswer
+                        ? [styles.item, styles.succesBgColor].join(" ")
+                        : [styles.item, styles.failBgColor].join(" ")
+                      : styles.item
+                  }
+                >
+                  <div className={styles.questionBox}>
+                    <div>
+                      {`${i + 1}) `}
+                      {content + "   "}
+                    </div>
+                    <select
+                      className={styles.select}
+                      name={`${i}`}
+                      value={answer[`${i}`]}
+                      onChange={(e) => onChange(e)}
+                    >
+                      <option value={""}>Wybierz odpowiedz</option>
+                      <option value={true}>Prawda</option>
+                      <option value={false}>Fałsz</option>
+                    </select>
                   </div>
-                  <select
-                    className={styles.select}
-                    name={`${i}`}
-                    value={answer[`${i}`]}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value={""}>Wybierz odpowiedz</option>
-                    <option value={true}>Prawda</option>
-                    <option value={false}>Fałsz</option>
-                  </select>
-                </div>
-                {resolved ? (
-                  correctAnswer === answer[`${i}`] ? (
-                    <div className={styles.success}>Dobrze</div>
+                  {resolved ? (
+                    correctAnswer === answer[`${i}`] ? (
+                      <div className={styles.success}>Dobrze</div>
+                    ) : (
+                      <div className={styles.fail}>Źle</div>
+                    )
                   ) : (
-                    <div className={styles.fail}>Źle</div>
-                  )
-                ) : (
-                  ""
-                )}
-              </li>
-            ))}
-          </ul>
+                    ""
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
           {errors && <Errors errors={errors.data.err} />}
           {resolved ? (
             <div className={styles.result}>{displayResult()}</div>

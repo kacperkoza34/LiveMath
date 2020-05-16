@@ -3,23 +3,59 @@ import PropTypes from "prop-types";
 import styles from "./AboutDashboard.module.scss";
 import { connect } from "react-redux";
 import AboutMathJax from "../Articles/AboutMathJax/AboutMathJax";
-import AboutOpenTask from "../Articles/AboutOpenTask/AboutOpenTask";
-import AboutCloseTask from "../Articles/AboutCloseTask/AboutCloseTask";
-import AboutBooleanTask from "../Articles/AboutBooleanTask/AboutBooleanTask";
+import DummArticles from "../Articles/DummArticles/DummArticles";
+import VideoArticle from "../Articles/VideoArticle/VideoArticle";
 import Aside from "../../layout/Aside/Aside";
 
+import { aboutOpenTask } from "../../../data/AboutOpenTask";
+import { aboutCloseTask } from "../../../data/AboutCloseTask";
+import { aboutBooleanTask } from "../../../data/AboutBooleanTask";
+
+import { newOpenTask } from "../../../data/NewOpenTask";
+import { newCloseTask } from "../../../data/NewCloseTask";
+import { newBooleanTask } from "../../../data/NewBooleanTask";
+
 const menuConfig = [
-  { allowStudents: true, component: AboutMathJax, title: "MathJax" },
-  { allowStudents: true, component: AboutOpenTask, title: "Zadania otwarte" },
   {
     allowStudents: true,
-    component: AboutCloseTask,
-    title: "Zadania zamknięte",
+    component: AboutMathJax,
+    title: "MathJax",
   },
   {
     allowStudents: true,
-    component: AboutBooleanTask,
+    component: DummArticles,
+    description: aboutOpenTask,
+    title: "Zadanie otwarte",
+  },
+  {
+    allowStudents: true,
+    component: DummArticles,
+    description: aboutCloseTask,
+    title: "Zadanie zamknięte",
+  },
+  {
+    allowStudents: true,
+    component: DummArticles,
+    description: aboutBooleanTask,
     title: "Zadanie prawda fałsz",
+  },
+  {
+    allowStudents: false,
+    component: VideoArticle,
+    description: newOpenTask,
+    title: "Nowe zadanie otwarte",
+  },
+  {
+    allowStudents: false,
+    component: VideoArticle,
+    description: newCloseTask,
+    title: "Nowe zadanie zamknięte",
+  },
+  {
+    allowStudents: false,
+    component: VideoArticle,
+    description: newBooleanTask,
+    title: "Nowe zadanie prawda fałsz",
   },
 ];
 
@@ -30,11 +66,18 @@ const AboutDashboard = ({ accountType, match }) => {
     setActivePage(match.params.page - 1);
   }, []);
 
-  const renderArticle = (block, index) => {
+  const renderArticle = (block, index, props) => {
     if (typeof block.component !== "undefined") {
-      return React.createElement(block.component, {
-        key: index,
-      });
+      if (block.description) {
+        return React.createElement(block.component, {
+          key: index,
+          description: block.description,
+        });
+      } else {
+        return React.createElement(block.component, {
+          key: index,
+        });
+      }
     }
     return React.createElement(() => <div>Coś jest nie tak :( </div>, {
       key: index,

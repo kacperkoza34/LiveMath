@@ -18,7 +18,7 @@ const NewTask = () => {
     <div className={styles.root}>
       <div className={styles.wrapper}>
         <div>
-          <button onClick={() => addTask()}>Dodaj zadanie</button>
+          <button onClick={() => addTask()}>Stwórz zadanie</button>
           <select
             value={taskType}
             onChange={(e) => {

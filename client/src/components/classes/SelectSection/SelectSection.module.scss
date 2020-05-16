@@ -2,5 +2,9 @@
 @import "../../../styles/global.scss";
 
 .root {
-  margin: 20px 0;
+  margin-bottom: 20px;
+
+  button {
+    margin: 20px 0;
+  }
 }

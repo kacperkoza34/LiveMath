@@ -75,7 +75,7 @@ const BooleanTaskDumm = ({
                 >
                   <div className={styles.questionBox}>
                     <div>
-                      {`${i + 1}). `}
+                      {`${i + 1}) `}
                       {content + "   "}
                     </div>
                     <select

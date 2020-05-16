@@ -75,9 +75,12 @@ const Nav = ({
   const logo = (
     <>
       <Link to="/">
-        <img src={"/liveMathLogo.png"} />
+        {fetching ? (
+          <ClipLoader size={25} />
+        ) : (
+          <img src={"/liveMathLogo.png"} />
+        )}
       </Link>
-      {fetching && <ClipLoader size={25} />}
     </>
   );
   return (

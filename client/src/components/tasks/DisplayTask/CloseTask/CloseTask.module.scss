@@ -71,6 +71,17 @@
     margin: 10px 0;
     font-weight: 700;
   }
+
+  .overlay {
+    position: relative;
+  }
+  .overlay::before {
+    z-index: 1000;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @media (max-width: 576px) {

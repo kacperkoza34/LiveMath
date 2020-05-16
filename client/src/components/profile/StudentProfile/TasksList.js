@@ -72,7 +72,9 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
                 ? `Wykorzystane podpowiedzi: ${usedPrompts}`
                 : "Podpowiedzi niedostępne"}
             </td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+            <td>
+              Załącznik: {descriptionRequired ? "wymagany" : "niewymagany"}
+            </td>
           </tr>
           <tr>
             <td>
@@ -132,7 +134,9 @@ const TasksList = ({ tasks, clearTasks, setTaskConfig }) => {
           </tr>
           <tr>
             <td></td>
-            <td>Opis: {descriptionRequired ? "wymagany" : "niewymagany"}</td>
+            <td>
+              Załącznik: {descriptionRequired ? "wymagany" : "niewymagany"}
+            </td>
           </tr>
           <tr>
             <td>

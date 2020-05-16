@@ -3,11 +3,14 @@ const connectDB = require("./config/db");
 const path = require("path");
 const app = express();
 const cors = require("cors");
+const helmet = require("helmet");
 
 const config = require("config");
 const domain = config.get("domain");
 
 connectDB();
+
+app.use(helmet());
 
 app.use(
   cors({

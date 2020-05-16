@@ -16,11 +16,11 @@
     padding: 5px;
     border: 1px solid black;
     font-weight: 700;
-    transition: 0.4;
+    transition: 0.3s;
   }
   .statusBox:hover {
     cursor: pointer;
-    transform: scale(1.2);
+    transform: scale(1.1);
     font-weight: 600;
   }
 
