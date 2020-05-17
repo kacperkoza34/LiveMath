@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./ReviewTask.module.scss";
+import Help from "../../../features/Help/Help";
 import TextareaAutosize from "react-textarea-autosize";
 import { connect } from "react-redux";
 
@@ -27,8 +28,10 @@ const ReviewTask = ({
   return (
     <div className={styles.root}>
       <form onSubmit={(e) => send(e)}>
-        <h4>Panel sprawdzający</h4>
-
+        <div className={styles.spaceBetween}>
+          <h4>Panel sprawdzający</h4>
+          <Help id={3} title={"Dowiedz się więcej"} />
+        </div>
         {correctAnswer ? (
           <h5>Poprawna odpowiedź: {correctAnswer}</h5>
         ) : (
@@ -43,7 +46,7 @@ const ReviewTask = ({
                       : styles.failBgColor
                   }
                   key={index}
-                >{`${index + 1}.  ${answer} => uczeń: ${
+                >{`${index + 1}.  Poprawna: ${answer} , uczeń: ${
                   studentAnswers[index]
                 }`}</li>
               ))}

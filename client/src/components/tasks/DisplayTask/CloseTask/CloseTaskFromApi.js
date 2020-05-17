@@ -82,7 +82,7 @@ const CloseTaskFromApi = ({
   };
 
   return (
-    <div className={styles.root}>
+    <div>
       {isFetching ? (
         <BeatLoader size={20} />
       ) : (
@@ -170,7 +170,7 @@ const CloseTaskFromApi = ({
               accountType={accountType}
             />
           </div>
-          {description.length && <LinkBlank url={description} />}
+          {description.length > 0 && <LinkBlank url={description} />}
           {accountType === "teacher" && toUpdate ? (
             <ReviewTask
               correctAnswers={data.data}

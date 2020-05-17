@@ -69,7 +69,10 @@ const DashboardTeacher = ({
                     <div className={styles.groupData}>
                       <h3>Twoja grupa</h3>
                       <div className={styles.copy}>
-                        <h5>Link do twojej grupy</h5>
+                        <h5>
+                          Link do twojej grupy. Wysyłaj go tylko do innych
+                          nauczycieli
+                        </h5>
                         <span>
                           <FontAwesomeIcon
                             icon={faCopy}

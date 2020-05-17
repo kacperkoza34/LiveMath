@@ -15,7 +15,7 @@ const CloseTask = ({
     <div className={styles.root}>
       <div className={styles.spaceBetween}>
         <BackArrow />
-        <Help id={3} />
+        <Help id={3} title={"Dowiedz się więcej"} />
       </div>
       {Object.keys(taskConfig).length > 0 ? (
         <CloseTaskFromApi match={match} />

@@ -14,6 +14,8 @@ import { aboutBooleanTask } from "../../../data/AboutBooleanTask";
 import { newOpenTask } from "../../../data/NewOpenTask";
 import { newCloseTask } from "../../../data/NewCloseTask";
 import { newBooleanTask } from "../../../data/NewBooleanTask";
+import { aboutClass } from "../../../data/AboutClass";
+import { addTask } from "../../../data/AddTask";
 
 const menuConfig = [
   {
@@ -56,6 +58,18 @@ const menuConfig = [
     component: VideoArticle,
     description: newBooleanTask,
     title: "Nowe zadanie prawda fałsz",
+  },
+  {
+    allowStudents: false,
+    component: VideoArticle,
+    description: aboutClass,
+    title: "Klasa",
+  },
+  {
+    allowStudents: false,
+    component: VideoArticle,
+    description: addTask,
+    title: "Dodawanie zadań",
   },
 ];
 

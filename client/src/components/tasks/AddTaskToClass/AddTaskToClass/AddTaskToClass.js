@@ -13,6 +13,7 @@ import SelectDeadLine from "../SelectDeadLine/SelectDeadLine";
 import SelectPrompt from "../SelectPrompt/SelectPrompt";
 import SelectDescription from "../SelectDescription/SelectDescription";
 import SetMessage from "../SetMessage/SetMessage";
+import Help from "../../../features/Help/Help";
 
 const AddTaskToClass = ({
   taskId,
@@ -92,7 +93,10 @@ const AddTaskToClass = ({
     </div>
   ) : (
     <div className={styles.root}>
-      <h3>Dodaj zadanie do klas</h3>
+      <div className={styles.spaceBetween}>
+        <h3>Dodaj zadanie do klas</h3>
+        <Help id={9} title={"Jak dodać zadanie?"} />
+      </div>
       <SelectClass />
       <SelectDeadLine />
       {taskType === "openTask" && (

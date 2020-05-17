@@ -16,7 +16,7 @@ const OpenTask = ({ match, tasks }) => {
       <>
         <div className={styles.spaceBetween}>
           <BackArrow />
-          <Help id={2} />
+          <Help id={2} title={"Dowiedz się więcej"} />
         </div>
         {Object.keys(taskConfig).length > 0 ? (
           <OpenTaskFromApi match={match} />

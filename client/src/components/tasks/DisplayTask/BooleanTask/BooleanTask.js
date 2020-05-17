@@ -16,7 +16,7 @@ const BooleanTask = ({
     <div className={styles.root}>
       <div className={styles.spaceBetween}>
         <BackArrow />
-        <Help id={4} />
+        <Help id={4} title={"Dowiedz się więcej"} />
       </div>
       {Object.keys(taskConfig).length > 0 ? (
         <BooleanTaskFromApi match={match} />

@@ -28,7 +28,7 @@ const CloseTask = ({ clearTask, clearTasks, success, sendBooleanTask }) => {
         <>
           <div className={styles.spaceBetween}>
             <BackArrow />
-            <Help id={7} />
+            <Help id={7} title={"Zobacz instrukcje"} />
           </div>
           <TaskContent />
           <AddQuestion />

@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
-const Help = ({ id }) => {
+const Help = ({ id, title }) => {
   return (
     <div className={styles.root}>
       <Link to={`/about/${id}`}>
         {" "}
+        {`${title}  `}
         <FontAwesomeIcon icon={faInfoCircle} />
       </Link>
     </div>

@@ -51,7 +51,6 @@ const Landing = ({ isAuthenticated }) => {
           </Link>
         </div>
       </div>
-
     </section>
   );
 };

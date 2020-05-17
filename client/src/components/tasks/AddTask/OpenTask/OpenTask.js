@@ -32,7 +32,7 @@ const OpenTask = ({ clearTask, clearTasks, success }) => {
         <>
           <div className={styles.spaceBetween}>
             <BackArrow />
-            <Help id={5} />
+            <Help id={5} title={"Zobacz instrukcje"} />
           </div>
           <TaskContent />
           <VariabelsList />

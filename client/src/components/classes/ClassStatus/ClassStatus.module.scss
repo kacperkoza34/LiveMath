@@ -10,11 +10,12 @@
     word-wrap: break-word;
     padding: 6px;
     background-color: $color-background;
+    margin-bottom: 20px;
   }
 
   .copy {
     display: flex;
-    padding: 10px 0 10px 0;
+    padding: 10px 0 5px 0;
 
     span {
       transition: 0.3s;
@@ -29,8 +30,5 @@
       transform: scale(1.3);
       color: green;
     }
-  }
-  button {
-    margin: 20px 0;
   }
 }

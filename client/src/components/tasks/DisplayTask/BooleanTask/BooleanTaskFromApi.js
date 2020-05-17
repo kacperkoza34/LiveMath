@@ -73,7 +73,7 @@ const BooleanTaskFromApi = ({
     });
   };
   return (
-    <div className={styles.root}>
+    <div>
       {isFetching ? (
         <BeatLoader size={20} />
       ) : (

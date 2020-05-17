@@ -5,7 +5,7 @@ const LinkBlank = ({ url }) => {
   return (
     <div className={styles.root}>
       <h4>Zobacz rozwiązanie:</h4>
-      <a href={url} target="_blank">
+      <a target="_blank" href={url}>
         {url}
       </a>
     </div>

@@ -8,6 +8,7 @@ import TasksList from "../TasksList/TasksList.js";
 import ClassStatus from "../ClassStatus/ClassStatus.js";
 import SelectSection from "../SelectSection/SelectSection.js";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
+import Help from "../../features/Help/Help";
 import Aside from "../../layout/Aside/Aside";
 import { connect } from "react-redux";
 import { getClasses, setCurrentClass } from "../../../redux/actions/classes";
@@ -33,19 +34,25 @@ const Classes = ({
           <Aside>
             <h2>Klasy</h2>
             <ul>
-              {classes.map(({ title, _id }, index) => (
-                <li
-                  key={index}
-                  className={
-                    currentClass === _id ? styles.btnListActive : styles.btnList
-                  }
-                  onClick={() => {
-                    setCurrentClass(_id);
-                  }}
-                >
-                  {title}
-                </li>
-              ))}
+              {classes.length > 0 ? (
+                classes.map(({ title, _id }, index) => (
+                  <li
+                    key={index}
+                    className={
+                      currentClass === _id
+                        ? styles.btnListActive
+                        : styles.btnList
+                    }
+                    onClick={() => {
+                      setCurrentClass(_id);
+                    }}
+                  >
+                    {title}
+                  </li>
+                ))
+              ) : (
+                <li>Dodaj nową klase</li>
+              )}
             </ul>
             <AddClass />
           </Aside>
@@ -71,7 +78,10 @@ const Classes = ({
                     ) =>
                       _id === currentClass && (
                         <div key={index}>
-                          <h3>{title}</h3>
+                          <div className={styles.spaceBetween}>
+                            <h3>{title}</h3>
+                            <Help id={8} title={"Zobacz instrukcje"} />
+                          </div>
                           {students.length === maxStudentsAmount ? (
                             <h5>Klasa jest pełna</h5>
                           ) : (
