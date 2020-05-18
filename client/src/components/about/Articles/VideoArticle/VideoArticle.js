@@ -1,4 +1,6 @@
 import React from "react";
+import ReactPlayer from "react-player";
+
 import styles from "./VideoArticle.module.scss";
 
 const VideoArticle = ({ description }) => {
@@ -6,12 +8,7 @@ const VideoArticle = ({ description }) => {
     <div className={styles.root}>
       <h2>{description.title}</h2>
       <div className={styles.video}>
-        <iframe
-          src={description.video}
-          frameborder="0"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-        ></iframe>
+        <ReactPlayer url={description.video} />
       </div>
     </div>
   );
