@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./AddGroups.module.scss";
 import PropTypes from "prop-types";
 import MathJax from "../../../../MathJax";
+import CustomInput from "../../../../../features/CustomInput/CustomInput";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../../../redux/actions/newTask";
@@ -47,12 +48,12 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
           {variables.map(({ variable }, i) => (
             <div key={i} className={styles.box}>
               <h5>{variable + "  =  "}</h5>
-              <input
+              <CustomInput
                 autoComplete="off"
                 placeholder="Wartość"
                 name={variable}
-                value={formData[variable]}
-                onChange={(e) => onChange(e)}
+                state={formData[variable]}
+                action={onChange}
                 required
               />
               {" =  "}
@@ -65,12 +66,12 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
           ))}
           <div className={styles.box}>
             <h5>Wynik:</h5>
-            <input
+            <CustomInput
               autoComplete="off"
               placeholder="Odpowiedz"
               name="answer"
-              value={formData.answer}
-              onChange={(e) => onChange(e)}
+              state={formData.answer}
+              action={onChange}
               required
             />
             {" =  "}

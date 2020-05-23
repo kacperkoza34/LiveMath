@@ -1,12 +1,11 @@
-import React, { Component } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import MathJax from "react-mathjax-preview";
 
-class Demo extends Component {
-  render() {
-    const content = this.props.content;
-    const math = String.raw`${content}`;
-    return <MathJax math={math} />;
-  }
-}
+const Demo = (props) => {
+  const content = props.content;
+  const math = String.raw`${content}`;
+
+  return <MathJax math={math} />;
+};
 
 export default Demo;
