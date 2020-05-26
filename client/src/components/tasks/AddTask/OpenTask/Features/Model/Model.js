@@ -13,6 +13,7 @@ const Model = ({ addTaskModel, variabels, modelFromState }) => {
       <h3>Wzór</h3>
       <CustomInput
         placeholder="Podaj wzór"
+        name="onlyString"
         state={modelFromState}
         action={addTaskModel}
       />

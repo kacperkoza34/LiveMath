@@ -11,7 +11,6 @@ const AboutMathJax = () => {
     <div className={styles.root}>
       <h2>{aboutMathJax.title}</h2>
       <p>{aboutMathJax.content}</p>
-      <h4>{aboutMathJax.subtitle}</h4>
       <div className={styles.buttonBox}>
         {aboutMathJax.examples.map(({ title, content }) => (
           <button onClick={() => setContent(content)}>{title}</button>
@@ -29,13 +28,26 @@ const AboutMathJax = () => {
       <div className={styles.mathJax}>
         <MathJax content={"`" + content + "`"} />
       </div>
+      <h2>{aboutMathJax.subtitle}</h2>
 
-      <h4 className={styles.redirect}>
-        Zapoznaj się z{" "}
-        <a target="_blank" href={"https://asciimath.org/#syntax"}>
-          dokumentacją
-        </a>{" "}
-      </h4>
+      <table>
+        <thead>
+          <tr className={styles.table}>
+            <th className={styles.firstColumn}>Kod</th>{" "}
+            <th className={styles.secondColumn}>Wynik</th>
+          </tr>
+        </thead>
+        <tbody>
+          {aboutMathJax.table.map((item) => (
+            <tr className={styles.table}>
+              <td className={styles.firstColumn}>{item}</td>{" "}
+              <td className={styles.secondColumn}>
+                <MathJax content={"`" + item + "`"} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -8,3 +8,11 @@
   cursor: pointer;
   color: $color-primary;
 }
+
+@media (max-width: 576px) {
+  .root {
+    span {
+      display: none;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./AdditionalVariables.module.scss";
 import MathJax from "../../../../MathJax";
+import CustomInput from "../../../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import {
   addAddVariable,
@@ -86,11 +87,11 @@ const AdditionalVariables = ({
                   />
                 </td>
                 <td>
-                  <input
+                  <CustomInput
                     name={"description"}
                     placeholder="Opis"
-                    value={formData.description}
-                    onChange={(e) => onChange(e)}
+                    state={formData.description}
+                    action={onChange}
                     required
                   />
                 </td>

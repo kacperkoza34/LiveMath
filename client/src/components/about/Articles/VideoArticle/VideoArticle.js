@@ -8,7 +8,7 @@ const VideoArticle = ({ description }) => {
     <div className={styles.root}>
       <h2>{description.title}</h2>
       <div className={styles.video}>
-        <ReactPlayer url={description.video} />
+        <ReactPlayer width={"100%"} heigth={"100%"} url={description.video} />
       </div>
     </div>
   );

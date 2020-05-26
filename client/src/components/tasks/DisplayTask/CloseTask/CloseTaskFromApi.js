@@ -8,6 +8,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import LinkBlank from "../../../features/LinkBlank/LinkBlank";
 import ReviewTask from "../ReviewTask/ReviewTask";
 import Messages from "../Messages/Messages";
+import CustomInput from "../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -122,12 +123,12 @@ const CloseTaskFromApi = ({
                     </div>
                     Podaj odpowiedz:
                     <div className={styles.item}>
-                      <input
+                      <CustomInput
                         autoComplete="off"
                         name={`${i}`}
-                        value={answer[`${i}`]}
-                        onChange={(e) => onChange(e)}
-                      ></input>
+                        state={answer[`${i}`]}
+                        action={onChange}
+                      />
                       <div>
                         <span>Twoja odpowiedz:</span>
                         <div className={styles.result}>

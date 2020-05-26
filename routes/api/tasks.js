@@ -52,7 +52,7 @@ router.post(
 
     try {
       let profile = await TeacherProfile.findOne({ user: req.user.id });
-      let taskName = `${req.body.name} [${profile.name}]`;
+      let taskName = `${req.body.class}.${req.body.section} ${req.body.name}`;
       let alredyExist = await TaskOpen.findOne({ name: taskName });
       if (alredyExist)
         return res
@@ -106,7 +106,7 @@ router.post(
 
     try {
       let profile = await TeacherProfile.findOne({ user: req.user.id });
-      let taskName = `${req.body.name} [${profile.name}]`;
+      let taskName = `${req.body.class}.${req.body.section} ${req.body.name}`;
       let alredyExist = await TaskClose.findOne({ name: taskName });
       if (alredyExist)
         return res
@@ -154,7 +154,7 @@ router.post(
 
     try {
       let profile = await TeacherProfile.findOne({ user: req.user.id });
-      let taskName = `${req.body.name} [${profile.name}]`;
+      let taskName = `${req.body.class}.${req.body.section} ${req.body.name}`;
       let alredyExist = await TaskBoolean.findOne({ name: taskName });
       if (alredyExist)
         return res

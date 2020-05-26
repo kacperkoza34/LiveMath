@@ -31,11 +31,20 @@ const CustomInput = (props) => {
 
   const setForm = (e, item = "") => {
     e.preventDefault();
+
+    if (props.action2) props.action2();
+
     if (props.name) {
-      e.target.name = props.name;
+      if (props.name === "onlyString") props.action(e.target.value + item);
+      else {
+        e.target.name = props.name;
+        e.target.value = e.target.value + item;
+        props.action(e);
+      }
+    } else {
       e.target.value = e.target.value + item;
       props.action(e);
-    } else props.action(e.target.value + item);
+    }
   };
   return (
     <div ref={root} className={styles.root}>

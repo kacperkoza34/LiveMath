@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../MathJax";
+import CustomInput from "../../../features/CustomInput/CustomInput";
 import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
@@ -29,24 +30,24 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
           <h5>Wprowadz równanie</h5>
-          <input
+          <CustomInput
             autoComplete="off"
             placeholder="Równanie"
             name="content"
-            value={formData.content}
-            onChange={(e) => onChange(e)}
+            state={formData.content}
+            action={onChange}
             required
           />
         </div>
         <MathJax content={"`" + formData.content + "`"} />
         <div>
           <h5>Dodaj odpowiedz:</h5>
-          <input
+          <CustomInput
             autoComplete="off"
             placeholder="Odpowiedz"
             name="answer"
-            value={formData.answer}
-            onChange={(e) => onChange(e)}
+            state={formData.answer}
+            action={onChange}
             required
           />
           <MathJax content={"`" + formData.answer + "`"} />

@@ -12,6 +12,7 @@ import ReviewTask from "../ReviewTask/ReviewTask";
 import MathJax from "../../MathJax";
 import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
+import CustomInput from "../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import { getOpenTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -71,7 +72,7 @@ const OpenTask = ({
       else sendOpenTaskResolution({ ...taskConfig, message });
     }
   };
-
+  const upDateView = () => check(false);
   return (
     <div>
       {isFetching ? (
@@ -124,13 +125,12 @@ const OpenTask = ({
             ></TextareaAutosize>
             <div className={styles.answer}>
               <h4>Odpowiedź:</h4>
-              <input
-                value={answer}
-                onChange={(e) => {
-                  updateAnswer(e.target.value);
-                  check(false);
-                }}
-              ></input>
+              <CustomInput
+                state={answer}
+                name="onlyString"
+                action={updateAnswer}
+                action2={upDateView}
+              />
             </div>
             <div className={styles.answer}>
               <h4>Twoja odpowiedź:</h4>

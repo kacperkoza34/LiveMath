@@ -1,5 +1,4 @@
 @import "../../../../styles/settings.scss";
-@import "../../../../styles/global.scss";
 
 .root {
   input {
@@ -26,5 +25,32 @@
     a {
       text-decoration: underline;
     }
+  }
+
+  table {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 500;
+
+    td,
+    th {
+      padding: 2px;
+      border: 1px solid rgba(0, 0, 0, 0.6);
+    }
+
+    .firstColumn {
+      width: 70px;
+    }
+
+    .secondColumn {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+  }
+
+  .table {
+    display: flex;
+    justify-content: space-between;
   }
 }

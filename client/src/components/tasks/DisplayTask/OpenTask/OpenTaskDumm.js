@@ -8,6 +8,7 @@ import PromptsDumm from "./DisplayPrompts/PromptsDumm";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
+import CustomInput from "../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import { getOpenTask } from "../../../../redux/actions/tasks";
 
@@ -82,7 +83,7 @@ const OpenTaskDumm = ({
           ></TextareaAutosize>
           <div className={styles.answer}>
             <h4>Odpowiedź:</h4>
-            <input value={answer} onChange={(e) => addAnswer(e)}></input>
+            <CustomInput state={answer} action={addAnswer} />
           </div>
           <div className={styles.answer}>
             <h4>Twoja odpowiedź:</h4>

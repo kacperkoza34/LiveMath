@@ -9,7 +9,7 @@ const Help = ({ id, title }) => {
     <div className={styles.root}>
       <Link to={`/about/${id}`}>
         {" "}
-        {`${title}  `}
+        <span> {`${title}  `}</span>
         <FontAwesomeIcon icon={faInfoCircle} />
       </Link>
     </div>
