@@ -14,12 +14,13 @@ const StudentProfile = require("../../models/StudentProfile");
 
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
+const sanitize = require("../../middleware/sanitize");
 
 // POST
 // Add new class
 router.post(
   "/create",
-  [authTeacher, [check("title", "Podaj nazwe").not().isEmpty()]],
+  [authTeacher, sanitize, [check("title", "Podaj nazwe").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -29,11 +30,9 @@ router.post(
     try {
       let teacher = await Teacher.findOne({ _id: req.user.id });
       if (!teacher.verified)
-        return res
-          .status(401)
-          .json({
-            err: [{ msg: "Konto nie zweryfikowane, potwierdź link w emailu" }],
-          });
+        return res.status(401).json({
+          err: [{ msg: "Konto nie zweryfikowane, potwierdź link w emailu" }],
+        });
 
       let teacherProfile = await TeacherProfile.findOne({
         user: req.user.id,
@@ -79,7 +78,7 @@ router.post(
 
 // PUT
 // Close class
-router.put("/close/:id", authTeacher, async (req, res) => {
+router.put("/close/:id", authTeacher, sanitize, async (req, res) => {
   try {
     await Class.findOneAndUpdate({ _id: req.params.id }, { open: false });
     res.json({ newStatus: false, id: req.params.id });
@@ -91,7 +90,7 @@ router.put("/close/:id", authTeacher, async (req, res) => {
 
 // PUT
 // Open class
-router.put("/open/:id", authTeacher, async (req, res) => {
+router.put("/open/:id", authTeacher, sanitize, async (req, res) => {
   try {
     await Class.findOneAndUpdate({ _id: req.params.id }, { open: true });
     res.json({ newStatus: true, id: req.params.id });
@@ -103,7 +102,7 @@ router.put("/open/:id", authTeacher, async (req, res) => {
 
 // GET
 // Get all classes by id for teacher
-router.get("/my", authTeacher, async (req, res) => {
+router.get("/my", authTeacher, sanitize, async (req, res) => {
   try {
     let allClasses = await Class.find({ teacher: req.user.id })
       .populate(
@@ -122,7 +121,7 @@ router.get("/my", authTeacher, async (req, res) => {
 
 // PUT
 // Put new task to class
-router.put("/:id", authTeacher, async (req, res) => {
+router.put("/:id", authTeacher, sanitize, async (req, res) => {
   try {
     let currentClass = await Class.findOne({ _id: req.params.id });
     currentClass.task.unshift({ title: req.body.title });
@@ -136,7 +135,7 @@ router.put("/:id", authTeacher, async (req, res) => {
 
 // GET
 // Get class by id, with students
-router.get("/:id", authTeacher, async (req, res) => {
+router.get("/:id", authTeacher, sanitize, async (req, res) => {
   try {
     let singleClass = await Class.findOne({ _id: req.params.id });
     if (singleClass.teacher != req.user.id) {
@@ -158,7 +157,7 @@ router.get("/:id", authTeacher, async (req, res) => {
 
 // GET
 // Get class by id
-router.get("/studentview/:id", authStudent, async (req, res) => {
+router.get("/studentview/:id", authStudent, sanitize, async (req, res) => {
   try {
     let singleClass = await Class.findOne({ _id: req.params.id });
     if (req.params.id != req.user.classId) {

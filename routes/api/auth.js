@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
-const sanitize = require("../../middleware/sanitize");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
@@ -12,8 +11,9 @@ const Teacher = require("../../models/Teacher");
 
 const authStudent = require("../../middleware/authStudent");
 const authTeacher = require("../../middleware/authTeacher");
+const sanitize = require("../../middleware/sanitize");
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, sanitize, async (req, res) => {
   try {
     let user;
     if (req.user.accountType == "student")

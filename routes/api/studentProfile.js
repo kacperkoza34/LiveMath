@@ -34,7 +34,7 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-router.get("/me", auth, async (req, res) => {
+router.get("/me", auth, sanitize, async (req, res) => {
   try {
     let students = await StudentProfile.findOne({ user: req.user.id }).populate(
       "teacher.teacher"
@@ -214,6 +214,7 @@ router.put(
   "/resolve/boolean",
   [
     authStudent,
+    sanitize,
     [
       check("_id", "Nie określono statusu zadania").not().isEmpty(),
       check("deadLine", "Nie określono statusu zadania").not().isEmpty(),

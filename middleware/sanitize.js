@@ -9,6 +9,16 @@ module.exports = async function (req, res, next) {
     if (req.body.password) {
       req.body.password = sanitize(req.body.password);
     }
+    if (req.body.student_id) {
+      req.body.student_id = sanitize(req.body.student_id);
+    }
+    if (req.params.id) {
+      req.params.id = sanitize(req.params.id);
+    }
+    if (req.params.class_id) {
+      req.params.class_id = sanitize(req.params.class_id);
+    }
+
     if (req.body.name) {
       req.body.content = sanitizeHtml(req.body.content);
     }
