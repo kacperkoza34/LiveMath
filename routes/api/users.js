@@ -78,12 +78,22 @@ router.post(
         d: "mm",
       });
 
+      const sendEmail =
+        "gmail.com" ===
+        email
+          .trim()
+          .split("")
+          .splice(email.length - 9, email.length)
+          .join("")
+          ? true
+          : false;
+
       user = new Teacher({
         name,
         email,
         avatar,
         password,
-        verified: true,
+        verified: !sendEmail,
       });
 
       let inviterProfile;
@@ -121,47 +131,49 @@ router.post(
       await userProfile.save();
 
       //      ******* Email verification
-      // const tokenData = {
-      //   user: {
-      //     id: user.id,
-      //   },
-      // };
-      //
-      // let verifyToken = await jwt.sign(
-      //   tokenData,
-      //   config.get("verifyJwtSecret"),
-      //   {
-      //     expiresIn: 360000,
-      //   }
-      // );
-      //
-      // const mailgun = require("mailgun-js")({
-      //   apiKey: config.get("api_key_mail_gun"),
-      //   domain: config.get("mail_gun_domain"),
-      //   host: config.get("host"),
-      // });
-      //
-      // const data = {
-      //   from: '"LiveMath" <no-reply@livemath.com>', // sender address
-      //   to: email, // list of receivers
-      //   subject: "Potwierdź wiadomość ✔", // Subject line
-      //   html: `<!DOCTYPE html>
-      //   <html lang="en" dir="ltr">
-      //     <head>
-      //       <meta charset="utf-8">
-      //       <title></title>
-      //     </head>
-      //     <body>
-      //       <h4>Witaj w LiveMath</h4>
-      //       <p>Kliknij w link aby potwierdzić email</p>
-      //       <a href="${config.get(
-      //         "domain"
-      //       )}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
-      //     </body>
-      //   </html>`,
-      // };
-      //
-      // await mailgun.messages().send(data);
+      if (sendEmail) {
+        const tokenData = {
+          user: {
+            id: user.id,
+          },
+        };
+
+        let verifyToken = await jwt.sign(
+          tokenData,
+          config.get("verifyJwtSecret"),
+          {
+            expiresIn: 360000,
+          }
+        );
+
+        const mailgun = require("mailgun-js")({
+          apiKey: config.get("api_key_mail_gun"),
+          domain: config.get("mail_gun_domain"),
+          host: config.get("host"),
+        });
+
+        const data = {
+          from: '"LiveMath" <no-reply@livemath.com>', // sender address
+          to: email, // list of receivers
+          subject: "Potwierdź wiadomość ✔", // Subject line
+          html: `<!DOCTYPE html>
+      <html lang="en" dir="ltr">
+        <head>
+          <meta charset="utf-8">
+          <title></title>
+        </head>
+        <body>
+          <h4>Witaj w LiveMath</h4>
+          <p>Kliknij w link aby potwierdzić email</p>
+          <a href="${config.get(
+            "domain"
+          )}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
+        </body>
+      </html>`,
+        };
+
+        await mailgun.messages().send(data);
+      }
 
       // Return jsonwebtoken
       const payload = {
@@ -303,7 +315,7 @@ router.post(
 );
 
 /// create profile if email verified
-router.post("/:token", async (req, res) => {
+router.post("/:token", sanitize, async (req, res) => {
   try {
     const decoded = jwt.verify(req.params.token, config.get("verifyJwtSecret"));
     let user = await Teacher.findOneAndUpdate(
@@ -313,9 +325,7 @@ router.post("/:token", async (req, res) => {
     res.json(decoded);
   } catch (err) {
     console.error(err.message);
-    if (err.kind == "ObjectId")
-      return res.status(400).json({ err: [{ msg: "Błedny link" }] });
-    res.status(500).send({ err: [{ msg: "Server error" }] });
+    res.status(500).send({ err: [{ msg: "Błedny link" }] });
   }
 });
 
