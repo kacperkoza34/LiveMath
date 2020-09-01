@@ -4,11 +4,13 @@ import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import Errors from "../../../layout/Errors/Errors";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
+
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
   updateAnswer,
-  sendBooleanTaskResolution,
+  sendBooleanTaskResolution
 } from "../../../../redux/actions/resolveTask";
 
 const BooleanTaskFromApi = ({
@@ -18,7 +20,7 @@ const BooleanTaskFromApi = ({
   setTaskConfig,
   updateAnswer,
   sendBooleanTaskResolution,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
   useEffect(() => {
     getBooleanTask(match.params.id);
@@ -38,18 +40,18 @@ const BooleanTaskFromApi = ({
     setTaskStatus({ ...answers });
   };
 
-  const onChange = (e) => {
+  const onChange = e => {
     if (e.target.value === "") {
       setTaskStatus({ ...taskStatus, [e.target.name]: "" });
       updateAnswer({ ...taskStatus, [e.target.name]: "" });
     } else
       setTaskStatus({
         ...taskStatus,
-        [e.target.name]: e.target.value === "true" ? true : false,
+        [e.target.name]: e.target.value === "true" ? true : false
       });
     updateAnswer({
       ...taskStatus,
-      [e.target.name]: e.target.value === "true" ? true : false,
+      [e.target.name]: e.target.value === "true" ? true : false
     });
   };
   const countResult = () => {
@@ -69,7 +71,7 @@ const BooleanTaskFromApi = ({
       result: countResult(),
       deadLine,
       _id,
-      answer,
+      answer
     });
   };
   return (
@@ -113,7 +115,7 @@ const BooleanTaskFromApi = ({
                       className={styles.select}
                       name={`${i}`}
                       value={answer[`${i}`]}
-                      onChange={(e) => onChange(e)}
+                      onChange={e => onChange(e)}
                     >
                       <option value={""}>Wybierz odpowiedz</option>
                       <option value={true}>Prawda</option>
@@ -139,9 +141,14 @@ const BooleanTaskFromApi = ({
           ) : (
             <>
               {accountType === "student" ? (
-                <button className={styles.check} onClick={() => sendSolution()}>
+                <BtnPrimary
+                  font={12}
+                  border={2}
+                  className={styles.check}
+                  onClick={() => sendSolution()}
+                >
                   Wyślij odpowiedź
-                </button>
+                </BtnPrimary>
               ) : (
                 <div className={styles.result}>{displayResult()}</div>
               )}
@@ -163,17 +170,17 @@ BooleanTaskFromApi.propTypes = {
   setTaskConfig: PropTypes.func.isRequired,
   updateAnswer: PropTypes.func.isRequired,
   sendBooleanTaskResolution: PropTypes.func.isRequired,
-  task: PropTypes.object,
+  task: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
-  accountType: state.user.data.accountType,
+  accountType: state.user.data.accountType
 });
 
 export default connect(mapStateToProps, {
   getBooleanTask,
   setTaskConfig,
   updateAnswer,
-  sendBooleanTaskResolution,
+  sendBooleanTaskResolution
 })(BooleanTaskFromApi);

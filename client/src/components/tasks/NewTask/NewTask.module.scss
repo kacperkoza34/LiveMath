@@ -5,13 +5,13 @@
   display: flex;
   margin: 10px;
 
-  button,
-  select {
-    height: 30px;
-  }
-
   .wrapper {
     display: flex;
+  }
+  .notValid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .warning {

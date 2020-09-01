@@ -9,13 +9,14 @@ import LinkBlank from "../../../features/LinkBlank/LinkBlank";
 import ReviewTask from "../ReviewTask/ReviewTask";
 import Messages from "../Messages/Messages";
 import CustomInput from "../../../features/CustomInput/CustomInput";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
   updateDescription,
   updateAnswer,
   sendCloseTaskResolution,
-  reviewCloseTask,
+  reviewCloseTask
 } from "../../../../redux/actions/resolveTask";
 
 const CloseTaskFromApi = ({
@@ -28,7 +29,7 @@ const CloseTaskFromApi = ({
   sendCloseTaskResolution,
   student,
   reviewCloseTask,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
   useEffect(() => {
     getCloseTask(match.params.id);
@@ -42,7 +43,7 @@ const CloseTaskFromApi = ({
     resolved,
     toUpdate,
     _id,
-    messages,
+    messages
   } = taskConfig;
 
   const answers = {};
@@ -57,7 +58,7 @@ const CloseTaskFromApi = ({
     setTaskStatus({ ...answers });
   };
 
-  const onChange = (e) => {
+  const onChange = e => {
     setChekAnswers(false);
     setTaskStatus({ ...taskStatus, [e.target.name]: e.target.value });
     updateAnswer({ ...taskStatus, [e.target.name]: e.target.value });
@@ -152,7 +153,7 @@ const CloseTaskFromApi = ({
                 maxcols="15"
                 mincols="5"
                 value={description}
-                onChange={(e) => updateDescription(e.target.value)}
+                onChange={e => updateDescription(e.target.value)}
               ></TextareaAutosize>
             </div>
             {checkAnswers && displayResult()}
@@ -200,13 +201,13 @@ CloseTaskFromApi.propTypes = {
   sendCloseTaskResolution: PropTypes.func.isRequired,
   student: PropTypes.string.isRequired,
   reviewCloseTask: PropTypes.func.isRequired,
-  tasks: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
   accountType: state.user.data.accountType,
-  student: state.student.data._id,
+  student: state.student.data._id
 });
 
 export default connect(mapStateToProps, {
@@ -215,5 +216,5 @@ export default connect(mapStateToProps, {
   updateDescription,
   updateAnswer,
   sendCloseTaskResolution,
-  reviewCloseTask,
+  reviewCloseTask
 })(CloseTaskFromApi);

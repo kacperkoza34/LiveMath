@@ -4,12 +4,13 @@ import styles from "./TaskDashboard.module.scss";
 import TasksList from "../TasksList/TasksList";
 import NewTask from "../NewTask/NewTask";
 import Aside from "../../layout/Aside/Aside";
+import ContentWrapper from "../../layout/ContentWrapper/ContentWrapper";
 import { availableClasses } from "../../../data/TaskDashboardConfig.js";
 import { connect } from "react-redux";
 import {
   taskSuccess,
   setCurrentClass,
-  setCurrentSection,
+  setCurrentSection
 } from "../../../redux/actions/tasks";
 
 const TaskDashboard = ({
@@ -17,7 +18,7 @@ const TaskDashboard = ({
   currentSection,
   currentClass,
   setCurrentClass,
-  setCurrentSection,
+  setCurrentSection
 }) => {
   useEffect(() => {
     taskSuccess({});
@@ -28,7 +29,7 @@ const TaskDashboard = ({
     setCurrentSection(null);
   };
 
-  const setList = (id) => {
+  const setList = id => {
     setCurrentClass(id);
     setCurrentSection(null);
   };
@@ -72,9 +73,9 @@ const TaskDashboard = ({
             ))}
           </ul>
         </Aside>
-        <div className={styles.contentWrapper}>
+        <ContentWrapper border={1}>
           <TasksList classId={currentClass} sectionId={currentSection} />
-        </div>
+        </ContentWrapper>
       </div>
     </div>
   );
@@ -83,16 +84,16 @@ const TaskDashboard = ({
 TaskDashboard.propTypes = {
   taskSuccess: PropTypes.func.isRequired,
   currentClass: PropTypes.string,
-  currentSection: PropTypes.string,
+  currentSection: PropTypes.string
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentSection: state.tasks.currentTasks.section,
-  currentClass: state.tasks.currentTasks.class,
+  currentClass: state.tasks.currentTasks.class
 });
 
 export default connect(mapStateToProps, {
   taskSuccess,
   setCurrentClass,
-  setCurrentSection,
+  setCurrentSection
 })(TaskDashboard);

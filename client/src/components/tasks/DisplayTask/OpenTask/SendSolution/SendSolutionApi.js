@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextareaAutosize from "react-textarea-autosize";
+import BtnPrimary from "../../../../features/BtnPrimary/BtnPrimary";
 import styles from "./SendSolution.module.scss";
 
 const SendSolutionApi = ({
@@ -12,7 +13,7 @@ const SendSolutionApi = ({
   accountType,
   check,
   sendSolution,
-  toUpdate,
+  toUpdate
 }) => {
   const [message, setMessage] = useState("");
   return (
@@ -41,7 +42,7 @@ const SendSolutionApi = ({
                 maxrows="15"
                 minrows="5"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={e => setMessage(e.target.value)}
               />
               {error.length > 0 && <div className={styles.error}>{error}</div>}
               {correctAnswer === answer ? (
@@ -49,16 +50,24 @@ const SendSolutionApi = ({
                   <p className={styles.statusBox + " " + styles.success}>
                     Dobra odpowiedź
                   </p>
-                  <button onClick={() => sendSolution(false, message)}>
+                  <BtnPrimary
+                    font={12}
+                    border={2}
+                    onClick={() => sendSolution(false, message)}
+                  >
                     Prześlij rozwiązanie
-                  </button>
+                  </BtnPrimary>
                 </div>
               ) : (
                 <div>
                   <p className={styles.error}>Zła odpowiedź</p>
-                  <button onClick={() => sendSolution(true, message)}>
+                  <BtnPrimary
+                    font={12}
+                    border={2}
+                    onClick={() => sendSolution(true, message)}
+                  >
                     Prześlij z prośbą o sprawdzenie
-                  </button>
+                  </BtnPrimary>
                 </div>
               )}
             </>
@@ -69,7 +78,9 @@ const SendSolutionApi = ({
         <>
           {" "}
           {!checkAnswer && (
-            <button onClick={() => check(true)}>Sprawdź odpowiedź</button>
+            <BtnPrimary font={12} border={2} onClick={() => check(true)}>
+              Sprawdź odpowiedź
+            </BtnPrimary>
           )}
         </>
       )}
@@ -84,7 +95,7 @@ SendSolutionApi.propTypes = {
   resolved: PropTypes.bool.isRequired,
   error: PropTypes.any.isRequired,
   check: PropTypes.func.isRequired,
-  accountType: PropTypes.string,
+  accountType: PropTypes.string
 };
 
 export default SendSolutionApi;

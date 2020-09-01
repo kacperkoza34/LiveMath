@@ -6,6 +6,7 @@ import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import TextareaAutosize from "react-textarea-autosize";
 import CustomInput from "../../../features/CustomInput/CustomInput";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
 
@@ -14,7 +15,7 @@ const CloseTaskDumm = ({
   getCloseTask,
   accountType,
   setTaskConfig,
-  tasks: { data, isFetching, errors },
+  tasks: { data, isFetching, errors }
 }) => {
   useEffect(() => {
     getCloseTask(match.params.id);
@@ -33,7 +34,7 @@ const CloseTaskDumm = ({
     setTaskStatus({ ...answers });
   };
 
-  const onChange = (e) => {
+  const onChange = e => {
     setChekAnswers(false);
     setTaskStatus({ ...taskStatus, [e.target.name]: e.target.value });
   };
@@ -108,13 +109,17 @@ const CloseTaskDumm = ({
               maxcols="15"
               mincols="5"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={e => setDescription(e.target.value)}
             ></TextareaAutosize>
           </div>
           <div className={styles.check}>
-            <button onClick={() => setChekAnswers(true)}>
+            <BtnPrimary
+              font={12}
+              border={2}
+              onClick={() => setChekAnswers(true)}
+            >
               Sprawdź odpowiedzi
-            </button>
+            </BtnPrimary>
           </div>
           {checkAnswers && (
             <div className={styles.result}>{displayResult()}</div>
@@ -131,12 +136,12 @@ CloseTaskDumm.propTypes = {
   getCloseTask: PropTypes.func.isRequired,
   accountType: PropTypes.string.isRequired,
   setTaskConfig: PropTypes.func.isRequired,
-  task: PropTypes.object,
+  task: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
-  accountType: state.user.data.accountType,
+  accountType: state.user.data.accountType
 });
 
 export default connect(mapStateToProps, { getCloseTask, setTaskConfig })(

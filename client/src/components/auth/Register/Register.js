@@ -4,11 +4,12 @@ import styles from "./Register.module.scss";
 import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
 import Errors from "../../layout/Errors/Errors";
+import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import {
   register,
   alreadyLogged,
-  clearErrors,
+  clearErrors
 } from "../../../redux/actions/auth";
 
 const Register = ({
@@ -16,31 +17,31 @@ const Register = ({
   register,
   alreadyLogged,
   match,
-  clearErrors,
+  clearErrors
 }) => {
   useEffect(() => {
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
     return () => clearErrors();
-  }, [alreadyLogged]);
+  }, [alreadyLogged, clearErrors]);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    password2: "",
+    confirmPassword: ""
   });
   const [passwordsErr, setPasswordErr] = useState([]);
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, confirmPassword } = formData;
 
-  const onChange = (e) => {
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setPasswordErr([]);
   };
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
-    if (password !== password2) {
+    if (password !== confirmPassword) {
       setPasswordErr([{ msg: "Hasła nie są takie same" }]);
     } else {
       setPasswordErr([]);
@@ -53,8 +54,8 @@ const Register = ({
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
-        <h1>Stwórz konto</h1>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <h1>Rejestracja</h1>
+        <form onSubmit={e => onSubmit(e)}>
           <div>
             <h4>Podaj swoją nazwe</h4>
             <input
@@ -63,7 +64,7 @@ const Register = ({
               placeholder="Name"
               name="name"
               value={name}
-              onChange={(e) => onChange(e)}
+              onChange={e => onChange(e)}
               required
             />
           </div>
@@ -75,7 +76,7 @@ const Register = ({
               placeholder="Email Address"
               name="email"
               value={email}
-              onChange={(e) => onChange(e)}
+              onChange={e => onChange(e)}
               required
             />
           </div>
@@ -88,7 +89,7 @@ const Register = ({
               name="password"
               minLength="6"
               value={password}
-              onChange={(e) => onChange(e)}
+              onChange={e => onChange(e)}
               required
             />
           </div>
@@ -98,14 +99,20 @@ const Register = ({
               autocomplete="off"
               type="password"
               placeholder="Confirm Password"
-              name="password2"
+              name="confirmPassword"
               minLength="6"
-              value={password2}
-              onChange={(e) => onChange(e)}
+              value={confirmPassword}
+              onChange={e => onChange(e)}
               required
             />
           </div>
-          {isFetching ? <BeatLoader size={30} /> : <button>Zarejestruj</button>}
+          {isFetching ? (
+            <BeatLoader size={30} />
+          ) : (
+            <BtnPrimary font={16} border={2}>
+              Zarejestruj
+            </BtnPrimary>
+          )}
         </form>
         {passwordsErr.length > 0 && <Errors errors={[...passwordsErr]} />}
         {errors && <Errors errors={[...errors.data.err]} />}
@@ -118,15 +125,15 @@ Register.propTypes = {
   auth: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   alreadyLogged: PropTypes.object.isRequired,
-  match: PropTypes.object,
+  match: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {
   register,
   alreadyLogged,
-  clearErrors,
+  clearErrors
 })(Register);

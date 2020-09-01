@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./DisplayPrompts.module.scss";
+import BtnPrimary from "../../../../features/BtnPrimary/BtnPrimary";
 import MathJax from "../../../MathJax";
 import { connect } from "react-redux";
 
@@ -13,16 +14,20 @@ const DisplayPrompts = ({
   taskId,
   action,
   resolved,
-  dispatch,
+  dispatch
 }) => {
   return (
     <div>
       {promptsAllowed && (
         <div className={styles.root}>
           {accountType !== "teacher" && !resolved && usedPrompts < 2 && (
-            <button onClick={() => dispatch(action(taskId))}>
+            <BtnPrimary
+              font={12}
+              border={2}
+              onClick={() => dispatch(action(taskId))}
+            >
               Pokaż podpowiedz
-            </button>
+            </BtnPrimary>
           )}
           {usedPrompts >= 1 && (
             <>
@@ -65,7 +70,7 @@ DisplayPrompts.propTypes = {
   taskId: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
   resolved: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default connect()(DisplayPrompts);

@@ -9,14 +9,14 @@ const SelectSection = ({ addClass, addSection }) => {
   const [currentClass, setCurrentClass] = useState("");
   const [currentSection, setCurrentSection] = useState("");
 
-  const setClass = (e) => {
+  const setClass = e => {
     setCurrentSection("");
     addSection("");
     setCurrentClass(e.target.value);
     addClass(e.target.value);
   };
 
-  const setSection = (e) => {
+  const setSection = e => {
     setCurrentSection(e.target.value);
     addSection(e.target.value);
   };
@@ -24,8 +24,9 @@ const SelectSection = ({ addClass, addSection }) => {
     <div className={styles.root}>
       <h5>Wybierz klase i dział</h5>
       <select
+        className={styles.selectPrimary}
         value={currentClass}
-        onChange={(e) => {
+        onChange={e => {
           setClass(e);
         }}
       >
@@ -38,8 +39,9 @@ const SelectSection = ({ addClass, addSection }) => {
       </select>
 
       <select
+        className={styles.selectPrimary}
         value={currentSection}
-        onChange={(e) => {
+        onChange={e => {
           setSection(e);
         }}
       >
@@ -57,7 +59,7 @@ const SelectSection = ({ addClass, addSection }) => {
 
 SelectSection.propTypes = {
   addClass: PropTypes.func.isRequired,
-  addSection: PropTypes.func.isRequired,
+  addSection: PropTypes.func.isRequired
 };
 
 export default connect(null, { addClass, addSection })(SelectSection);

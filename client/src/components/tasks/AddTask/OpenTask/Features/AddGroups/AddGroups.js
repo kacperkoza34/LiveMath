@@ -15,14 +15,14 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
 
   const [formData, setFormData] = useState({ ...mockVars, answer: "" });
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     addGroup({ ...formData, id: uuidv4() });
     setFormData({ ...mockVars, answer: "" });
   };
-  const displayGroup = (item) => {
+  const displayGroup = item => {
     const listItems = [];
     for (let i in item) {
       if (i !== "id") {
@@ -43,7 +43,7 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
   return (
     <div className={styles.root}>
       {variables.length > 0 && (
-        <form className={styles.addGroup} onSubmit={(e) => onSubmit(e)}>
+        <form className={styles.addGroup} onSubmit={e => onSubmit(e)}>
           <h3>Zdefinuj wartości dla grup</h3>
           {variables.map(({ variable }, i) => (
             <div key={i} className={styles.box}>
@@ -77,7 +77,7 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
             {" =  "}
             <MathJax content={"`" + formData.answer + "`"} />
           </div>
-          {<button>Dodaj</button>}
+          {<button className={styles.btnPrimary}>Dodaj</button>}
         </form>
       )}
       {groups.length > 0 && (
@@ -90,7 +90,12 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
             >
               <h4>{`Grupa ${index + 1}`}</h4>
               {displayGroup(item)}
-              <button onClick={() => deleteGroup(item.id)}>Usun grupe</button>
+              <button
+                className={styles.btnPrimary}
+                onClick={() => deleteGroup(item.id)}
+              >
+                Usun grupe
+              </button>
             </li>
           ))}
         </ul>
@@ -104,13 +109,13 @@ AddGroups.propTypes = {
   content: PropTypes.string.isRequired,
   addGroup: PropTypes.func.isRequired,
   deleteGroup: PropTypes.func.isRequired,
-  groups: PropTypes.array.isRequired,
+  groups: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   variables: state.newTask.data.variables,
   content: state.newTask.data.content,
-  groups: state.newTask.data.groups,
+  groups: state.newTask.data.groups
 });
 
 export default connect(mapStateToProps, { addGroup, deleteGroup })(AddGroups);

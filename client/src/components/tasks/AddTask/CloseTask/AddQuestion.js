@@ -11,23 +11,23 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
   const [formData, setFormData] = useState({
     content: "",
     answer: "",
-    id: uuidv4(),
+    id: uuidv4()
   });
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     addGroup(formData);
     setFormData({
       content: "",
       answer: "",
-      id: uuidv4(),
+      id: uuidv4()
     });
   };
   return (
     <div className={styles.root}>
-      <form onSubmit={(e) => onSubmit(e)}>
+      <form onSubmit={e => onSubmit(e)}>
         <div>
           <h5>Wprowadz równanie</h5>
           <CustomInput
@@ -52,7 +52,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
           />
           <MathJax content={"`" + formData.answer + "`"} />
         </div>
-        <button>Dodaj</button>
+        <button className={styles.btnPrimary}>Dodaj</button>
         {groups.length > 0 && (
           <ul className={styles.groupList}>
             {groups.map(({ content, answer, id }, index) => (
@@ -69,7 +69,12 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
                     <MathJax content={"`" + answer + "`"} />
                   </div>
                 </span>
-                <button onClick={() => deleteGroup(id)}>Usun grupe</button>
+                <button
+                  className={styles.btnPrimary}
+                  onClick={() => deleteGroup(id)}
+                >
+                  Usun grupe
+                </button>
               </li>
             ))}
           </ul>
@@ -82,11 +87,11 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
 AddQuestion.propTypes = {
   addGroup: PropTypes.func.isRequired,
   deleteGroup: PropTypes.func.isRequired,
-  groups: PropTypes.array.isRequired,
+  groups: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  groups: state.newTask.data.groups,
+const mapStateToProps = state => ({
+  groups: state.newTask.data.groups
 });
 
 export default connect(mapStateToProps, { addGroup, deleteGroup })(AddQuestion);

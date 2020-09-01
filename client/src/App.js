@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout/MainLayout";
-import Login from "./components/auth/Login/Login";
-import Register from "./components/auth/Register/Register";
 import Dashboard from "./components/dashboard/Dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute/PrivateRoute";
 import TeacherRoute from "./components/routing/TeacherRoute/TeacherRoute";
@@ -29,13 +32,6 @@ const App = () => {
       <Router>
         <MainLayout>
           <Switch>
-            <Route
-              exact
-              path="/register/:teacher/:class"
-              component={Register}
-            />
-            <Route exact path="/register/:teacher" component={Register} />
-            <Route exact path="/login" component={Login} />
             <Route exact path="/verify/:token" component={VerifyEmail} />
             <PrivateRoute
               exact

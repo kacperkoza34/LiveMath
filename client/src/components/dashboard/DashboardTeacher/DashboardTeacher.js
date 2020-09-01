@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./DashboardTeacher.module.scss";
 import Errors from "../../layout/Errors/Errors";
+import Clipboard from "../../features/Clipboard/Clipboard";
 import BeatLoader from "react-spinners/BeatLoader";
 import TeacherProfile from "../../profile/TeacherProfile/TeacherProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,9 +15,9 @@ const DashboardTeacher = ({
   profile: {
     isFetching,
     data: { invitedByMe, inviter },
-    errors,
+    errors
   },
-  user: { name, _id, verified },
+  user: { name, _id, verified }
 }) => {
   useEffect(() => {
     getProfile();
@@ -68,25 +69,10 @@ const DashboardTeacher = ({
                   {verified ? (
                     <div className={styles.groupData}>
                       <h3>Twoja grupa</h3>
-                      <div className={styles.copy}>
-                        <h5>
-                          Link do twojej grupy. Wysyłaj go tylko do innych
-                          nauczycieli
-                        </h5>
-                        <span>
-                          <FontAwesomeIcon
-                            icon={faCopy}
-                            onClick={() => {
-                              navigator.clipboard.writeText(
-                                `${window.location.origin}/register/${_id}`
-                              );
-                            }}
-                          />
-                        </span>
-                      </div>
-                      <h5
-                        className={styles.link}
-                      >{`${window.location.origin}/register/${_id}`}</h5>
+                      <Clipboard
+                        link={`${window.location.origin}/register/${_id}`}
+                        title={"Zaproś innych nauczycieli"}
+                      />
                       {invitedByMe.length > 0 ? (
                         <div className={styles.list}>
                           <h4>Zaproszeni przez Ciebie</h4>
@@ -100,7 +86,7 @@ const DashboardTeacher = ({
                                     : [
                                         styles.btnList,
                                         styles.student,
-                                        styles.light,
+                                        styles.light
                                       ].join(" ")
                                 }
                                 onClick={() => setTeacher(user._id)}
@@ -142,11 +128,11 @@ const DashboardTeacher = ({
 DashboardTeacher.propTypes = {
   user: PropTypes.object.isRequired,
   getProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  profile: state.profile,
+const mapStateToProps = state => ({
+  profile: state.profile
 });
 
 export default connect(mapStateToProps, { getProfile })(DashboardTeacher);

@@ -1,4 +1,5 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
 
 .root {
   position: fixed;
@@ -23,27 +24,19 @@
     padding: 100px;
 
     h1 {
+      margin: 50px 0;
       font-size: 35px;
     }
   }
 
-  .btnLogin {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border: solid 2px black;
-    transition: 0.3s;
-  }
-  .btnLogin:hover {
-    background-color: $color-primary;
-  }
-
   .animation {
     position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
     top: 10%;
-    right: 20%;
-    width: 300px;
+    right: 10%;
+    width: 60%;
+    height: 75%;
 
     svg {
       width: 100%;

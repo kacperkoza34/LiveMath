@@ -1,0 +1,17 @@
+@import "../settings.scss";
+
+.btnList {
+  padding: 6px;
+  margin: 2px;
+}
+.btnList:hover {
+  cursor: pointer;
+  background: $color-background;
+}
+
+.btnListActive {
+  padding: 6px;
+  margin: 2px;
+  cursor: pointer;
+  background: $color-background;
+}

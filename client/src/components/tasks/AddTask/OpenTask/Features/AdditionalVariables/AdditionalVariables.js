@@ -6,22 +6,22 @@ import CustomInput from "../../../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import {
   addAddVariable,
-  removeAddVariable,
+  removeAddVariable
 } from "../../../../../../redux/actions/newTask";
 
 const AdditionalVariables = ({
   addAddVariable,
   additionalVariables,
   variables,
-  removeAddVariable,
+  removeAddVariable
 }) => {
   const [formData, setFormData] = useState({
     variable: "",
-    description: "",
+    description: ""
   });
   const [error, setError] = useState("");
 
-  const onChange = (e) => {
+  const onChange = e => {
     if (e.target.name === "variable") {
       if (e.target.value.length > 1) setError("Zmienne nazywamy jedną literą");
       else {
@@ -38,15 +38,15 @@ const AdditionalVariables = ({
       }
     } else setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     addAddVariable({
       variable: formData.variable,
-      description: formData.description,
+      description: formData.description
     });
     setFormData({ variable: "", description: "" });
   };
-  const remove = (name) => {
+  const remove = name => {
     removeAddVariable(name);
   };
   return (
@@ -55,17 +55,18 @@ const AdditionalVariables = ({
         <h3>
           Dodaj pomocnicze zmienne{" "}
           <button
+            className={styles.btnPrimary}
             onClick={() =>
               setFormData({
                 ...formData,
-                description: formData.description + "`" + "2/3+(3*3)/9" + "`",
+                description: formData.description + "`" + "2/3+(3*3)/9" + "`"
               })
             }
           >
             Umieść wzór w opisie
           </button>
         </h3>
-        <form className={styles.addFrom} onSubmit={(e) => onSubmit(e)}>
+        <form className={styles.addFrom} onSubmit={e => onSubmit(e)}>
           <table>
             <thead>
               <tr>
@@ -82,7 +83,7 @@ const AdditionalVariables = ({
                     name={"variable"}
                     placeholder="Zmienna"
                     value={formData.variable}
-                    onChange={(e) => onChange(e)}
+                    onChange={e => onChange(e)}
                     required
                   />
                 </td>
@@ -114,7 +115,7 @@ const AdditionalVariables = ({
               </div>
             </div>
           )}
-          <button>Dodaj</button>
+          <button className={styles.btnPrimary}>Dodaj</button>
         </form>
         {error.length > 0 && error}
         {additionalVariables.length > 0 && (
@@ -141,7 +142,7 @@ const AdditionalVariables = ({
                       </tr>
                       <tr>
                         <button
-                          className={styles.delete}
+                          className={styles.btnPrimary}
                           onClick={() => remove(variable)}
                         >
                           Usuń
@@ -163,12 +164,12 @@ AdditionalVariables.propTypes = {
   addAddVariable: PropTypes.func.isRequired,
   additionalVariables: PropTypes.array.isRequired,
   variables: PropTypes.array.isRequired,
-  removeAddVariable: PropTypes.func.isRequired,
+  removeAddVariable: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   additionalVariables: state.newTask.data.additionalVariables,
-  variables: state.newTask.data.variables,
+  variables: state.newTask.data.variables
 });
 
 export default connect(mapStateToProps, { addAddVariable, removeAddVariable })(

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./ReviewTask.module.scss";
 import Help from "../../../features/Help/Help";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import TextareaAutosize from "react-textarea-autosize";
 import { connect } from "react-redux";
 
@@ -12,22 +13,22 @@ const ReviewTask = ({
   dispatch,
   correctAnswer,
   correctAnswers,
-  studentAnswers,
+  studentAnswers
 }) => {
   const [message, setMessage] = useState("");
   const [accept, setAccept] = useState(false);
 
-  const send = (e) => {
+  const send = e => {
     e.preventDefault();
     reduxAction({
       message,
       student_id: studentId,
-      task_id: taskId,
+      task_id: taskId
     });
   };
   return (
     <div className={styles.root}>
-      <form onSubmit={(e) => send(e)}>
+      <form onSubmit={e => send(e)}>
         <div className={styles.spaceBetween}>
           <h4>Panel sprawdzający</h4>
           <Help id={3} title={"Dowiedz się więcej"} />
@@ -61,9 +62,11 @@ const ReviewTask = ({
           maxrows="15"
           minrows="5"
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={e => setMessage(e.target.value)}
         />
-        <button>Potwierdź</button>
+        <BtnPrimary font={12} border={2}>
+          Potwierdź
+        </BtnPrimary>
       </form>
     </div>
   );
@@ -75,7 +78,7 @@ ReviewTask.propTypes = {
   reduxAction: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   correctAnswer: PropTypes.object.isRequired,
-  correctAnswers: PropTypes.object.isRequired,
+  correctAnswers: PropTypes.object.isRequired
 };
 
 export default connect()(ReviewTask);

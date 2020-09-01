@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
 import styles from "./NewTask.module.scss";
 
 const NewTask = () => {
@@ -17,22 +18,24 @@ const NewTask = () => {
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
-        <div>
-          <button onClick={() => addTask()}>Stwórz zadanie</button>
-          <select
-            value={taskType}
-            onChange={(e) => {
-              setError(false);
-              setTaskType(e.target.value);
-            }}
-          >
-            <option value={""}>---</option>
-            <option value={"openTask"}>Zadanie otwarte</option>
-            <option value={"closeTask"}>Zadanie zamknięte</option>
-            <option value={"booleanTask"}>Zadanie prawda fałsz</option>
-          </select>
-        </div>
-        <div>
+        <BtnPrimary font={12} border={2} onClick={() => addTask()}>
+          Stwórz zadanie
+        </BtnPrimary>
+        <select
+          className={styles.selectPrimary}
+          value={taskType}
+          onChange={e => {
+            setError(false);
+            setTaskType(e.target.value);
+          }}
+        >
+          <option value={""}>---</option>
+          <option value={"openTask"}>Zadanie otwarte</option>
+          <option value={"closeTask"}>Zadanie zamknięte</option>
+          <option value={"booleanTask"}>Zadanie prawda fałsz</option>
+        </select>
+
+        <div className={styles.notValid}>
           {valiadtionError && (
             <div className={styles.warning}>Wybierz rodzaj zadania</div>
           )}

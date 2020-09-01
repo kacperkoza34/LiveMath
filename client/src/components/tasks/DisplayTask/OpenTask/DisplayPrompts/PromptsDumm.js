@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./DisplayPrompts.module.scss";
 import MathJax from "../../../MathJax";
+import BtnPrimary from "../../../../features/BtnPrimary/BtnPrimary";
 
 const PromptsDumm = ({ model, variables }) => {
   const [prompts, addOne] = useState(0);
@@ -15,7 +16,9 @@ const PromptsDumm = ({ model, variables }) => {
     <div className={styles.root}>
       {" "}
       {canAddPrompt && (
-        <button onClick={() => addPrompts()}>Pokaż podpowiedz</button>
+        <BtnPrimary font={12} border={2} onClick={() => addPrompts()}>
+          Pokaż podpowiedz
+        </BtnPrimary>
       )}
       {prompts >= 1 && (
         <>
@@ -49,7 +52,7 @@ const PromptsDumm = ({ model, variables }) => {
 
 PromptsDumm.propTypes = {
   model: PropTypes.string.isRequired,
-  variables: PropTypes.array.isRequired,
+  variables: PropTypes.array.isRequired
 };
 
 export default PromptsDumm;

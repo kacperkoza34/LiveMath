@@ -1,0 +1,17 @@
+@import "../../../styles/settings.scss";
+
+.btnPrimary {
+  background: $color-light;
+  font-weight: 600;
+  display: inline;
+  padding: 10px;
+  margin: 10px 0;
+  border-color: $color-dark;
+  color: $color-dark;
+  transition: 0.3s;
+}
+
+.btnPrimary:hover {
+  background-color: $color-primary;
+  cursor: pointer;
+}

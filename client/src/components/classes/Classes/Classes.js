@@ -9,15 +9,26 @@ import ClassStatus from "../ClassStatus/ClassStatus.js";
 import SelectSection from "../SelectSection/SelectSection.js";
 import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
 import Help from "../../features/Help/Help";
+import LockClasses from "../../features/LockClasses/LockClasses";
 import Aside from "../../layout/Aside/Aside";
+import ContentWrapper from "../../layout/ContentWrapper/ContentWrapper";
+import { faCopy, faLockOpen, faLock } from "@fortawesome/free-solid-svg-icons";
+
 import { connect } from "react-redux";
-import { getClasses, setCurrentClass } from "../../../redux/actions/classes";
+import {
+  getClasses,
+  setCurrentClass,
+  openClass,
+  closeClass
+} from "../../../redux/actions/classes";
 
 const Classes = ({
   getClasses,
   classes: { isFetching, data: classes, errors, currentClass },
   myId,
   setCurrentClass,
+  openClass,
+  closeClass
 }) => {
   useEffect(() => {
     getClasses();
@@ -56,7 +67,7 @@ const Classes = ({
             </ul>
             <AddClass />
           </Aside>
-          <div className={styles.contentWrapper}>
+          <ContentWrapper border={1}>
             <div>
               {currentClass == null ? (
                 <h5>Wybierz klase...</h5>
@@ -72,14 +83,27 @@ const Classes = ({
                         tasksBoolean,
                         open,
                         title,
-                        maxStudentsAmount,
+                        maxStudentsAmount
                       },
                       index
                     ) =>
                       _id === currentClass && (
                         <div key={index}>
                           <div className={styles.spaceBetween}>
-                            <h3>{title}</h3>
+                            <span className={styles.titleWithIcon}>
+                              <h3>{title}</h3>
+                              {open ? (
+                                <LockClasses
+                                  icon={faLockOpen}
+                                  onClick={() => closeClass(_id)}
+                                />
+                              ) : (
+                                <LockClasses
+                                  icon={faLock}
+                                  onClick={() => openClass(_id)}
+                                />
+                              )}
+                            </span>
                             <Help id={8} title={"Zobacz instrukcje"} />
                           </div>
                           {students.length === maxStudentsAmount ? (
@@ -104,7 +128,7 @@ const Classes = ({
                                 tasks={[
                                   ...tasksOpen,
                                   ...tasksClose,
-                                  ...tasksBoolean,
+                                  ...tasksBoolean
                                 ]}
                               />
                             </>
@@ -115,7 +139,7 @@ const Classes = ({
                 </>
               )}
             </div>
-          </div>
+          </ContentWrapper>
         </div>
       )}
     </>
@@ -125,14 +149,17 @@ const Classes = ({
 Classes.propTypes = {
   getClasses: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  myId: PropTypes.string.isRequired,
+  myId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   classes: state.classes,
-  myId: state.user.data._id,
+  myId: state.user.data._id
 });
 
-export default connect(mapStateToProps, { getClasses, setCurrentClass })(
-  Classes
-);
+export default connect(mapStateToProps, {
+  getClasses,
+  setCurrentClass,
+  openClass,
+  closeClass
+})(Classes);

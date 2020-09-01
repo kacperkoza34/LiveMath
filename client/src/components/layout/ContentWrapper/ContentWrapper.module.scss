@@ -1,0 +1,15 @@
+.contentWrapper {
+  width: 100%;
+  min-height: 500px;
+  background: #fff;
+  margin: 10px;
+  padding: 20px;
+  border: solid;
+  transition: 0.4s;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    width: 100%;
+  }
+}

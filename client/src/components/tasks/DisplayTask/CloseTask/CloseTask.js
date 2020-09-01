@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 const CloseTask = ({
   match,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
   return (
     <div className={styles.root}>
@@ -28,11 +28,11 @@ const CloseTask = ({
 
 CloseTask.propTypes = {
   match: PropTypes.object.isRequired,
-  task: PropTypes.object,
+  task: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  tasks: state.tasks,
+const mapStateToProps = state => ({
+  tasks: state.tasks
 });
 
 export default connect(mapStateToProps)(CloseTask);

@@ -5,7 +5,7 @@ import styles from "./VariabelsList.module.scss";
 import { connect } from "react-redux";
 import {
   addTaskData,
-  addVarDescription,
+  addVarDescription
 } from "../../../../../../redux/actions/newTask";
 
 class VariabelsList extends React.Component {
@@ -14,7 +14,7 @@ class VariabelsList extends React.Component {
     activeForm: 0,
     addingType: "",
     varsExist: false,
-    varsOneLetter: false,
+    varsOneLetter: false
   };
 
   getCode() {
@@ -62,7 +62,10 @@ class VariabelsList extends React.Component {
     const { addTaskData, taskData } = this.props;
     return (
       <div className={styles.root}>
-        <button onClick={() => addTaskData(this.getCode())}>
+        <button
+          className={styles.btnPrimary}
+          onClick={() => addTaskData(this.getCode())}
+        >
           Ustal zmienne
         </button>
         {this.state.varsExist && (
@@ -98,7 +101,7 @@ class VariabelsList extends React.Component {
                           <TextareaAutosize
                             value={description}
                             placeholder="Opis"
-                            onChange={(e) => this.addDescription(e, variable)}
+                            onChange={e => this.addDescription(e, variable)}
                             name="title"
                           />
                         </td>
@@ -119,12 +122,12 @@ VariabelsList.propTypes = {
   taskContent: PropTypes.string.isRequired,
   addVarDescription: PropTypes.func.isRequired,
   addTaskData: PropTypes.func.isRequired,
-  taskData: PropTypes.array.isRequired,
+  taskData: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   taskContent: state.newTask.data.content,
-  taskData: state.newTask.data.variables,
+  taskData: state.newTask.data.variables
 });
 
 export default connect(mapStateToProps, { addTaskData, addVarDescription })(

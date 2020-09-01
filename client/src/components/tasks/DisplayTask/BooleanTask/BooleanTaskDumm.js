@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { getBooleanTask, setTaskConfig } from "../../../../redux/actions/tasks";
 
@@ -11,7 +12,7 @@ const BooleanTaskDumm = ({
   getBooleanTask,
   accountType,
   setTaskConfig,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
   useEffect(() => {
     getBooleanTask(match.params.id);
@@ -29,14 +30,14 @@ const BooleanTaskDumm = ({
     setTaskStatus({ ...answers });
   };
 
-  const onChange = (e) => {
+  const onChange = e => {
     setChekAnswers(false);
     if (e.target.value === "")
       setTaskStatus({ ...taskStatus, [e.target.name]: "" });
     else
       setTaskStatus({
         ...taskStatus,
-        [e.target.name]: e.target.value === "true" ? true : false,
+        [e.target.name]: e.target.value === "true" ? true : false
       });
   };
 
@@ -82,7 +83,7 @@ const BooleanTaskDumm = ({
                       className={styles.select}
                       name={`${i}`}
                       value={taskStatus[`${i}`]}
-                      onChange={(e) => onChange(e)}
+                      onChange={e => onChange(e)}
                     >
                       <option value={""}>Wybierz odpowiedz</option>
                       <option value={true}>Prawda</option>
@@ -99,9 +100,14 @@ const BooleanTaskDumm = ({
               ))}
             </ul>
           )}
-          <button className={styles.check} onClick={() => setChekAnswers(true)}>
+          <BtnPrimary
+            font={12}
+            border={2}
+            className={styles.check}
+            onClick={() => setChekAnswers(true)}
+          >
             Sprawdź odpowiedzi
-          </button>
+          </BtnPrimary>
           {checkAnswers && (
             <div className={styles.result}>{displayResult()}</div>
           )}
@@ -119,12 +125,12 @@ BooleanTaskDumm.propTypes = {
   getBooleanTask: PropTypes.func.isRequired,
   accountType: PropTypes.string.isRequired,
   setTaskConfig: PropTypes.func.isRequired,
-  tasks: PropTypes.object,
+  tasks: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
-  accountType: state.user.data.accountType,
+  accountType: state.user.data.accountType
 });
 
 export default connect(mapStateToProps, { getBooleanTask, setTaskConfig })(

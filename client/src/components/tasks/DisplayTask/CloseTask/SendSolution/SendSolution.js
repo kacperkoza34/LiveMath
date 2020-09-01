@@ -16,7 +16,7 @@ const SendSolution = ({
   toUpdate,
   checkAnswers,
   setChekAnswers,
-  accountType,
+  accountType
 }) => {
   const [message, setMessage] = useState("");
   return (
@@ -47,18 +47,24 @@ const SendSolution = ({
                 maxrows="15"
                 minrows="5"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={e => setMessage(e.target.value)}
               />
               {apiErrors && <Errors errors={apiErrors.data.err} />}
               {error.length > 0 && <div className={styles.error}>{error}</div>}
               <div className={styles.send}>
                 <div>
-                  <button onClick={() => sendSolution(result, false, message)}>
+                  <button
+                    className={styles.btnPrimary}
+                    onClick={() => sendSolution(result, false, message)}
+                  >
                     Prześlij rozwiązanie
                   </button>
                 </div>
                 <div>
-                  <button onClick={() => sendSolution(result, true, message)}>
+                  <button
+                    className={styles.btnPrimary}
+                    onClick={() => sendSolution(result, true, message)}
+                  >
                     Wyślij prośbe o sprawdzenie
                   </button>
                 </div>
@@ -73,7 +79,10 @@ const SendSolution = ({
         <>
           {" "}
           {!checkAnswers && (
-            <button onClick={() => setChekAnswers(true)}>
+            <button
+              className={styles.btnPrimary}
+              onClick={() => setChekAnswers(true)}
+            >
               Sprawdź odpowiedź
             </button>
           )}
@@ -94,7 +103,7 @@ SendSolution.propTypes = {
   toUpdate: PropTypes.bool.isRequired,
   checkAnswers: PropTypes.bool.isRequired,
   setChekAnswers: PropTypes.func.isRequired,
-  accountType: PropTypes.string.isRequired,
+  accountType: PropTypes.string.isRequired
 };
 
 export default SendSolution;

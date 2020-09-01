@@ -4,6 +4,7 @@ import styles from "./Login.module.scss";
 import PropTypes from "prop-types";
 import BeatLoader from "react-spinners/BeatLoader";
 import Errors from "../../layout/Errors/Errors";
+import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { login, alreadyLogged, clearErrors } from "../../../redux/actions/auth";
 
@@ -11,24 +12,24 @@ const Login = ({
   login,
   alreadyLogged,
   auth: { isAuthenticated, isFetching, errors },
-  clearErrors,
+  clearErrors
 }) => {
   useEffect(() => {
     if (localStorage.token) {
       alreadyLogged({ token: localStorage.token });
     }
     return () => clearErrors();
-  }, [alreadyLogged]);
+  }, [alreadyLogged, clearErrors]);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    accountType: "teacher",
+    accountType: "teacher"
   });
   const { email, password, accountType } = formData;
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     login({ email, password, accountType });
   };
@@ -39,7 +40,7 @@ const Login = ({
     <div className={styles.root}>
       <div className={styles.wrapper}>
         <h1>Logowanie</h1>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={e => onSubmit(e)}>
           <div>
             <h4>Email</h4>
             <input
@@ -47,7 +48,7 @@ const Login = ({
               placeholder="Email Address"
               name="email"
               value={email}
-              onChange={(e) => onChange(e)}
+              onChange={e => onChange(e)}
               required
             />
           </div>
@@ -59,18 +60,29 @@ const Login = ({
               name="password"
               minLength="6"
               value={password}
-              onChange={(e) => onChange(e)}
+              onChange={e => onChange(e)}
               required
             />
           </div>
           <small>Wybierz rodzaj konta</small>
           <div>
-            <select onChange={(e) => onChange(e)} name="accountType" required>
+            <select
+              className={styles.selectPrimary}
+              onChange={e => onChange(e)}
+              name="accountType"
+              required
+            >
               <option value={"teacher"}>Nauczyciel</option>
               <option value={"student"}>Uczeń</option>
             </select>
           </div>
-          {isFetching ? <BeatLoader size={30} /> : <button>Login</button>}
+          {isFetching ? (
+            <BeatLoader size={30} />
+          ) : (
+            <BtnPrimary font={16} border={2}>
+              Login
+            </BtnPrimary>
+          )}
         </form>
         {errors && <Errors errors={errors.data.err} />}
       </div>
@@ -81,11 +93,11 @@ const Login = ({
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   alreadyLogged: PropTypes.func.isRequired,
-  auht: PropTypes.object,
+  auht: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { login, alreadyLogged, clearErrors })(

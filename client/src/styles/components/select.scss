@@ -1,0 +1,11 @@
+@import "../settings.scss";
+
+.selectPrimary {
+  border: 2px solid $color-dark;
+  color: $color-dark;
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px 0;
+  transition: 0.3s;
+  font-weight: 600;
+}

@@ -4,31 +4,4 @@
   .wrapper {
     width: 100%;
   }
-
-  .link {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    padding: 6px;
-    background-color: $color-background;
-    margin-bottom: 20px;
-  }
-
-  .copy {
-    display: flex;
-    padding: 10px 0 5px 0;
-
-    span {
-      transition: 0.3s;
-      margin-left: 10px;
-    }
-
-    span:hover {
-      cursor: pointer;
-    }
-
-    span:active {
-      transform: scale(1.3);
-      color: green;
-    }
-  }
 }

@@ -1,9 +1,14 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/global.scss";
 
 .root {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: $color-light;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 
   .wrapper {
     min-height: 400px;
@@ -16,7 +21,7 @@
   }
 
   h1 {
-    margin: 20px;
+    margin: 20px 0;
   }
 
   .btnRedirect {

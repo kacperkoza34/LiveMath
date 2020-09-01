@@ -6,7 +6,7 @@ import {
   addOpenTask,
   addCloseTask,
   addBooleanTask,
-  clearTask,
+  clearTask
 } from "../../../../redux/actions/taskToClass";
 import SelectClass from "../SelectClass/SelectClass";
 import SelectDeadLine from "../SelectDeadLine/SelectDeadLine";
@@ -14,6 +14,7 @@ import SelectPrompt from "../SelectPrompt/SelectPrompt";
 import SelectDescription from "../SelectDescription/SelectDescription";
 import SetMessage from "../SetMessage/SetMessage";
 import Help from "../../../features/Help/Help";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 
 const AddTaskToClass = ({
   taskId,
@@ -24,14 +25,14 @@ const AddTaskToClass = ({
   addBooleanTask,
   addCloseTask,
   success,
-  clearTask,
+  clearTask
 }) => {
   const {
     descriptionRequired,
     promptsAllowed,
     deadLine,
     classes,
-    message,
+    message
   } = taskParams;
   const [error, setError] = useState(false);
 
@@ -49,7 +50,7 @@ const AddTaskToClass = ({
         deadLine,
         classes,
         points,
-        message,
+        message
       });
     } else setError(true);
   };
@@ -63,7 +64,7 @@ const AddTaskToClass = ({
         points,
         deadLine,
         classes,
-        message,
+        message
       });
     } else setError(true);
   };
@@ -75,7 +76,7 @@ const AddTaskToClass = ({
         taskId,
         points,
         deadLine,
-        classes,
+        classes
       });
     } else setError(true);
   };
@@ -107,9 +108,9 @@ const AddTaskToClass = ({
           <SelectDescription />
           <div>
             {displayError()}
-            <button onClick={() => submitOpenTask()}>
+            <BtnPrimary font={12} border={2} onClick={() => submitOpenTask()}>
               Dodaj zadnie do klas
-            </button>
+            </BtnPrimary>
           </div>
         </>
       )}
@@ -120,20 +121,18 @@ const AddTaskToClass = ({
           <SelectDescription />
           <div>
             {displayError()}
-            <button onClick={() => submitCloseTask()}>
+            <BtnPrimary font={12} border={2} onClick={() => submitCloseTask()}>
               Dodaj zadnie do klas
-            </button>
+            </BtnPrimary>
           </div>
         </>
       )}
       {taskType === "booleanTask" && (
         <>
-          <div>
-            {displayError()}
-            <button onClick={() => submitBooleanTask()}>
-              Dodaj zadnie do klas
-            </button>
-          </div>
+          {displayError()}
+          <BtnPrimary font={12} border={2} onClick={() => submitBooleanTask()}>
+            Dodaj zadnie do klas
+          </BtnPrimary>
         </>
       )}
     </div>
@@ -149,20 +148,20 @@ AddTaskToClass.propTypes = {
   addBooleanTask: PropTypes.func.isRequired,
   addCloseTask: PropTypes.func.isRequired,
   success: PropTypes.bool.isRequired,
-  clearTask: PropTypes.func.isRequired,
+  clearTask: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   taskId: state.tasks.data._id,
   points: state.tasks.data.points,
   taskType: state.tasks.data.taskType,
   taskParams: state.addTaskToClass.data,
-  success: state.addTaskToClass.success,
+  success: state.addTaskToClass.success
 });
 
 export default connect(mapStateToProps, {
   addOpenTask,
   addCloseTask,
   addBooleanTask,
-  clearTask,
+  clearTask
 })(AddTaskToClass);

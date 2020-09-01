@@ -14,7 +14,7 @@ const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
     groups,
     section,
     points,
-    class: classNew,
+    class: classNew
   } = newTask;
   const [errors, setErrors] = useState("");
   const sendTask = () => {
@@ -44,7 +44,9 @@ const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
         </ul>
       )}
       {apiErrors && <Errors errors={apiErrors.data.err} />}
-      <button onClick={() => sendTask()}>Zapisz zadanie</button>
+      <button className={styles.btnPrimary} onClick={() => sendTask()}>
+        Zapisz zadanie
+      </button>
     </div>
   );
 };
@@ -52,12 +54,12 @@ const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
 SendOpenTask.propTypes = {
   newTask: PropTypes.object.isRequired,
   sendOpenTask: PropTypes.func.isRequired,
-  apiErrors: PropTypes.any.isRequired,
+  apiErrors: PropTypes.any.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   newTask: state.newTask.data,
-  apiErrors: state.newTask.errors,
+  apiErrors: state.newTask.errors
 });
 
 export default connect(mapStateToProps, { sendOpenTask })(SendOpenTask);
