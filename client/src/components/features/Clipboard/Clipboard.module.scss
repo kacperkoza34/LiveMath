@@ -2,10 +2,12 @@
 @import "../../../styles/global.scss";
 
 .root {
+  margin: 0 0 50px 0;
+
   .link {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    padding: 6px;
+    padding: 5px 0;
     background-color: $color-background;
     margin-bottom: 20px;
   }

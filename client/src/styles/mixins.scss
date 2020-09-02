@@ -1,0 +1,7 @@
+@import "./settings.scss";
+
+@mixin taskView($bg-color) {
+  width: 100%;
+  background-color: $bg-color;
+  padding: 5px;
+}

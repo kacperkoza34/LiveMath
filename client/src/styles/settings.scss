@@ -2,7 +2,7 @@ $color-light: #fff;
 $color-dark: #222f3e;
 $color-background: #f1f2f6;
 $color-primary: #0652dd;
-$color-secondary: #95afc0;
+$color-secondary: #e94100;
 $color-success: #2ecc71;
 $color-to-update: #fbc531;
 $color-to-do: #273c75;
@@ -24,11 +24,3 @@ $font-text: "Source Sans Pro", sans-serif;
 $radius: 5px;
 $base-size: 12px;
 $transition: all 0.5s;
-
-@mixin p-el($element) {
-  &:#{$element},
-  &::#{$element} {
-    position: absolute;
-    @content;
-  }
-}

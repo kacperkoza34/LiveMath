@@ -2,17 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./SelectSection.module.scss";
-import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
 
 const SelectSection = ({ activePage, setActivePage }) => {
   return (
     <div className={styles.root}>
-      <Link to={"/tasks"}>
-        <BtnPrimary size={12} border={2}>
-          Dodaj zadanie
-        </BtnPrimary>
-      </Link>
-
       <div>
         <span
           className={activePage === 1 ? styles.btnListActive : styles.btnList}
