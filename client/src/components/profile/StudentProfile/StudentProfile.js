@@ -3,20 +3,21 @@ import PropTypes from "prop-types";
 import styles from "./StudentProfile.module.scss";
 import BeatLoader from "react-spinners/BeatLoader";
 import { Line } from "rc-progress";
-import TasksList from "./TasksList";
 import BackArrow from "../../features/BackArrow/BackArrow";
+import TasksList from "../../features/TasksList/TasksList";
 import { connect } from "react-redux";
 import { getStudent } from "../../../redux/actions/student";
+import { clearTasks, setTaskConfig } from "../../../redux/actions/tasks";
 
 const StudentProfile = ({
   id,
   student: {
     isFetching,
-    data: { name, tasksOpen, tasksBoolean, tasksClose, points, maxPoints },
+    data: { name, tasksOpen, tasksBoolean, tasksClose, points, maxPoints }
   },
   user: { _id, accountType },
   getStudent,
-  match,
+  match
 }) => {
   useEffect(() => {
     if (match) getStudent(match.params.id);
@@ -41,7 +42,11 @@ const StudentProfile = ({
               <div>{`Postęp: ${points}/${maxPoints}`}</div>
             </span>
           </div>
-          <TasksList tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]} />
+          <TasksList
+            clearTasks={clearTasks}
+            setTaskConfig={setTaskConfig}
+            tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]}
+          />
         </div>
       )}
     </div>
@@ -53,12 +58,12 @@ StudentProfile.propTypes = {
   student: PropTypes.object.isRequired,
   user: PropTypes.string.isRequired,
   getStudent: PropTypes.func.isRequired,
-  match: PropTypes.object,
+  match: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   student: state.student,
-  user: state.user.data,
+  user: state.user.data
 });
 
 export default connect(mapStateToProps, { getStudent })(StudentProfile);

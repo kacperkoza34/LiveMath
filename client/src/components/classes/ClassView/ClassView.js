@@ -6,10 +6,13 @@ import TaskTypeBox from "../../features/TaskTypeBox/TaskTypeBox";
 import ClassStatus from "../ClassStatus/ClassStatus";
 import SelectSection from "../SelectSection/SelectSection";
 import StudentsList from "../StudentsList/StudentsList";
-import TasksList from "../TasksList/TasksList";
+import TasksList from "../../features/TasksList/TasksList";
 import { faLockOpen, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
 import styles from "./ClassView.module.scss";
+import { connect } from "react-redux";
+import { clearTasks, setTaskConfig } from "../../../redux/actions/tasks";
 
 const ClassView = ({
   index,
@@ -52,7 +55,16 @@ const ClassView = ({
         ) : (
           <>
             <TaskTypeBox />
-            <TasksList tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]} />
+            <Link to={"/tasks"}>
+              <BtnPrimary size={12} border={2}>
+                Dodaj zadanie
+              </BtnPrimary>
+            </Link>
+            <TasksList
+              onlyName={false}
+              clearTasks={clearTasks}
+              tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]}
+            />
           </>
         )}
       </div>

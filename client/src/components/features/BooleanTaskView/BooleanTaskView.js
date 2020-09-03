@@ -1,30 +1,17 @@
 import React from "react";
-import styles from "./CloseTaskView.module.scss";
+import styles from "./BooleanTaskView.module.scss";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import TaskStatus from "../TaskStatus/TaskStatus";
 
-const CloseTaskView = ({
+const BooleanTaskView = ({
   onlyName,
   data,
   index,
   clearTasks,
   setTaskConfig
 }) => {
-  const {
-    task,
-    deadLine,
-    task,
-    deadLine,
-    resolved,
-    result,
-    description,
-    descriptionRequired,
-    answer,
-    toUpdate,
-    _id,
-    messages
-  } = data;
+  const { task, deadLine, resolved, result, answer, _id } = data;
   return (
     <>
       {onlyName ? (
@@ -44,17 +31,7 @@ const CloseTaskView = ({
             onClick={() => {
               clearTasks();
               if (setTaskConfig)
-                setTaskConfig({
-                  deadLine,
-                  resolved,
-                  result,
-                  answer,
-                  description,
-                  descriptionRequired,
-                  toUpdate,
-                  _id,
-                  messages
-                });
+                setTaskConfig({ deadLine, resolved, answer, _id });
             }}
             to={`/display/booleanTask/${task._id}`}
           >
@@ -67,22 +44,10 @@ const CloseTaskView = ({
                     <Moment format="YYYY/MM/DD HH:mm">{deadLine}</Moment>
                   </td>
                 </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    Załącznik:{" "}
-                    {descriptionRequired ? "wymagany" : "niewymagany"}
-                  </td>
-                </tr>
                 {setTaskConfig && (
                   <tr>
                     <td>
-                      <TaskStatus
-                        deadLine={deadLine}
-                        resolved={resolved}
-                        description={description}
-                        toUpdate={toUpdate}
-                      />
+                      <TaskStatus deadLine={deadLine} resolved={resolved} />
                     </td>
                     <td>Wynik: {`${result}/${task.points}`}</td>
                   </tr>
@@ -96,4 +61,4 @@ const CloseTaskView = ({
   );
 };
 
-export default CloseTaskView;
+export default BooleanTaskView;
