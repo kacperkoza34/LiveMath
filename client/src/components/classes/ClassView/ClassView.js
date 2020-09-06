@@ -63,31 +63,7 @@ const ClassView = ({
             <TasksList
               onlyName={false}
               taskFromApi={false}
-              tasks={[
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose,
-                ...tasksBoolean,
-                ...tasksOpen,
-                ...tasksClose
-              ]}
+              tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]}
             />
           </>
         )}

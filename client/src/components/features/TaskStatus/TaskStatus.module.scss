@@ -1,0 +1,17 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  font-size: 25px;
+  .succes {
+    color: $color-success;
+  }
+  .toDo {
+    color: $color-to-do;
+  }
+  .fail {
+    color: $color-alert;
+  }
+  .toCheck {
+    color: $color-to-update;
+  }
+}

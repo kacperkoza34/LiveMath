@@ -3,8 +3,6 @@ import styles from "./CloseTaskView.module.scss";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import TaskStatus from "../TaskStatus/TaskStatus";
-import { connect } from "react-redux";
-import { clearTasks, setTaskConfig } from "../../../redux/actions/tasks";
 
 const CloseTaskView = ({
   onlyName,
