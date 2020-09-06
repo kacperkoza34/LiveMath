@@ -1,9 +1,8 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
 .root {
-  margin: 5px 0;
-  padding: 5px;
-  background: $color-boolean-task;
+  @include tableItem($color-boolean-task);
 }
 .root:hover {
   background: lighten($color-boolean-task, 5%);

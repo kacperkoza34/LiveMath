@@ -2,12 +2,38 @@
 @import "../../../styles/global.scss";
 
 .root {
+  .item {
+    border: 1px solid black;
+  }
+
   table {
     width: 100%;
 
     tr {
       display: flex;
       justify-content: space-between;
+    }
+  }
+  .page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    height: 20px;
+
+    li {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin: 0 5px;
+    }
+    li:hover {
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .activePage {
+      font-weight: 900;
     }
   }
 }

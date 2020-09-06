@@ -3,6 +3,8 @@ import styles from "./CloseTaskView.module.scss";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import TaskStatus from "../TaskStatus/TaskStatus";
+import { connect } from "react-redux";
+import { clearTasks, setTaskConfig } from "../../../redux/actions/tasks";
 
 const CloseTaskView = ({
   onlyName,
@@ -11,9 +13,10 @@ const CloseTaskView = ({
   clearTasks,
   setTaskConfig
 }) => {
+  if (typeof data.task === "undefined") {
+    data["task"] = { name: data.name, _id: data._id };
+  }
   const {
-    task,
-    deadLine,
     task,
     deadLine,
     resolved,
@@ -23,8 +26,10 @@ const CloseTaskView = ({
     answer,
     toUpdate,
     _id,
+    name,
     messages
   } = data;
+
   return (
     <>
       {onlyName ? (
@@ -33,7 +38,7 @@ const CloseTaskView = ({
             onClick={() => {
               clearTasks();
             }}
-            to={`/display/booleanTask/${task._id}`}
+            to={`/display/closeTask/${task._id}`}
           >
             <div className={styles.name}>{task.name}</div>
           </Link>
@@ -56,7 +61,7 @@ const CloseTaskView = ({
                   messages
                 });
             }}
-            to={`/display/booleanTask/${task._id}`}
+            to={`/display/closeTask/${task._id}`}
           >
             <table>
               <tbody>

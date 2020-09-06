@@ -6,6 +6,10 @@ import PromptsStatus from "../PromptsStatus/PromptsStatus";
 import TaskStatus from "../TaskStatus/TaskStatus";
 
 const OpenTaskView = ({ onlyName, data, index, clearTasks, setTaskConfig }) => {
+  if (typeof data.task === "undefined") {
+    data["task"] = { name: data.name, _id: data._id };
+  }
+
   const {
     task,
     deadLine,
@@ -16,11 +20,13 @@ const OpenTaskView = ({ onlyName, data, index, clearTasks, setTaskConfig }) => {
     resolved,
     result,
     _id,
+    name,
     group,
     answer,
     toUpdate,
     messages
   } = data;
+
   return (
     <>
       {onlyName ? (

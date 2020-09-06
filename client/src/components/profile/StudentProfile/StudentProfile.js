@@ -7,7 +7,6 @@ import BackArrow from "../../features/BackArrow/BackArrow";
 import TasksList from "../../features/TasksList/TasksList";
 import { connect } from "react-redux";
 import { getStudent } from "../../../redux/actions/student";
-import { clearTasks, setTaskConfig } from "../../../redux/actions/tasks";
 
 const StudentProfile = ({
   id,
@@ -43,8 +42,8 @@ const StudentProfile = ({
             </span>
           </div>
           <TasksList
-            clearTasks={clearTasks}
-            setTaskConfig={setTaskConfig}
+            onlyName={false}
+            taskFromApi={true}
             tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]}
           />
         </div>

@@ -1,7 +1,8 @@
 @import "./settings.scss";
 
-@mixin taskView($bg-color) {
-  width: 100%;
-  background-color: $bg-color;
+@mixin tableItem($bg-color) {
+  margin: 10px 0;
   padding: 5px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.36);
+  background: $bg-color;
 }

@@ -62,8 +62,32 @@ const ClassView = ({
             </Link>
             <TasksList
               onlyName={false}
-              clearTasks={clearTasks}
-              tasks={[...tasksOpen, ...tasksClose, ...tasksBoolean]}
+              taskFromApi={false}
+              tasks={[
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose,
+                ...tasksBoolean,
+                ...tasksOpen,
+                ...tasksClose
+              ]}
             />
           </>
         )}
@@ -74,4 +98,4 @@ const ClassView = ({
 
 ClassView.propTypes = {};
 
-export default ClassView;
+export default connect(null, { clearTasks, setTaskConfig })(ClassView);

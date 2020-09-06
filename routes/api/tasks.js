@@ -31,18 +31,34 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("name", "Podaj nazwę zadania").not().isEmpty(),
+      check("name", "Podaj nazwę zadania")
+        .not()
+        .isEmpty(),
       check("class", "Podaj klase od 1 do 8")
         .not()
         .isEmpty()
         .isInt({ min: 1, max: 8 }),
-      check("section", "Podaj dział").not().isEmpty().isInt(),
-      check("content", "Podaj treść zadania").not().isEmpty(),
-      check("model", "Podaj wzór").not().isEmpty(),
-      check("points", "Podaj ilość punktów").not().isEmpty().isInt(),
-      check("groups", "Podaj grupy").not().isEmpty(),
-      check("variables", "Podaj zmienne").not().isEmpty(),
-    ],
+      check("section", "Podaj dział")
+        .not()
+        .isEmpty()
+        .isInt(),
+      check("content", "Podaj treść zadania")
+        .not()
+        .isEmpty(),
+      check("model", "Podaj wzór")
+        .not()
+        .isEmpty(),
+      check("points", "Podaj ilość punktów")
+        .not()
+        .isEmpty()
+        .isInt(),
+      check("groups", "Podaj grupy")
+        .not()
+        .isEmpty(),
+      check("variables", "Podaj zmienne")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -70,8 +86,8 @@ router.post(
           model: req.body.model,
           variables: req.body.variables,
           additionalVariables: req.body.additionalVariables,
-          groups: req.body.groups,
-        },
+          groups: req.body.groups
+        }
       });
       task.save();
       res.json({ _id: task._id, taskType: "openTask", name: task.name });
@@ -89,14 +105,20 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("name", "Podaj zadania").not().isEmpty(),
+      check("name", "Podaj zadania")
+        .not()
+        .isEmpty(),
       check("class", "Podaj klase od 1 do 8")
         .not()
         .isEmpty()
         .isInt({ min: 1, max: 8 }),
-      check("section", "Podaj dział").not().isEmpty(),
-      check("groups", "Uzupełnij grupy").not().isEmpty(),
-    ],
+      check("section", "Podaj dział")
+        .not()
+        .isEmpty(),
+      check("groups", "Uzupełnij grupy")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -119,7 +141,7 @@ router.post(
         class: req.body.class,
         section: req.body.section,
         author: req.user.id,
-        data: req.body.groups,
+        data: req.body.groups
       });
       task.save();
       res.json({ _id: task._id, taskType: "closeTask", name: task.name });
@@ -136,15 +158,23 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("name", "Podaj zadania").not().isEmpty(),
+      check("name", "Podaj zadania")
+        .not()
+        .isEmpty(),
       check("class", "Podaj klase od 1 do 8")
         .not()
         .isEmpty()
         .isInt({ min: 1, max: 8 }),
-      check("section", "Podaj dział").not().isEmpty(),
-      check("groups", "Dodaj grupy").not().isEmpty(),
-      check("content", "Podaj treść zadania").not().isEmpty(),
-    ],
+      check("section", "Podaj dział")
+        .not()
+        .isEmpty(),
+      check("groups", "Dodaj grupy")
+        .not()
+        .isEmpty(),
+      check("content", "Podaj treść zadania")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -168,7 +198,7 @@ router.post(
         class: req.body.class,
         section: req.body.section,
         author: req.user.id,
-        data: req.body.groups,
+        data: req.body.groups
       });
       task.save();
       res.json({ _id: task._id, taskType: "booleanTask", name: task.name });
@@ -237,15 +267,15 @@ router.get("/search/:class/:section", authTeacher, async (req, res) => {
   try {
     let taskClose = await TaskClose.find({
       class: req.params.class,
-      section: req.params.section,
+      section: req.params.section
     }).select("-data");
     let taskOpen = await TaskOpen.find({
       class: req.params.class,
-      section: req.params.section,
+      section: req.params.section
     }).select("-data");
     let taskBoolean = await TaskBoolean.find({
       class: req.params.class,
-      section: req.params.section,
+      section: req.params.section
     }).select("-data");
 
     function compare(a, b) {
@@ -267,12 +297,22 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("classes", "Nie wybrano klas!").not().isEmpty(),
-      check("taskId", "Nie wybrano zadania!").not().isEmpty(),
-      check("deadLine", "Nie wybrano daty!").not().isEmpty(),
-      check("promptsAllowed", "Ustal status podpowiedzi!").not().isEmpty(),
-      check("descriptionRequired", "Ustal status opisu!!").not().isEmpty(),
-    ],
+      check("classes", "Nie wybrano klas!")
+        .not()
+        .isEmpty(),
+      check("taskId", "Nie wybrano zadania!")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie wybrano daty!")
+        .not()
+        .isEmpty(),
+      check("promptsAllowed", "Ustal status podpowiedzi!")
+        .not()
+        .isEmpty(),
+      check("descriptionRequired", "Ustal status opisu!!")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -293,7 +333,7 @@ router.post(
           deadLine: req.body.deadLine,
           promptsAllowed: req.body.promptsAllowed,
           descriptionRequired: req.body.descriptionRequired,
-          task: req.body.taskId,
+          task: req.body.taskId
         });
 
         currentClass.students.forEach(async ({ studentProfile }, i) => {
@@ -308,7 +348,7 @@ router.post(
             messages:
               req.body.message.length > 0
                 ? [{ message: req.body.message, author: teacher.name }]
-                : [],
+                : []
           });
           await studentProfile.save();
         });
@@ -330,11 +370,19 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("classes", "Nie wybrano klas!").not().isEmpty(),
-      check("taskId", "Nie wybrano zadania!").not().isEmpty(),
-      check("deadLine", "Nie wybrano daty!").not().isEmpty(),
-      check("descriptionRequired", "Nie wybrano daty!").not().isEmpty(),
-    ],
+      check("classes", "Nie wybrano klas!")
+        .not()
+        .isEmpty(),
+      check("taskId", "Nie wybrano zadania!")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie wybrano daty!")
+        .not()
+        .isEmpty(),
+      check("descriptionRequired", "Nie wybrano daty!")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -361,7 +409,7 @@ router.post(
         currentClass.tasksClose.push({
           deadLine: req.body.deadLine,
           task: req.body.taskId,
-          descriptionRequired: req.body.descriptionRequired,
+          descriptionRequired: req.body.descriptionRequired
         });
 
         currentClass.students.forEach(async ({ studentProfile }, i) => {
@@ -375,7 +423,7 @@ router.post(
             messages:
               req.body.message.length > 0
                 ? [{ message: req.body.message, author: teacher.name }]
-                : [],
+                : []
           });
           await studentProfile.save();
         });
@@ -396,10 +444,16 @@ router.post(
     authTeacher,
     verifiedTeacher,
     [
-      check("classes", "Nie wybrano klas!").not().isEmpty(),
-      check("taskId", "Nie wybrano zadania!").not().isEmpty(),
-      check("deadLine", "Nie wybrano daty!").not().isEmpty(),
-    ],
+      check("classes", "Nie wybrano klas!")
+        .not()
+        .isEmpty(),
+      check("taskId", "Nie wybrano zadania!")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie wybrano daty!")
+        .not()
+        .isEmpty()
+    ]
   ],
   async (req, res) => {
     const erros = validationResult(req);
@@ -415,7 +469,7 @@ router.post(
 
         currentClass.tasksBoolean.push({
           deadLine: req.body.deadLine,
-          task: req.body.taskId,
+          task: req.body.taskId
         });
 
         let task = await TaskBoolean.findOne({ _id: req.body.taskId });
@@ -433,7 +487,7 @@ router.post(
             date: Date.now(),
             deadLine: req.body.deadLine,
             answer: answers,
-            task: req.body.taskId,
+            task: req.body.taskId
           });
           await studentProfile.save();
         });
@@ -451,7 +505,7 @@ router.post(
 router.put("/:taskId", authStudent, async (req, res) => {
   try {
     let profile = await StudentProfile.findOne({ user: req.user.id });
-    profile.tasksOpen.map((item) => {
+    profile.tasksOpen.map(item => {
       if (item._id.toString() === req.params.taskId.toString()) {
         item.usedPrompts++;
       }

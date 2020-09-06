@@ -1,9 +1,8 @@
 @import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
 .root {
-  margin: 5px 0;
-  padding: 5px;
-  background: $color-open-task;
+  @include tableItem($color-open-task);
 }
 .root:hover {
   background: lighten($color-open-task, 5%);

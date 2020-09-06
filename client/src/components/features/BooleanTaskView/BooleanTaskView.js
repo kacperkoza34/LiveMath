@@ -11,7 +11,12 @@ const BooleanTaskView = ({
   clearTasks,
   setTaskConfig
 }) => {
-  const { task, deadLine, resolved, result, answer, _id } = data;
+  if (typeof data.task === "undefined") {
+    data["task"] = { name: data.name, _id: data._id };
+  }
+
+  const { task, deadLine, resolved, result, answer, _id, name } = data;
+
   return (
     <>
       {onlyName ? (
