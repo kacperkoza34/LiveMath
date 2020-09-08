@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MathJax from "../../MathJax";
-import CustomInput from "../../../features/CustomInput/CustomInput";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import styles from "./AddQuestion.module.scss";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
@@ -30,29 +30,31 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
       <form onSubmit={e => onSubmit(e)}>
         <div>
           <h5>Wprowadz równanie</h5>
-          <CustomInput
+          <input
             autoComplete="off"
             placeholder="Równanie"
             name="content"
-            state={formData.content}
-            action={onChange}
+            value={formData.content}
+            onChange={e => onChange(e)}
             required
           />
         </div>
         <MathJax content={"`" + formData.content + "`"} />
         <div>
           <h5>Dodaj odpowiedz:</h5>
-          <CustomInput
+          <input
             autoComplete="off"
             placeholder="Odpowiedz"
             name="answer"
-            state={formData.answer}
-            action={onChange}
+            value={formData.answer}
+            onChange={e => onChange(e)}
             required
           />
           <MathJax content={"`" + formData.answer + "`"} />
         </div>
-        <button className={styles.btnPrimary}>Dodaj</button>
+        <BtnPrimary border={2} font={12}>
+          Dodaj
+        </BtnPrimary>
         {groups.length > 0 && (
           <ul className={styles.groupList}>
             {groups.map(({ content, answer, id }, index) => (
@@ -69,12 +71,16 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
                     <MathJax content={"`" + answer + "`"} />
                   </div>
                 </span>
-                <button
-                  className={styles.btnPrimary}
-                  onClick={() => deleteGroup(id)}
-                >
-                  Usun grupe
-                </button>
+                <div className={styles.inline}>
+                  <BtnPrimary
+                    border={2}
+                    font={12}
+                    onClick={() => deleteGroup(id)}
+                  >
+                    {" "}
+                    Usun grupe
+                  </BtnPrimary>
+                </div>
               </li>
             ))}
           </ul>

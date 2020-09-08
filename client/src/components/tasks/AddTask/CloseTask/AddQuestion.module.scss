@@ -2,14 +2,16 @@
 @import "../../../../styles/global.scss";
 
 .root {
-  padding: 10px;
-  margin: 10px;
-
+  margin: 20px 0;
   .groupList {
     padding: 10px;
     margin: 10px 0 10px 0;
     background: $color-light;
     border: 1px solid;
+  }
+
+  .inline {
+    display: inline;
   }
 
   .listElement {

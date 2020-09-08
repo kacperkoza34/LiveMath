@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextareaAutosize from "react-textarea-autosize";
+import BtnPrimary from "../../../../../features/BtnPrimary/BtnPrimary";
 import styles from "./VariabelsList.module.scss";
 import { connect } from "react-redux";
 import {
@@ -62,12 +63,13 @@ class VariabelsList extends React.Component {
     const { addTaskData, taskData } = this.props;
     return (
       <div className={styles.root}>
-        <button
-          className={styles.btnPrimary}
+        <BtnPrimary
+          border={2}
+          font={12}
           onClick={() => addTaskData(this.getCode())}
         >
           Ustal zmienne
-        </button>
+        </BtnPrimary>
         {this.state.varsExist && (
           <h4 className={styles.warning}>Nie podano zmiennych</h4>
         )}

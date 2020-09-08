@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./SendOpenTask.module.scss";
 import Errors from "../../../../../layout/Errors/Errors";
+import BtnPrimary from "../../../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { sendOpenTask } from "../../../../../../redux/actions/newTask";
 
@@ -44,9 +45,9 @@ const SendOpenTask = ({ newTask, sendOpenTask, apiErrors }) => {
         </ul>
       )}
       {apiErrors && <Errors errors={apiErrors.data.err} />}
-      <button className={styles.btnPrimary} onClick={() => sendTask()}>
+      <BtnPrimary border={2} font={12} onClick={() => sendTask()}>
         Zapisz zadanie
-      </button>
+      </BtnPrimary>
     </div>
   );
 };

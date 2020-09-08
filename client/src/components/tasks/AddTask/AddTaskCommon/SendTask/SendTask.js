@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Errors from "../../../../layout/Errors/Errors";
+import BtnPrimary from "../../../../features/BtnPrimary/BtnPrimary";
 import styles from "./SendTask.module.scss";
 import { connect } from "react-redux";
 
@@ -33,9 +34,9 @@ const SendTask = ({ newTask, send, apiErrors }) => {
         </ul>
       )}
       {apiErrors && <Errors errors={apiErrors.data.err} />}
-      <button className={styles.btnPrimary} onClick={() => sendTask()}>
+      <BtnPrimary border={2} font={12} onClick={() => sendTask()}>
         Zapisz zadanie
-      </button>
+      </BtnPrimary>
     </div>
   );
 };

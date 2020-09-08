@@ -12,7 +12,6 @@ import ReviewTask from "../ReviewTask/ReviewTask";
 import MathJax from "../../MathJax";
 import Errors from "../../../layout/Errors/Errors";
 import TextareaAutosize from "react-textarea-autosize";
-import CustomInput from "../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import { getOpenTask, setTaskConfig } from "../../../../redux/actions/tasks";
 import {
@@ -20,7 +19,7 @@ import {
   updateDescription,
   updateAnswer,
   sendOpenTaskResolution,
-  reviewOpenTask,
+  reviewOpenTask
 } from "../../../../redux/actions/resolveTask";
 
 const OpenTask = ({
@@ -33,7 +32,7 @@ const OpenTask = ({
   sendOpenTaskResolution,
   student,
   reviewOpenTask,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
   const {
     deadLine,
@@ -46,7 +45,7 @@ const OpenTask = ({
     description,
     answer,
     toUpdate,
-    messages,
+    messages
   } = taskConfig;
   useEffect(() => {
     getOpenTask(match.params.id);
@@ -57,7 +56,7 @@ const OpenTask = ({
   const [checkAnswer, check] = useState(false);
   const [error, setError] = useState("");
 
-  const countPoints = (points) => {
+  const countPoints = points => {
     if (!usedPrompts) return points;
     if (usedPrompts === 1) return (points / 2).toPrecision(2);
     if (usedPrompts === 2) return (points / 4).toPrecision(2);
@@ -110,7 +109,7 @@ const OpenTask = ({
               model={data.data.model}
               variables={[
                 ...data.data.variables,
-                ...data.data.additionalVariables,
+                ...data.data.additionalVariables
               ]}
             />
             <h4>Link do zdjęcia</h4>
@@ -118,18 +117,17 @@ const OpenTask = ({
               maxcols="15"
               mincols="5"
               value={description}
-              onChange={(e) => {
+              onChange={e => {
                 setError("");
                 updateDescription(e.target.value);
               }}
             ></TextareaAutosize>
             <div className={styles.answer}>
               <h4>Odpowiedź:</h4>
-              <CustomInput
-                state={answer}
+              <input
+                onChange={e => updateAnswer(e.target.value)}
+                value={answer}
                 name="onlyString"
-                action={updateAnswer}
-                action2={upDateView}
               />
             </div>
             <div className={styles.answer}>
@@ -189,13 +187,13 @@ OpenTask.propTypes = {
   sendOpenTaskResolution: PropTypes.func.isRequired,
   student: PropTypes.string.isRequired,
   reviewOpenTask: PropTypes.func.isRequired,
-  tasks: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
   accountType: state.user.data.accountType,
-  student: state.student.data._id,
+  student: state.student.data._id
 });
 
 export default connect(mapStateToProps, {
@@ -204,5 +202,5 @@ export default connect(mapStateToProps, {
   updateDescription,
   updateAnswer,
   sendOpenTaskResolution,
-  reviewOpenTask,
+  reviewOpenTask
 })(OpenTask);

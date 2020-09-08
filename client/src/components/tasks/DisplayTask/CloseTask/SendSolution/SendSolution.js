@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Errors from "../../../../layout/Errors/Errors";
+import BtnPrimary from "../../../../features/BtnPrimary/BtnPrimary";
 import TextareaAutosize from "react-textarea-autosize";
 import styles from "./SendSolution.module.scss";
 
@@ -53,20 +54,22 @@ const SendSolution = ({
               {error.length > 0 && <div className={styles.error}>{error}</div>}
               <div className={styles.send}>
                 <div>
-                  <button
-                    className={styles.btnPrimary}
+                  <BtnPrimary
+                    font={12}
+                    border={2}
                     onClick={() => sendSolution(result, false, message)}
                   >
                     Prześlij rozwiązanie
-                  </button>
+                  </BtnPrimary>
                 </div>
                 <div>
-                  <button
-                    className={styles.btnPrimary}
+                  <BtnPrimary
+                    font={12}
+                    border={2}
                     onClick={() => sendSolution(result, true, message)}
                   >
                     Wyślij prośbe o sprawdzenie
-                  </button>
+                  </BtnPrimary>
                 </div>
               </div>
             </>
@@ -79,12 +82,13 @@ const SendSolution = ({
         <>
           {" "}
           {!checkAnswers && (
-            <button
-              className={styles.btnPrimary}
+            <BtnPrimary
+              font={12}
+              border={2}
               onClick={() => setChekAnswers(true)}
             >
               Sprawdź odpowiedź
-            </button>
+            </BtnPrimary>
           )}
         </>
       )}

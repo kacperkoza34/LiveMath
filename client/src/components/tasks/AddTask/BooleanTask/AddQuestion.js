@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./AddQuestion.module.scss";
+import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../redux/actions/newTask";
 import { v4 as uuidv4 } from "uuid";
@@ -54,6 +55,7 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
         <div>
           <h3>Dodaj odpowiedz:</h3>
           <select
+            className={styles.selectPrimary}
             name="answer"
             value={formData.answer}
             onChange={e => onChange(e)}
@@ -64,19 +66,22 @@ const AddQuestion = ({ addGroup, deleteGroup, groups }) => {
           </select>
         </div>
         {noAnswer && <h5>Podaj odpowiedz</h5>}
-        <button className={styles.btnPrimary}>Dodaj</button>
+        <BtnPrimary border={2} font={12}>
+          Dodaj
+        </BtnPrimary>
         {groups.length > 0 && (
           <ul className={styles.groupList}>
             {groups.map(({ content, answer, id }, index) => (
               <li key={index} className={styles.listElement}>
                 <span>{`${index + 1}). ${content}`}</span>
                 <span>{`Odpowiedź: ${answer ? "Prawda" : "Fałsz"}`}</span>
-                <button
-                  className={styles.btnPrimary}
+                <BtnPrimary
+                  font={12}
+                  border={2}
                   onClick={() => deleteGroup(id)}
                 >
                   Usun grupe
-                </button>
+                </BtnPrimary>
               </li>
             ))}
           </ul>

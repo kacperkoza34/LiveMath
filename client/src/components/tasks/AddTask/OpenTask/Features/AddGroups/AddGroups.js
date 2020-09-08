@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./AddGroups.module.scss";
 import PropTypes from "prop-types";
 import MathJax from "../../../../MathJax";
-import CustomInput from "../../../../../features/CustomInput/CustomInput";
+import BtnPrimary from "../../../../../features/BtnPrimary/BtnPrimary";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { addGroup, deleteGroup } from "../../../../../../redux/actions/newTask";
@@ -48,12 +48,12 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
           {variables.map(({ variable }, i) => (
             <div key={i} className={styles.box}>
               <h5>{variable + "  =  "}</h5>
-              <CustomInput
+              <input
                 autoComplete="off"
                 placeholder="Wartość"
                 name={variable}
-                state={formData[variable]}
-                action={onChange}
+                value={formData[variable]}
+                onChange={e => onChange(e)}
                 required
               />
               {" =  "}
@@ -66,18 +66,20 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
           ))}
           <div className={styles.box}>
             <h5>Wynik:</h5>
-            <CustomInput
+            <input
               autoComplete="off"
               placeholder="Odpowiedz"
               name="answer"
-              state={formData.answer}
-              action={onChange}
+              value={formData.answer}
+              onChange={e => onChange(e)}
               required
             />
             {" =  "}
             <MathJax content={"`" + formData.answer + "`"} />
           </div>
-          {<button className={styles.btnPrimary}>Dodaj</button>}
+          <BtnPrimary border={2} font={12}>
+            {"Dodaj"}
+          </BtnPrimary>
         </form>
       )}
       {groups.length > 0 && (
@@ -90,12 +92,13 @@ const AddGroups = ({ variables, content, addGroup, deleteGroup, groups }) => {
             >
               <h4>{`Grupa ${index + 1}`}</h4>
               {displayGroup(item)}
-              <button
-                className={styles.btnPrimary}
+              <BtnPrimary
+                border={2}
+                font={12}
                 onClick={() => deleteGroup(item.id)}
               >
-                Usun grupe
-              </button>
+                {"Usuń grupe"}
+              </BtnPrimary>
             </li>
           ))}
         </ul>

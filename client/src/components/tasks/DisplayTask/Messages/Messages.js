@@ -8,12 +8,15 @@ const Messages = ({ messages }) => {
       {messages.length > 0 && (
         <div className={styles.root}>
           <>
-            <h4>Dyskusja</h4>
+            <h4 className={styles.title}>Dyskusja</h4>
 
             <ul>
               {messages.map(({ message, author }, index) => (
                 <li key={index} className={styles.message}>
-                  <h4>{author}</h4>
+                  <div className={styles.spaceBetween}>
+                    <h4>{author}</h4>
+                    <p>{"2018-212-12"}</p>
+                  </div>
                   <pre>{message}</pre>
                 </li>
               ))}
@@ -26,7 +29,7 @@ const Messages = ({ messages }) => {
 };
 
 Messages.propTypes = {
-  messages: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired
 };
 
 export default Messages;

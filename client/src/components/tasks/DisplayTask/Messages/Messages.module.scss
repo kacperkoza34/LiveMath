@@ -7,15 +7,17 @@
   background-color: $color-light;
   border: 1px solid;
 
+  .title {
+    padding: 5px 10px;
+  }
+
   .message {
+    padding: 5px 10px;
+    margin: 10px 0;
     background: $color-background;
 
-    h4 {
-      margin: 8px;
-    }
     pre {
       white-space: pre-wrap;
-      margin: 8px;
     }
   }
 }

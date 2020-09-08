@@ -128,12 +128,12 @@ const AddTaskToClass = ({
         </>
       )}
       {taskType === "booleanTask" && (
-        <>
+        <div>
           {displayError()}
           <BtnPrimary font={12} border={2} onClick={() => submitBooleanTask()}>
             Dodaj zadnie do klas
           </BtnPrimary>
-        </>
+        </div>
       )}
     </div>
   );

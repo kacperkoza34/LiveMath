@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./AdditionalVariables.module.scss";
 import MathJax from "../../../../MathJax";
-import CustomInput from "../../../../../features/CustomInput/CustomInput";
+import BtnPrimary from "../../../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import {
   addAddVariable,
@@ -54,8 +54,9 @@ const AdditionalVariables = ({
       <div className={styles.root}>
         <h3>
           Dodaj pomocnicze zmienne{" "}
-          <button
-            className={styles.btnPrimary}
+          <BtnPrimary
+            border={2}
+            font={12}
             onClick={() =>
               setFormData({
                 ...formData,
@@ -64,7 +65,7 @@ const AdditionalVariables = ({
             }
           >
             Umieść wzór w opisie
-          </button>
+          </BtnPrimary>
         </h3>
         <form className={styles.addFrom} onSubmit={e => onSubmit(e)}>
           <table>
@@ -88,11 +89,11 @@ const AdditionalVariables = ({
                   />
                 </td>
                 <td>
-                  <CustomInput
+                  <input
                     name={"description"}
                     placeholder="Opis"
-                    state={formData.description}
-                    action={onChange}
+                    value={formData.description}
+                    onChange={e => onChange(e)}
                     required
                   />
                 </td>
@@ -115,7 +116,9 @@ const AdditionalVariables = ({
               </div>
             </div>
           )}
-          <button className={styles.btnPrimary}>Dodaj</button>
+          <BtnPrimary border={2} font={12}>
+            Dodaj
+          </BtnPrimary>
         </form>
         {error.length > 0 && error}
         {additionalVariables.length > 0 && (
@@ -141,12 +144,13 @@ const AdditionalVariables = ({
                         </td>
                       </tr>
                       <tr>
-                        <button
-                          className={styles.btnPrimary}
+                        <BtnPrimary
+                          border={2}
+                          font={12}
                           onClick={() => remove(variable)}
                         >
                           Usuń
-                        </button>
+                        </BtnPrimary>
                       </tr>
                     </tbody>
                   </table>

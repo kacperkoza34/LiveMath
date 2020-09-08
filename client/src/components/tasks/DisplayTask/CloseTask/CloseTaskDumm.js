@@ -5,7 +5,6 @@ import BeatLoader from "react-spinners/BeatLoader";
 import MathJax from "../../MathJax";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
 import TextareaAutosize from "react-textarea-autosize";
-import CustomInput from "../../../features/CustomInput/CustomInput";
 import BtnPrimary from "../../../features/BtnPrimary/BtnPrimary";
 import { connect } from "react-redux";
 import { getCloseTask, setTaskConfig } from "../../../../redux/actions/tasks";
@@ -80,11 +79,11 @@ const CloseTaskDumm = ({
                   </div>
                   Podaj odpowiedz:
                   <div className={styles.item}>
-                    <CustomInput
+                    <input
                       autoComplete="off"
                       name={`${i}`}
-                      state={taskStatus[`${i}`]}
-                      action={onChange}
+                      value={taskStatus[`${i}`]}
+                      onChange={e => onChange(e)}
                     />
                     <div>
                       <span>Twoja odpowiedz:</span>

@@ -8,7 +8,6 @@ import PromptsDumm from "./DisplayPrompts/PromptsDumm";
 import MathJax from "../../MathJax";
 import TextareaAutosize from "react-textarea-autosize";
 import AddTaskToClass from "../../AddTaskToClass/AddTaskToClass/AddTaskToClass";
-import CustomInput from "../../../features/CustomInput/CustomInput";
 import { connect } from "react-redux";
 import { getOpenTask } from "../../../../redux/actions/tasks";
 
@@ -23,7 +22,7 @@ const OpenTaskDumm = ({
   getOpenTask,
   accountType,
   updateDescription,
-  tasks: { data, isFetching, errors },
+  tasks: { data, isFetching, errors }
 }) => {
   useEffect(() => {
     getOpenTask(match.params.id);
@@ -41,7 +40,7 @@ const OpenTaskDumm = ({
     setCorrectAnswer(data.data.groups[index].answer);
   };
 
-  const addAnswer = (e) => {
+  const addAnswer = e => {
     check(false);
     setAnswer(e.target.value);
   };
@@ -71,7 +70,7 @@ const OpenTaskDumm = ({
             model={data.data.model}
             variables={[
               ...data.data.variables,
-              ...data.data.additionalVariables,
+              ...data.data.additionalVariables
             ]}
           />
           <h4>Link do zdjęcia</h4>
@@ -79,11 +78,11 @@ const OpenTaskDumm = ({
             maxcols="15"
             mincols="5"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={e => setDescription(e.target.value)}
           ></TextareaAutosize>
           <div className={styles.answer}>
             <h4>Odpowiedź:</h4>
-            <CustomInput state={answer} action={addAnswer} />
+            <input onChange={e => setAnswer(e.target.value)} value={answer} />
           </div>
           <div className={styles.answer}>
             <h4>Twoja odpowiedź:</h4>
@@ -109,14 +108,14 @@ OpenTaskDumm.propTypes = {
   getOpenTask: PropTypes.func.isRequired,
   accountType: PropTypes.string.isRequired,
   updateDescription: PropTypes.func,
-  tasks: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tasks: state.tasks,
-  accountType: state.user.data.accountType,
+  accountType: state.user.data.accountType
 });
 
 export default connect(mapStateToProps, {
-  getOpenTask,
+  getOpenTask
 })(OpenTaskDumm);
