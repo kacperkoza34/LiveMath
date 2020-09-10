@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("./config/db");
+const connectDB = require("./db");
 const path = require("path");
 const app = express();
 const cors = require("cors");
@@ -15,14 +15,14 @@ app.use(helmet());
 app.use(
   cors({
     origin: domain, //origin sets domains that we approve
-    methods: "GET,POST,DELETE,PUT",
+    methods: "GET,POST,DELETE,PUT"
   })
 );
 
 app.enable("trust proxy");
 
 if (process.env.NODE_ENV === "production") {
-  app.use(function (req, res, next) {
+  app.use(function(req, res, next) {
     if (!req.secure) {
       return res.redirect(["https://", req.get("Host"), req.url].join(""));
     }
