@@ -122,15 +122,6 @@ const BooleanTaskFromApi = ({
                       <option value={false}>Fałsz</option>
                     </select>
                   </div>
-                  {resolved ? (
-                    correctAnswer === answer[`${i}`] ? (
-                      <div className={styles.success}>Dobrze</div>
-                    ) : (
-                      <div className={styles.fail}>Źle</div>
-                    )
-                  ) : (
-                    ""
-                  )}
                 </li>
               ))}
             </ul>

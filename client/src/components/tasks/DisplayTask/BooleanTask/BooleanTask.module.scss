@@ -28,7 +28,16 @@
   .item {
     height: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 15px 0;
+  }
+
+  .select {
+    border: 2px solid $color-dark;
+    color: $color-dark;
+    font-size: 12px;
+    padding: 5px;
+    transition: 0.3s;
+    font-weight: 600;
   }
 
   .questionBox {
@@ -36,10 +45,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .select {
-    margin: 0 10px;
   }
 
   .check {

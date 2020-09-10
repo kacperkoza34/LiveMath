@@ -90,22 +90,11 @@ const BooleanTaskDumm = ({
                       <option value={false}>Fałsz</option>
                     </select>
                   </div>
-                  {checkAnswers &&
-                    (answer === taskStatus[`${i}`] ? (
-                      <div className={styles.success}>Dobrze</div>
-                    ) : (
-                      <div className={styles.fail}>Źle</div>
-                    ))}
                 </li>
               ))}
             </ul>
           )}
-          <BtnPrimary
-            font={12}
-            border={2}
-            className={styles.check}
-            onClick={() => setChekAnswers(true)}
-          >
+          <BtnPrimary font={12} border={2} onClick={() => setChekAnswers(true)}>
             Sprawdź odpowiedzi
           </BtnPrimary>
           {checkAnswers && (

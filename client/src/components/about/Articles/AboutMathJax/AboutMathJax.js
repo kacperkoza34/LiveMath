@@ -31,26 +31,31 @@ const AboutMathJax = () => {
       <div className={styles.mathJax}>
         <MathJax content={"`" + content + "`"} />
       </div>
-      <h2>{aboutMathJax.subtitle}</h2>
 
-      <table>
-        <thead>
-          <tr className={styles.table}>
-            <th className={styles.firstColumn}>Kod</th>{" "}
-            <th className={styles.secondColumn}>Wynik</th>
-          </tr>
-        </thead>
-        <tbody>
-          {aboutMathJax.table.map(item => (
-            <tr className={styles.table}>
-              <td className={styles.firstColumn}>{item}</td>{" "}
-              <td className={styles.secondColumn}>
-                <MathJax content={"`" + item + "`"} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {false && (
+        <>
+          <h2>{aboutMathJax.subtitle}</h2>
+
+          <table>
+            <thead>
+              <tr className={styles.table}>
+                <th className={styles.firstColumn}>Kod</th>{" "}
+                <th className={styles.secondColumn}>Wynik</th>
+              </tr>
+            </thead>
+            <tbody>
+              {aboutMathJax.table.map(item => (
+                <tr className={styles.table}>
+                  <td className={styles.firstColumn}>{item}</td>{" "}
+                  <td className={styles.secondColumn}>
+                    <MathJax content={"`" + item + "`"} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 };
