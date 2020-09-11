@@ -3,16 +3,13 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config =
-  process.env.NODE_ENV === "production"
-    ? require("config-heroku")
-    : require("config");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
 const nodemailMailgun = require("nodemailer-mailgun-transport");
 const hbs = require("nodemailer-express-handlebars");
 const sanitize = require("../../middleware/sanitize");
+require("dotenv").config();
 
 const Teacher = require("../../models/Teacher");
 const Student = require("../../models/Student");
@@ -145,16 +142,16 @@ router.post(
 
         let verifyToken = await jwt.sign(
           tokenData,
-          config.get("verifyJwtSecret"),
+          process.env.verifyJwtSecret,
           {
             expiresIn: 360000
           }
         );
 
         const mailgun = require("mailgun-js")({
-          apiKey: config.get("api_key_mail_gun"),
-          domain: config.get("mail_gun_domain"),
-          host: config.get("host")
+          apiKey: process.env.api_key_mail_gun,
+          domain: process.env.mail_gun_domain,
+          host: process.env.host
         });
 
         const data = {
@@ -170,9 +167,7 @@ router.post(
         <body>
           <h4>Witaj w LiveMath</h4>
           <p>Kliknij w link aby potwierdzić email</p>
-          <a href="${config.get(
-            "domain"
-          )}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
+          <a href="${process.env.domain}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
         </body>
       </html>`
         };
@@ -190,7 +185,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.jwtSecret,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
@@ -305,7 +300,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.jwtSecret,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
@@ -324,7 +319,7 @@ router.post(
 /// create profile if email verified
 router.post("/:token", sanitize, async (req, res) => {
   try {
-    const decoded = jwt.verify(req.params.token, config.get("verifyJwtSecret"));
+    const decoded = jwt.verify(req.params.token, process.env.verifyJwtSecret);
     let user = await Teacher.findOneAndUpdate(
       { _id: decoded.user.id },
       { verified: true }

@@ -1,9 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const config =
-  process.env.NODE_ENV === "production"
-    ? require("config-heroku")
-    : require("config");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 

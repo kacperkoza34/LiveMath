@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
-const config =
-  process.env.NODE_ENV === "production"
-    ? require("config-heroku")
-    : require("config");
-
-const db = config.get("mongoURI");
+require("dotenv").config();
+const db = process.env.mongoURI;
 
 const connectDB = async () => {
   try {
