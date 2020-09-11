@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const config =
+  process.env.NODE_ENV === "production"
+    ? require("config-heroku")
+    : require("config");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
@@ -20,7 +23,15 @@ const sanitize = require("../../middleware/sanitize");
 // Add new class
 router.post(
   "/create",
-  [authTeacher, sanitize, [check("title", "Podaj nazwe").not().isEmpty()]],
+  [
+    authTeacher,
+    sanitize,
+    [
+      check("title", "Podaj nazwe")
+        .not()
+        .isEmpty()
+    ]
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -31,11 +42,11 @@ router.post(
       let teacher = await Teacher.findOne({ _id: req.user.id });
       if (!teacher.verified)
         return res.status(401).json({
-          err: [{ msg: "Konto nie zweryfikowane, potwierdź link w emailu" }],
+          err: [{ msg: "Konto nie zweryfikowane, potwierdź link w emailu" }]
         });
 
       let teacherProfile = await TeacherProfile.findOne({
-        user: req.user.id,
+        user: req.user.id
       }).populate("classes.class");
 
       if (teacherProfile.classes.length === 10)
@@ -61,7 +72,7 @@ router.post(
         teacher: req.user.id,
         title: req.body.title,
         task: [],
-        students: [],
+        students: []
       });
 
       teacherProfile.classes.push({ class: newClass._id });
@@ -146,7 +157,7 @@ router.get("/:id", authTeacher, sanitize, async (req, res) => {
     );
     const classView = {
       singleClass,
-      students,
+      students
     };
     res.json(classView);
   } catch (err) {
@@ -164,7 +175,7 @@ router.get("/studentview/:id", authStudent, sanitize, async (req, res) => {
       return res.status(401).send("It's not your class");
     }
     const classView = {
-      singleClass,
+      singleClass
     };
     res.json(classView);
   } catch (err) {

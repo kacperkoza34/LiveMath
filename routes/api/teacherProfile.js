@@ -1,6 +1,9 @@
 const express = require("express");
 const request = require("request");
-const config = require("config");
+const config =
+  process.env.NODE_ENV === "production"
+    ? require("config-heroku")
+    : require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
@@ -48,7 +51,7 @@ router.get("/:id", authTeacher, async (req, res) => {
       name: teacher.name,
       invited: teacher.invitedByMe.length,
       classes: teacher.classes.length,
-      students: teacher.students.length,
+      students: teacher.students.length
     };
     res.json(profileView);
   } catch (err) {

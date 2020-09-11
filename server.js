@@ -5,7 +5,11 @@ const app = express();
 const cors = require("cors");
 const helmet = require("helmet");
 
-const config = require("config");
+const config =
+  process.env.NODE_ENV === "production"
+    ? require("config-heroku")
+    : require("config");
+
 const domain = config.get("domain");
 
 connectDB();

@@ -3,7 +3,10 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const config =
+  process.env.NODE_ENV === "production"
+    ? require("config-heroku")
+    : require("config");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
@@ -25,12 +28,14 @@ router.post(
   [
     sanitize,
     [
-      check("name", "Imię jest wymagane").not().isEmpty(),
+      check("name", "Imię jest wymagane")
+        .not()
+        .isEmpty(),
       check("email", "Email jest wymagany").isEmail(),
       check("password", "Hasło powinno zwierać więcej niż 6 liter").isLength({
-        min: 6,
-      }),
-    ],
+        min: 6
+      })
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -45,7 +50,7 @@ router.post(
       if (req.params.id.toString() !== "firstline") {
         if (!ObjectId.isValid(req.params.id.toString()))
           res.status(401).json({
-            err: [{ msg: "Błędny link" }],
+            err: [{ msg: "Błędny link" }]
           });
 
         let inviterData = await Teacher.findOne({ _id: req.params.id });
@@ -53,11 +58,11 @@ router.post(
         if (inviterData) {
           if (!inviterData.verified)
             return res.status(401).json({
-              err: [{ msg: "Zapraszający nie jest zweryfikowany" }],
+              err: [{ msg: "Zapraszający nie jest zweryfikowany" }]
             });
         } else {
           return res.status(401).json({
-            err: [{ msg: "Błędny link" }],
+            err: [{ msg: "Błędny link" }]
           });
         }
       }
@@ -66,7 +71,7 @@ router.post(
 
       if (user) {
         return res.status(400).json({
-          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }]
         });
       }
 
@@ -75,7 +80,7 @@ router.post(
       const avatar = gravatar.url(email, {
         s: "200",
         r: "pg",
-        d: "mm",
+        d: "mm"
       });
 
       const sendEmail =
@@ -93,7 +98,7 @@ router.post(
         email,
         avatar,
         password,
-        verified: !sendEmail,
+        verified: !sendEmail
       });
 
       let inviterProfile;
@@ -102,12 +107,12 @@ router.post(
 
         if (inviterProfile) {
           inviterProfile.invitedByMe.push({
-            user: user._id,
+            user: user._id
           });
           await inviterProfile.save();
         } else
           return res.status(400).json({
-            err: [{ msg: "Błędny link" }],
+            err: [{ msg: "Błędny link" }]
           });
       }
 
@@ -119,7 +124,7 @@ router.post(
         inviter: inviterId,
         invitedByMe: [],
         classes: [],
-        students: [],
+        students: []
       });
 
       // Encrypt password
@@ -134,22 +139,22 @@ router.post(
       if (sendEmail) {
         const tokenData = {
           user: {
-            id: user.id,
-          },
+            id: user.id
+          }
         };
 
         let verifyToken = await jwt.sign(
           tokenData,
           config.get("verifyJwtSecret"),
           {
-            expiresIn: 360000,
+            expiresIn: 360000
           }
         );
 
         const mailgun = require("mailgun-js")({
           apiKey: config.get("api_key_mail_gun"),
           domain: config.get("mail_gun_domain"),
-          host: config.get("host"),
+          host: config.get("host")
         });
 
         const data = {
@@ -169,7 +174,7 @@ router.post(
             "domain"
           )}/verify/${verifyToken}" target="_blank"> Potwierdź</a>
         </body>
-      </html>`,
+      </html>`
         };
 
         await mailgun.messages().send(data);
@@ -179,8 +184,8 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          accountType: "teacher",
-        },
+          accountType: "teacher"
+        }
       };
 
       jwt.sign(
@@ -206,12 +211,14 @@ router.post(
   [
     sanitize,
     [
-      check("name", "Imię jset wymagane").not().isEmpty(),
+      check("name", "Imię jset wymagane")
+        .not()
+        .isEmpty(),
       check("email", "Email jest wymagany").isEmail(),
       check("password", "Hasło powinno zwierać więcej niż 6 liter").isLength({
-        min: 6,
-      }),
-    ],
+        min: 6
+      })
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -226,14 +233,14 @@ router.post(
       let teacher = await Teacher.findOne({ _id: req.params.id });
       if (!teacher.verified)
         return res.status(401).json({
-          err: [{ msg: "Link jest nieaktywny" }],
+          err: [{ msg: "Link jest nieaktywny" }]
         });
 
       let user = await Student.findOne({ email });
 
       if (user) {
         return res.status(400).json({
-          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }],
+          err: [{ msg: "Użytkownik od tym adresie email już istnieje" }]
         });
       }
 
@@ -252,21 +259,21 @@ router.post(
       const avatar = gravatar.url(email, {
         s: "200",
         r: "pg",
-        d: "mm",
+        d: "mm"
       });
 
       user = new Student({
         name,
         email,
         avatar,
-        password,
+        password
       });
 
       let userProfile = new StudentProfile({
         user: user._id,
         name,
         teacher: req.params.id,
-        class: req.params.class_id,
+        class: req.params.class_id
       });
 
       currentClass.students.push({ studentProfile: userProfile._id });
@@ -275,10 +282,10 @@ router.post(
 
       // Add to inviter profile
       let inviterProfile = await TeacherProfile.findOne({
-        user: req.params.id,
+        user: req.params.id
       });
       inviterProfile.students.push({
-        student: user._id,
+        student: user._id
       });
 
       // Encrypt password
@@ -292,8 +299,8 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          accountType: "student",
-        },
+          accountType: "student"
+        }
       };
 
       jwt.sign(

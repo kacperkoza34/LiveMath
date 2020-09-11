@@ -1,6 +1,9 @@
 const express = require("express");
 const request = require("request");
-const config = require("config");
+const config =
+  process.env.NODE_ENV === "production"
+    ? require("config-heroku")
+    : require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
@@ -57,10 +60,14 @@ router.put(
       check("descriptionRequired", "Nie określono statusu zadania")
         .not()
         .isEmpty(),
-      check("_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
-      check("toUpdate", "Nie określono statusu zadania").exists(),
-    ],
+      check("_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("toUpdate", "Nie określono statusu zadania").exists()
+    ]
   ],
 
   async (req, res) => {
@@ -85,12 +92,12 @@ router.put(
         .json({ err: [{ msg: "Zadanie wymaga dodania opisu" }] });
     try {
       let profile = await StudentProfile.findOne({
-        user: req.user.id,
+        user: req.user.id
       }).populate("tasksOpen.task", "points name");
 
       if (req.body.toUpdate) profile.needReview = true;
 
-      profile.tasksOpen.map((item) => {
+      profile.tasksOpen.map(item => {
         if (req.body._id.toString() === item._id.toString()) {
           let foo = 1;
           if (parseInt(item.usedPrompts) === 1) foo = 2;
@@ -107,7 +114,7 @@ router.put(
           if (req.body.message.length)
             item.messages.push({
               message: req.body.message,
-              author: profile.name,
+              author: profile.name
             });
           item.answer = req.body.answer;
           item.description = req.body.description;
@@ -120,8 +127,8 @@ router.put(
         toUpdate: req.body.toUpdate,
         message: {
           message: req.body.message,
-          author: profile.name,
-        },
+          author: profile.name
+        }
       });
     } catch (err) {
       console.error(err.message);
@@ -141,10 +148,14 @@ router.put(
       check("descriptionRequired", "Nie określono statusu zadania")
         .not()
         .isEmpty(),
-      check("_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
-      check("toUpdate", "Nie określono statusu zadania").exists(),
-    ],
+      check("_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("toUpdate", "Nie określono statusu zadania").exists()
+    ]
   ],
 
   async (req, res) => {
@@ -170,10 +181,10 @@ router.put(
 
     try {
       let profile = await StudentProfile.findOne({
-        user: req.user.id,
+        user: req.user.id
       }).populate("tasksOpen.task", "points name");
 
-      profile.tasksClose.map((item) => {
+      profile.tasksClose.map(item => {
         if (req.body._id.toString() === item._id.toString()) {
           if (!req.body.toUpdate) {
             profile.points =
@@ -186,7 +197,7 @@ router.put(
           if (req.body.message.length)
             item.messages.push({
               message: req.body.message,
-              author: profile.name,
+              author: profile.name
             });
           item.description = req.body.description;
           item.answer = req.body.answer;
@@ -199,8 +210,8 @@ router.put(
         toUpdate: req.body.toUpdate,
         message: {
           message: req.body.message,
-          author: profile.name,
-        },
+          author: profile.name
+        }
       });
     } catch (err) {
       console.error(err.message);
@@ -216,11 +227,15 @@ router.put(
     authStudent,
     sanitize,
     [
-      check("_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("deadLine", "Nie określono statusu zadania").not().isEmpty(),
+      check("_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("deadLine", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
       check("result", "Nie określono statusu zadania").exists(),
-      check("answer", "Nie określono statusu zadania").exists(),
-    ],
+      check("answer", "Nie określono statusu zadania").exists()
+    ]
   ],
 
   async (req, res) => {
@@ -236,10 +251,10 @@ router.put(
 
     try {
       let profile = await StudentProfile.findOne({
-        user: req.user.id,
+        user: req.user.id
       }).populate("tasksBoolean.task", "points");
 
-      profile.tasksBoolean.map((item) => {
+      profile.tasksBoolean.map(item => {
         if (req.body._id.toString() === item._id.toString()) {
           if (item.resolved)
             return res
@@ -258,8 +273,8 @@ router.put(
         toUpdate: false,
         message: {
           message: "",
-          author: profile.name,
-        },
+          author: profile.name
+        }
       });
     } catch (err) {
       console.error(err.message);
@@ -277,10 +292,16 @@ router.put(
     authTeacher,
     sanitize,
     [
-      check("task_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("student_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("message", "Nie określono statusu zadania").not().isEmpty(),
-    ],
+      check("task_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("student_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("message", "Nie określono statusu zadania")
+        .not()
+        .isEmpty()
+    ]
   ],
 
   async (req, res) => {
@@ -291,16 +312,16 @@ router.put(
     try {
       let teacher = await Teacher.findOne({ _id: req.user.id });
       let profile = await StudentProfile.findOne({
-        _id: req.body.student_id,
+        _id: req.body.student_id
       }).populate("tasksOpen.task", "points");
 
-      profile.tasksOpen.map((item) => {
+      profile.tasksOpen.map(item => {
         if (req.body.task_id.toString() === item._id.toString()) {
           item.resolved = false;
           item.toUpdate = false;
           item.messages.push({
             message: req.body.message,
-            author: teacher.name,
+            author: teacher.name
           });
         }
       });
@@ -314,8 +335,8 @@ router.put(
         resolved: false,
         message: {
           message: req.body.message,
-          author: teacher.name,
-        },
+          author: teacher.name
+        }
       });
     } catch (err) {
       console.error(err.message);
@@ -333,10 +354,16 @@ router.put(
     authTeacher,
     sanitize,
     [
-      check("task_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("student_id", "Nie określono statusu zadania").not().isEmpty(),
-      check("message", "Nie określono statusu zadania").not().isEmpty(),
-    ],
+      check("task_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("student_id", "Nie określono statusu zadania")
+        .not()
+        .isEmpty(),
+      check("message", "Nie określono statusu zadania")
+        .not()
+        .isEmpty()
+    ]
   ],
 
   async (req, res) => {
@@ -347,15 +374,15 @@ router.put(
     try {
       let teacher = await Teacher.findOne({ _id: req.user.id });
       let profile = await StudentProfile.findOne({
-        _id: req.body.student_id,
+        _id: req.body.student_id
       }).populate("tasksClose.task", "points");
-      profile.tasksClose.map((item) => {
+      profile.tasksClose.map(item => {
         if (req.body.task_id.toString() === item._id.toString()) {
           item.resolved = false;
           item.toUpdate = false;
           item.messages.push({
             message: req.body.message,
-            author: teacher.name,
+            author: teacher.name
           });
         }
       });
@@ -369,8 +396,8 @@ router.put(
         resolved: req.body.accept,
         message: {
           message: req.body.message,
-          author: teacher.name,
-        },
+          author: teacher.name
+        }
       });
     } catch (err) {
       console.error(err.message);
