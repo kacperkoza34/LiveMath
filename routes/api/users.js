@@ -80,15 +80,17 @@ router.post(
         d: "mm"
       });
 
-      const sendEmail =
-        "gmail.com" ===
-        email
-          .trim()
-          .split("")
-          .splice(email.length - 9, email.length)
-          .join("")
-          ? true
-          : false;
+      // const sendEmail =
+      //   "gmail.com" ===
+      //   email
+      //     .trim()
+      //     .split("")
+      //     .splice(email.length - 9, email.length)
+      //     .join("")
+      //     ? true
+      //     : false;
+
+      const sendEmail = false;
 
       user = new Teacher({
         name,
