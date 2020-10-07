@@ -10,8 +10,8 @@ export const availableClasses = [
       { name: "UŁAMKI ZWYKŁE", id: 5 },
       { name: "UŁAMKI DZIESIĘTNE", id: 6 },
       { name: "POLA FIGUR", id: 7 },
-      { name: "PROSTOPADŁOŚCIANY I SZEŚCIANY", id: 8 },
-    ],
+      { name: "PROSTOPADŁOŚCIANY I SZEŚCIANY", id: 8 }
+    ]
   },
   {
     name: "KLASY 5",
@@ -24,8 +24,8 @@ export const availableClasses = [
       { name: "UŁAMKI DZIESIĘTNE", id: 5 },
       { name: "POLA FIGUR", id: 6 },
       { name: "LICZBY CAŁKOWITE", id: 7 },
-      { name: "GRANIASTOSŁUPY", id: 8 },
-    ],
+      { name: "GRANIASTOSŁUPY", id: 8 }
+    ]
   },
   {
     name: "KLASY 6",
@@ -39,8 +39,8 @@ export const availableClasses = [
       { name: "PROCENTY", id: 6 },
       { name: "LICZBY DODATNIE I LICZBY UJEMNE", id: 7 },
       { name: "WYRAŻENIA ALGEBRAICZNE I RÓWNANIA", id: 8 },
-      { name: "FIGURY PRZESTRZENNE", id: 9 },
-    ],
+      { name: "FIGURY PRZESTRZENNE", id: 9 }
+    ]
   },
   {
     name: "KLASY 7",
@@ -53,8 +53,8 @@ export const availableClasses = [
       { name: "RÓWNANIA", id: 5 },
       { name: "POTĘGI", id: 6 },
       { name: "GRANIASTOSŁUPY", id: 7 },
-      { name: "STATYSTYKA", id: 8 },
-    ],
+      { name: "STATYSTYKA", id: 8 }
+    ]
   },
   {
     name: "KLASY 8",
@@ -67,7 +67,119 @@ export const availableClasses = [
       { name: "GRANIASTOSŁUPY I OSTROSŁUPY", id: 5 },
       { name: "SYMETRIE", id: 6 },
       { name: "KOŁA I OKRĘGI", id: 7 },
-      { name: "RACHUNEK PRAWDOPODOBIEŃSTWA", id: 8 },
-    ],
+      { name: "RACHUNEK PRAWDOPODOBIEŃSTWA", id: 8 }
+    ]
   },
+  {
+    name: "MAT - 1 liceum",
+    id: 6,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "MAT - 2 liceum",
+    id: 7,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "MAT - 3 liceum",
+    id: 8,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "MAT - 4 liceum",
+    id: 9,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "FIZ - 1 liceum",
+    id: 10,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "FIZ - 2 liceum",
+    id: 11,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "FIZ - 3 liceum",
+    id: 12,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  },
+  {
+    name: "FIZ - 4 liceum",
+    id: 13,
+    sections: [
+      { name: "DZIAŁ 1", id: 1 },
+      { name: "DZIAŁ 2", id: 2 },
+      { name: "DZIAŁ 3", id: 3 },
+      { name: "DZIAŁ 4", id: 4 },
+      { name: "DZIAŁ 5", id: 5 },
+      { name: "DZIAŁ 6", id: 6 },
+      { name: "DZIAŁ 7", id: 7 },
+      { name: "DZIAŁ 8", id: 8 }
+    ]
+  }
 ];

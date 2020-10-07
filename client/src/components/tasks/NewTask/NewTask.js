@@ -1,45 +1,47 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import BtnPrimary from "../../features/BtnPrimary/BtnPrimary";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./NewTask.module.scss";
 
 const NewTask = () => {
   const [taskType, setTaskType] = useState("");
   const [redirect, setRedirect] = useState(null);
-  const [valiadtionError, setError] = useState(false);
+  const [isModalVisible, setModalVisibily] = useState(false);
 
-  const addTask = () => {
-    if (taskType) setRedirect(true);
-    else setError(true);
-  };
-
-  if (taskType && redirect) return <Redirect push to={`/add/${taskType}`} />;
+  if (taskType) return <Redirect push to={`/add/${taskType}`} />;
 
   return (
     <div className={styles.root}>
       <div className={styles.wrapper}>
-        <BtnPrimary font={12} border={2} onClick={() => addTask()}>
+        <BtnPrimary font={12} border={2} onClick={() => setModalVisibily(true)}>
           Stwórz zadanie
         </BtnPrimary>
-        <select
-          className={styles.selectPrimary}
-          value={taskType}
-          onChange={e => {
-            setError(false);
-            setTaskType(e.target.value);
-          }}
-        >
-          <option value={""}>---</option>
-          <option value={"openTask"}>Zadanie otwarte</option>
-          <option value={"closeTask"}>Zadanie zamknięte</option>
-          <option value={"booleanTask"}>Zadanie prawda fałsz</option>
-        </select>
-
-        <div className={styles.notValid}>
-          {valiadtionError && (
-            <div className={styles.warning}>Wybierz rodzaj zadania</div>
-          )}
-        </div>
+        {isModalVisible && (
+          <div className={styles.overlay}>
+            <div className={styles.modal}>
+              <div className={styles.header}>
+                <h4>Wybierz rodzaj zadania</h4>
+                <div
+                  className={styles.exit}
+                  onClick={() => setModalVisibily(false)}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </div>
+              </div>
+              <BtnPrimary onClick={() => setTaskType("openTask")}>
+                Zadanie otwarte
+              </BtnPrimary>
+              <BtnPrimary onClick={() => setTaskType("closeTask")}>
+                Zadanie zamknięte
+              </BtnPrimary>
+              <BtnPrimary onClick={() => setTaskType("booleanTask")}>
+                Zadanie prawda/fałsz
+              </BtnPrimary>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
