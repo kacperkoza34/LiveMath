@@ -7,9 +7,14 @@ import { matchPath } from "react-router";
 import Landing from "../Landing/Landing";
 import Login from "../../auth/Login/Login";
 import Register from "../../auth/Register/Register";
+import Chat from "../../chat/index.js";
+import { connect } from "react-redux";
 
 const MainLayout = props => {
-  const { children } = props;
+  const {
+    children,
+    auth: { token, isAuthenticated, isFetching, errors }
+  } = props;
 
   return (
     <main>
@@ -21,6 +26,7 @@ const MainLayout = props => {
         <Route exact path="/register/:teacher" component={Register} />
         <div className={styles.wrapper}>{children}</div>
       </section>
+      {isAuthenticated && <Chat token={token} />}
     </main>
   );
 };
@@ -29,4 +35,8 @@ MainLayout.propTypes = {
   children: PropTypes.node
 };
 
-export default MainLayout;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(MainLayout);

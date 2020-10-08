@@ -1,0 +1,10 @@
+@import "../../styles/settings.scss";
+@import "../../styles/global.scss";
+
+.chat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: red;
+  z-index: 5555555555;
+}
