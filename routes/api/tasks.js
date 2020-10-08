@@ -329,6 +329,7 @@ router.post(
           "students.studentProfile"
         );
         currentClass.tasksOpen.push({
+          date: req.body.startDate,
           deadLine: req.body.deadLine,
           promptsAllowed: req.body.promptsAllowed,
           descriptionRequired: req.body.descriptionRequired,
@@ -338,7 +339,7 @@ router.post(
         currentClass.students.forEach(async ({ studentProfile }, i) => {
           studentProfile.maxPoints = req.body.points + studentProfile.maxPoints;
           studentProfile.tasksOpen.push({
-            date: Date.now(),
+            date: req.body.startDate,
             deadLine: req.body.deadLine,
             promptsAllowed: req.body.promptsAllowed,
             descriptionRequired: req.body.descriptionRequired,
@@ -391,8 +392,6 @@ router.post(
 
     try {
       let teacher = await Teacher.findOne({ _id: req.user.id });
-      console.log(teacher);
-      console.log(req.user.id);
       let task = await TaskClose.findOne({ _id: req.body.taskId });
 
       const answers = {};
@@ -406,6 +405,7 @@ router.post(
           "students.studentProfile"
         );
         currentClass.tasksClose.push({
+          date: req.body.startDate,
           deadLine: req.body.deadLine,
           task: req.body.taskId,
           descriptionRequired: req.body.descriptionRequired
@@ -414,7 +414,7 @@ router.post(
         currentClass.students.forEach(async ({ studentProfile }, i) => {
           studentProfile.maxPoints = req.body.points + studentProfile.maxPoints;
           studentProfile.tasksClose.push({
-            date: Date.now(),
+            date: req.body.startDate,
             answer: answers,
             deadLine: req.body.deadLine,
             task: req.body.taskId,
@@ -467,6 +467,7 @@ router.post(
         );
 
         currentClass.tasksBoolean.push({
+          date: req.body.startDate,
           deadLine: req.body.deadLine,
           task: req.body.taskId
         });
@@ -483,7 +484,7 @@ router.post(
             task.data.length + studentProfile.maxPoints;
 
           studentProfile.tasksBoolean.push({
-            date: Date.now(),
+            date: req.body.startDate,
             deadLine: req.body.deadLine,
             answer: answers,
             task: req.body.taskId

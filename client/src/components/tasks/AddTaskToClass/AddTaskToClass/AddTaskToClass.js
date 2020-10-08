@@ -6,10 +6,12 @@ import {
   addOpenTask,
   addCloseTask,
   addBooleanTask,
+  setDeadLine,
+  setStartDate,
   clearTask
 } from "../../../../redux/actions/taskToClass";
 import SelectClass from "../SelectClass/SelectClass";
-import SelectDeadLine from "../SelectDeadLine/SelectDeadLine";
+import SelectDate from "../SelectDate/SelectDate";
 import SelectPrompt from "../SelectPrompt/SelectPrompt";
 import SelectDescription from "../SelectDescription/SelectDescription";
 import SetMessage from "../SetMessage/SetMessage";
@@ -24,6 +26,8 @@ const AddTaskToClass = ({
   addOpenTask,
   addBooleanTask,
   addCloseTask,
+  setDeadLine,
+  setStartDate,
   success,
   clearTask
 }) => {
@@ -31,63 +35,83 @@ const AddTaskToClass = ({
     descriptionRequired,
     promptsAllowed,
     deadLine,
+    startDate,
     classes,
     message
   } = taskParams;
-  const [error, setError] = useState(false);
+  const [error, setError] = useState([]);
 
   useEffect(() => {
     return () => clearTask();
   }, [clearTask]);
 
+  const validator = requiredFields => {
+    const { deadLine, classes, startDate } = requiredFields;
+    const errors = [];
+
+    if (!deadLine.length) errors.push("Wybierz termin wykonania");
+    if (!startDate.length) setStartDate(new Date());
+    if (!classes.length) errors.push("Wybierz klasy");
+    if (Date.parse(startDate) >= Date.parse(deadLine))
+      errors.push("Startowa data musi być mniejsza niż termin wykonania");
+
+    if (errors.length) {
+      setError(errors);
+      return false;
+    } else {
+      setError([]);
+      return true;
+    }
+  };
+
   const submitOpenTask = () => {
-    if (deadLine.length && classes.length) {
-      setError(false);
+    if (validator({ deadLine, classes, startDate })) {
       addOpenTask({
         taskId,
         descriptionRequired,
         promptsAllowed,
         deadLine,
+        startDate,
         classes,
         points,
         message
       });
-    } else setError(true);
+    }
   };
 
   const submitCloseTask = () => {
-    if (deadLine.length && classes.length) {
-      setError(false);
+    if (validator({ deadLine, classes, startDate })) {
       addCloseTask({
         taskId,
         descriptionRequired,
         points,
         deadLine,
+        startDate,
         classes,
         message
       });
-    } else setError(true);
+    }
   };
 
   const submitBooleanTask = () => {
-    if (deadLine.length && classes.length) {
-      setError(false);
+    if (validator({ deadLine, classes, startDate })) {
       addBooleanTask({
         taskId,
         points,
         deadLine,
+        startDate,
         classes
       });
-    } else setError(true);
+    }
   };
 
   const displayError = () => {
     return (
-      error && (
-        <h5 className={styles.error}>Wybierz klasy i termin wykonania</h5>
-      )
+      error.length > 0 &&
+      error.map(item => <h5 className={styles.error}>{item}</h5>)
     );
   };
+
   return success ? (
     <div className={styles.root}>
       <h3 className={styles.success}>Dodano zadanie</h3>
@@ -99,7 +123,12 @@ const AddTaskToClass = ({
         <Help id={9} title={"Jak dodać zadanie?"} />
       </div>
       <SelectClass />
-      <SelectDeadLine />
+      <SelectDate
+        setDate={setStartDate}
+        message={"Wybierz termin rozpoczęcia zadania"}
+      />
+
+      <SelectDate setDate={setDeadLine} message={"Wybierz termin wykonania"} />
       {taskType === "openTask" && (
         <>
           <SetMessage />
@@ -163,5 +192,7 @@ export default connect(mapStateToProps, {
   addOpenTask,
   addCloseTask,
   addBooleanTask,
+  setDeadLine,
+  setStartDate,
   clearTask
 })(AddTaskToClass);

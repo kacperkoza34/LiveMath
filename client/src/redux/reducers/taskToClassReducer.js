@@ -1,12 +1,13 @@
 import {
   UPDATE_CLASSES,
   SET_DEADLINE,
+  SET_START_DATE,
   SET_PROMPTS,
   SET_DESCRIPTION,
   ADD_TASK_ERROR,
   ADD_TASK_SUCCESS,
   CLEAR_TASK,
-  SET_MESSAGE,
+  SET_MESSAGE
 } from "../actions/taskToClass";
 
 export default function reducer(statePart = [], action = {}) {
@@ -16,64 +17,73 @@ export default function reducer(statePart = [], action = {}) {
         ...statePart,
         data: {
           ...statePart.data,
-          classes: action.payload,
-        },
+          classes: action.payload
+        }
       };
     case SET_DEADLINE:
       return {
         ...statePart,
         data: {
           ...statePart.data,
-          deadLine: action.payload,
-        },
+          deadLine: action.payload
+        }
+      };
+    case SET_START_DATE:
+      return {
+        ...statePart,
+        data: {
+          ...statePart.data,
+          startDate: action.payload
+        }
       };
     case SET_PROMPTS:
       return {
         ...statePart,
         data: {
           ...statePart.data,
-          promptsAllowed: action.payload,
-        },
+          promptsAllowed: action.payload
+        }
       };
     case SET_DESCRIPTION:
       return {
         ...statePart,
         data: {
           ...statePart.data,
-          descriptionRequired: action.payload,
-        },
+          descriptionRequired: action.payload
+        }
       };
     case SET_MESSAGE:
       return {
         ...statePart,
         data: {
           ...statePart.data,
-          message: action.payload,
-        },
+          message: action.payload
+        }
       };
     case ADD_TASK_SUCCESS:
       return {
         ...statePart,
-        success: true,
+        success: true
       };
     case ADD_TASK_ERROR:
       return {
         ...statePart,
-        errors: action.payload,
+        errors: action.payload
       };
     case CLEAR_TASK:
       return {
         ...statePart,
         data: {
           classes: [],
+          startDate: "",
           deadLine: "",
           promptsAllowed: false,
           descriptionRequired: false,
-          message: "",
+          message: ""
         },
         isFetching: false,
         errors: false,
-        success: false,
+        success: false
       };
     default:
       return statePart;

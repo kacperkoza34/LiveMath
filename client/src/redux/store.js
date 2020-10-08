@@ -35,41 +35,41 @@ const initialState = {
     token: null,
     isAuthenticated: false,
     isFetching: false,
-    errors: false,
+    errors: false
   },
   user: {
     data: {},
     isFetching: true,
-    errors: false,
+    errors: false
   },
   profile: {
     data: {},
     isFetching: true,
-    errors: false,
+    errors: false
   },
   teacher: {
     data: {},
     isFetching: true,
-    errors: false,
+    errors: false
   },
   classes: {
     data: [],
     isFetching: true,
     errors: false,
-    currentClass: null,
+    currentClass: null
   },
   smallLoading: false,
   student: {
     data: [],
     isFetching: true,
-    errors: false,
+    errors: false
   },
   tasks: {
     data: [],
     taskConfig: {},
     isFetching: false,
     errors: false,
-    currentTasks: { class: null, section: null },
+    currentTasks: { class: null, section: null }
   },
   newTask: {
     data: {
@@ -81,24 +81,25 @@ const initialState = {
       groups: [],
       class: "",
       section: "",
-      points: 0,
+      points: 0
     },
     isFetching: false,
     errors: false,
-    success: {},
+    success: {}
   },
   addTaskToClass: {
     data: {
       classes: [],
+      startDate: "",
       deadLine: "",
       promptsAllowed: false,
       descriptionRequired: false,
-      message: "",
+      message: ""
     },
     isFetching: false,
     errors: false,
-    success: false,
-  },
+    success: false
+  }
 };
 
 const reducers = {
@@ -111,7 +112,7 @@ const reducers = {
   student: studentReducer,
   tasks: tasksReducer,
   newTask: newTasksReducer,
-  addTaskToClass: taskToClassReducer,
+  addTaskToClass: taskToClassReducer
 };
 
 const combinedReducers = combineReducers(reducers);

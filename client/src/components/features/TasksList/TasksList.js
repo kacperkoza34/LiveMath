@@ -13,7 +13,8 @@ const TasksList = ({
   setTaskConfig,
   tasks,
   taskFromApi,
-  onlyName
+  onlyName,
+  accountType
 }) => {
   const [tasksRange, setRange] = useState({
     start: 0,
@@ -68,6 +69,7 @@ const TasksList = ({
           if (item.taskType === "taskClose" || item.taskType === "closeTask")
             return (
               <CloseTaskView
+                accountType={accountType}
                 onlyName={onlyName}
                 data={item}
                 index={index}
@@ -78,6 +80,7 @@ const TasksList = ({
           if (item.taskType === "taskOpen" || item.taskType === "openTask")
             return (
               <OpenTaskView
+                accountType={accountType}
                 onlyName={onlyName}
                 data={item}
                 index={index}
@@ -91,6 +94,7 @@ const TasksList = ({
           )
             return (
               <BooleanTaskView
+                accountType={accountType}
                 onlyName={onlyName}
                 data={item}
                 index={index}
@@ -110,4 +114,10 @@ TasksList.propTypes = {
   clearTasks: PropTypes.func.isRequired
 };
 
-export default connect(null, { clearTasks, setTaskConfig })(TasksList);
+const mapStateToProps = state => ({
+  accountType: state.user.data.accountType
+});
+
+export default connect(mapStateToProps, { clearTasks, setTaskConfig })(
+  TasksList
+);

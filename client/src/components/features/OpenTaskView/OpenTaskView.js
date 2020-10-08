@@ -5,13 +5,21 @@ import Moment from "react-moment";
 import PromptsStatus from "../PromptsStatus/PromptsStatus";
 import TaskStatus from "../TaskStatus/TaskStatus";
 
-const OpenTaskView = ({ onlyName, data, index, clearTasks, setTaskConfig }) => {
+const OpenTaskView = ({
+  onlyName,
+  data,
+  index,
+  clearTasks,
+  setTaskConfig,
+  accountType
+}) => {
   if (typeof data.task === "undefined") {
     data["task"] = { name: data.name, _id: data._id };
   }
 
   const {
     task,
+    date,
     deadLine,
     promptsAllowed,
     descriptionRequired,
@@ -27,20 +35,39 @@ const OpenTaskView = ({ onlyName, data, index, clearTasks, setTaskConfig }) => {
     messages
   } = data;
 
-  return (
-    <>
-      {onlyName ? (
-        <div className={styles.root}>
-          <Link
-            onClick={() => {
-              clearTasks();
-            }}
-            to={`/display/openTask/${task._id}`}
-          >
-            <div className={styles.name}>{task.name}</div>
-          </Link>
-        </div>
-      ) : (
+  const allowToDisplay = accountType === "teacher" && !setTaskConfig;
+
+  const displayTaskView = () => {
+    if (Date.parse(date) > Date.now())
+      return (
+        <>
+          {allowToDisplay ? (
+            <div key={index} className={styles.root}>
+              <Link
+                onClick={() => clearTasks()}
+                to={`/display/openTask/${task._id}`}
+              >
+                <div className={styles.hiddenTask}>
+                  <div>
+                    Start: <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>
+                  </div>
+                  <div>Zobacz treść</div>
+                </div>
+              </Link>
+            </div>
+          ) : (
+            <div key={index} className={styles.root}>
+              <div className={styles.hiddenTask}>
+                <div>
+                  Start: <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    else
+      return (
         <div key={index} className={styles.root}>
           <Link
             onClick={() => {
@@ -100,6 +127,24 @@ const OpenTaskView = ({ onlyName, data, index, clearTasks, setTaskConfig }) => {
             </table>
           </Link>
         </div>
+      );
+  };
+
+  return (
+    <>
+      {onlyName ? (
+        <div className={styles.root}>
+          <Link
+            onClick={() => {
+              clearTasks();
+            }}
+            to={`/display/openTask/${task._id}`}
+          >
+            <div className={styles.name}>{task.name}</div>
+          </Link>
+        </div>
+      ) : (
+        displayTaskView()
       )}
     </>
   );

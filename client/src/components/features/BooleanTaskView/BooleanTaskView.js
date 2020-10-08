@@ -9,28 +9,48 @@ const BooleanTaskView = ({
   data,
   index,
   clearTasks,
-  setTaskConfig
+  setTaskConfig,
+  accountType
 }) => {
   if (typeof data.task === "undefined") {
     data["task"] = { name: data.name, _id: data._id };
   }
 
-  const { task, deadLine, resolved, result, answer, _id, name } = data;
+  const { task, date, deadLine, resolved, result, answer, _id, name } = data;
 
-  return (
-    <>
-      {onlyName ? (
-        <div className={styles.root}>
-          <Link
-            onClick={() => {
-              clearTasks();
-            }}
-            to={`/display/booleanTask/${task._id}`}
-          >
-            <div className={styles.name}>{task.name}</div>
-          </Link>
-        </div>
-      ) : (
+  const allowToDisplay = accountType === "teacher" && !setTaskConfig;
+
+  const displayTaskView = () => {
+    if (Date.parse(date) > Date.now())
+      return (
+        <>
+          {allowToDisplay ? (
+            <div key={index} className={styles.root}>
+              <Link
+                onClick={() => clearTasks()}
+                to={`/display/booleanTask/${task._id}`}
+              >
+                <div className={styles.hiddenTask}>
+                  <div>
+                    Start: <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>
+                  </div>
+                  <div>Zobacz treść</div>
+                </div>
+              </Link>
+            </div>
+          ) : (
+            <div key={index} className={styles.root}>
+              <div className={styles.hiddenTask}>
+                <div>
+                  Start: <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    else
+      return (
         <div key={index} className={styles.root}>
           <Link
             onClick={() => {
@@ -61,6 +81,23 @@ const BooleanTaskView = ({
             </table>
           </Link>
         </div>
+      );
+  };
+  return (
+    <>
+      {onlyName ? (
+        <div className={styles.root}>
+          <Link
+            onClick={() => {
+              clearTasks();
+            }}
+            to={`/display/booleanTask/${task._id}`}
+          >
+            <div className={styles.name}>{task.name}</div>
+          </Link>
+        </div>
+      ) : (
+        displayTaskView()
       )}
     </>
   );

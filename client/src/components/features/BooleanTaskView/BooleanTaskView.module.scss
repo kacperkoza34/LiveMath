@@ -3,6 +3,13 @@
 
 .root {
   @include tableItem($color-boolean-task);
+
+  .hiddenTask {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .root:hover {
   background: lighten($color-boolean-task, 5%);

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./SelectDeadLine.module.scss";
+import styles from "./SelectDate.module.scss";
 import { connect } from "react-redux";
 import { setDeadLine } from "../../../../redux/actions/taskToClass";
 import DateTimePicker from "react-datetime-picker";
@@ -8,20 +8,20 @@ import DateTimePicker from "react-datetime-picker";
 class SelectDeadLine extends React.Component {
   state = {
     date: new Date(),
-    rawDate: new Date().toISOString(),
+    rawDate: new Date().toISOString()
   };
 
-  onChange = (date) => {
+  onChange = date => {
     if (date) {
       this.setState({ date: date, rawDate: date.toISOString() });
-      this.props.setDeadLine(date.toISOString());
+      this.props.setDate(date.toISOString());
     }
   };
 
   render() {
     return (
       <div className={styles.root}>
-        <h4 className={styles.title}>Wybierz termin wykonania</h4>
+        <h4 className={styles.title}>{this.props.message}</h4>
         <DateTimePicker
           minDate={new Date()}
           onChange={this.onChange}
@@ -33,7 +33,7 @@ class SelectDeadLine extends React.Component {
 }
 
 SelectDeadLine.propTypes = {
-  setDeadLine: PropTypes.func.isRequired,
+  setDeadLine: PropTypes.func.isRequired
 };
 
-export default connect(null, { setDeadLine })(SelectDeadLine);
+export default SelectDeadLine;
