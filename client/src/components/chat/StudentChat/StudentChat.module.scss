@@ -1,0 +1,30 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background: $color-primary;
+  border-radius: 50%;
+  font-size: 50px;
+  color: $color-light;
+
+  span {
+    position: absolute;
+    left: 25%;
+    bottom: 15%;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  }
+
+  .active {
+    background: $color-success;
+  }
+  .disactive {
+    background: $color-dark;
+  }
+}

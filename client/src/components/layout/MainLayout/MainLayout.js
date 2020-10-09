@@ -13,7 +13,12 @@ import { connect } from "react-redux";
 const MainLayout = props => {
   const {
     children,
-    auth: { token, isAuthenticated, isFetching, errors }
+    auth: { token, isAuthenticated, isFetching, errors },
+    user: {
+      isFetching: isFetchingUser,
+      data: { accountType },
+      _id
+    }
   } = props;
 
   return (
@@ -26,7 +31,9 @@ const MainLayout = props => {
         <Route exact path="/register/:teacher" component={Register} />
         <div className={styles.wrapper}>{children}</div>
       </section>
-      {isAuthenticated && <Chat token={token} />}
+      {isAuthenticated && !isFetchingUser ? (
+        <Chat token={token} id={_id} accountType={accountType} />
+      ) : null}
     </main>
   );
 };
@@ -36,7 +43,8 @@ MainLayout.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
 });
 
 export default connect(mapStateToProps)(MainLayout);

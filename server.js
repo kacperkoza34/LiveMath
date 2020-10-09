@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const cors = require("cors");
 const helmet = require("helmet");
-const Chat = require("./chat/index.js");
+const Chat = require("./routes/chat/index.js");
 
 require("dotenv").config();
 
