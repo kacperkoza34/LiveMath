@@ -1,15 +1,24 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import styles from "./StudentChat.module.scss";
+import React, { useState } from "react";
+import ChatWindow from "../ChatWindow/ChatWindow";
+import TeacherIcon from "./TeacherIcon";
 
-const StudentChat = ({ users }) => {
-  return (
-    <div className={styles.root}>
-      <FontAwesomeIcon icon={faUser} />
-      <span className={users.active ? styles.active : styles.disactive}></span>
-    </div>
-  );
+const StudentChat = ({ users: { _id, name, active }, sendMessageSocket }) => {
+  const [chatWindowActive, setChatWindow] = useState(false);
+  const styles = chatWindowActive ? "0 50px" : "50px";
+  const displayChat = () => {
+    if (chatWindowActive)
+      return (
+        <ChatWindow
+          toggleChat={setChatWindow}
+          id={_id}
+          name={name}
+          active={active}
+          sendMessageSocket={sendMessageSocket}
+        />
+      );
+    else return <TeacherIcon toggleChat={setChatWindow} active={active} />;
+  };
+  return <div style={{ margin: styles }}>{displayChat()}</div>;
 };
 
 export default StudentChat;

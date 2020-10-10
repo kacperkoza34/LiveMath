@@ -14,7 +14,7 @@
 
   span {
     position: absolute;
-    left: 25%;
+    right: 25%;
     bottom: 15%;
     height: 20px;
     width: 20px;
@@ -27,4 +27,8 @@
   .disactive {
     background: $color-dark;
   }
+}
+
+.root {
+  cursor: pointer;
 }

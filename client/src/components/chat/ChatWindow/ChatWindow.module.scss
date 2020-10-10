@@ -1,0 +1,62 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 400px;
+  width: 260px;
+  border: 1px solid $color-dark;
+
+  .topBar {
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    background: $color-primary;
+    font-size: 18px;
+    font-weight: bold;
+
+    .exit:hover {
+      cursor: pointer;
+    }
+  }
+
+  .messagesBox {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    background: $color-contrast-list;
+  }
+
+  .sendBox {
+    background: $color-light;
+    border-top: solid 1px $color-dark;
+    width: 100%;
+    padding: 5px 10px;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      background: $color-light;
+      font-weight: 600;
+      display: inline;
+      padding: 3px;
+      margin: 10px 0;
+      border-color: $color-dark;
+      color: $color-dark;
+      transition: 0.3;
+    }
+    button:hover {
+      background-color: $color-secondary;
+      cursor: pointer;
+    }
+  }
+}

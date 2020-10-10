@@ -13,22 +13,37 @@ const Chat = ({ token, id, accountType }) => {
 
   const socket = socketIOClient(PORT);
   const isTeacher = accountType == "teacher";
+  const sendMessageSocket = (message, recipentId, senderId) => {
+    socket.emit("message", { message, recipentId, senderId });
+  };
+
+  const updateChatUsersList = (newStatus, _id) => {
+    setChatUsersList(state =>
+      state.map(item => {
+        if (item._id == _id) item.active = newStatus;
+        return item;
+      })
+    );
+  };
 
   useEffect(() => {
     socket.emit("auth", { token });
-    socket.on("message", ({ message }) => console.log(message));
+    socket.on("authSuccess", ({ users }) => {
+      setChatUsersList(users);
+      socket.on("markAsNotActive", ({ _id }) => {
+        updateChatUsersList(false, _id);
+      });
+      socket.on("markAsActive", ({ _id }) => {
+        updateChatUsersList(true, _id);
+      });
+    });
+
     socket.on("error", ({ error }) => {
       socket.disconnect();
       setError(error);
     });
 
-    if (isTeacher) {
-      socket.emit("askAboutStudents", { token });
-      socket.on("getStudents", data => setChatUsersList(data));
-    } else {
-      socket.emit("askAboutTeacher", { token });
-      socket.on("getTeacher", data => setChatUsersList(data));
-    }
+    socket.on("message", ({ message }) => console.log(message));
 
     return () => socket.disconnect();
   }, []);
@@ -36,7 +51,13 @@ const Chat = ({ token, id, accountType }) => {
   const displayChatList = () => {
     if (chatUsersList) {
       if (accountType === "teacher") return <>nauczyciel</>;
-      else return <StudentChat users={chatUsersList} />;
+      else
+        return (
+          <StudentChat
+            users={chatUsersList[0]}
+            sendMessageSocket={sendMessageSocket}
+          />
+        );
     } else return null;
   };
 
