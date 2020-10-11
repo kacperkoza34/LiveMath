@@ -1,46 +1,45 @@
 import React, { useEffect, useState } from "react";
 import StudentChat from "./StudentChat/StudentChat";
 import socketIOClient from "socket.io-client";
+import { setChatUsers, updateUserState, chatError } from "../../redux/actions/chat";
 import { connect } from "react-redux";
 import styles from "./index.module.scss";
 
-const Chat = ({ token, id, accountType }) => {
-  const [error, setError] = useState("");
-  const [chatUsersList, setChatUsersList] = useState(null);
+const Chat = ({
+  token,
+  id,
+  accountType,
+  chatUsers,
+  setChatUsers,
+  updateUserState
+}) => {
+  const { data, isFetching, isError } = chatUsers;
 
   const PORT =
     process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
 
   const socket = socketIOClient(PORT);
   const isTeacher = accountType == "teacher";
+
   const sendMessageSocket = (message, recipentId, senderId) => {
     socket.emit("message", { message, recipentId, senderId });
-  };
-
-  const updateChatUsersList = (newStatus, _id) => {
-    setChatUsersList(state =>
-      state.map(item => {
-        if (item._id == _id) item.active = newStatus;
-        return item;
-      })
-    );
   };
 
   useEffect(() => {
     socket.emit("auth", { token });
     socket.on("authSuccess", ({ users }) => {
-      setChatUsersList(users);
+      setChatUsers(users, id);
       socket.on("markAsNotActive", ({ _id }) => {
-        updateChatUsersList(false, _id);
+        updateUserState(_id);
       });
       socket.on("markAsActive", ({ _id }) => {
-        updateChatUsersList(true, _id);
+        updateUserState(_id);
       });
     });
 
     socket.on("error", ({ error }) => {
       socket.disconnect();
-      setError(error);
+      chatError();
     });
 
     socket.on("message", ({ message }) => console.log(message));
@@ -49,23 +48,26 @@ const Chat = ({ token, id, accountType }) => {
   }, []);
 
   const displayChatList = () => {
-    if (chatUsersList) {
+    if (data.length) {
       if (accountType === "teacher") return <>nauczyciel</>;
-      else
+      else {
         return (
-          <StudentChat
-            users={chatUsersList[0]}
-            sendMessageSocket={sendMessageSocket}
-          />
+          <StudentChat teacher={data[0]} sendMessageSocket={sendMessageSocket} />
         );
+      }
     } else return null;
   };
 
   return (
     <div className={styles.chat}>
-      {error.length > 0 ? <div>{error}</div> : displayChatList()}
+      {isError ? <div>{"Błąd czatu"}</div> : displayChatList()}
     </div>
   );
 };
 
-export default Chat;
+const mapStateToProps = state => ({
+  chatUsers: state.chat.chatUsers,
+  isWindowChatOpen: !!state.chat.currentChat.senderId
+});
+
+export default connect(mapStateToProps, { setChatUsers, updateUserState })(Chat);

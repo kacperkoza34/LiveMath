@@ -5,6 +5,7 @@ require("dotenv").config();
 const Student = require("../../models/Student");
 const Teacher = require("../../models/Teacher");
 const TeacherProfile = require("../../models/TeacherProfile");
+const Messages = require("../../models/Messages");
 
 module.exports = class Chat {
   constructor(server) {
@@ -143,24 +144,72 @@ module.exports = class Chat {
     this.activeUsers = [...this.activeUsers, ...updatedUsers];
   }
 
+  async addMessageToDatabase(message, recipentId, senderId, accountType) {
+    try {
+      let messages = await Messages.findOne({
+        recipentId: recipentId,
+        senderId: senderId
+      });
+      if (!messages) {
+        let senderAccountType;
+        let recipentAccountType;
+        if (accountType === "teacher") {
+          senderAccountType = "teacher";
+          recipentAccountType = "student";
+        } else {
+          senderAccountType = "student";
+          recipentAccountType = "teacher";
+        }
+        messages = new Messages({
+          senderAccountType,
+          recipentAccountType,
+          recipentId,
+          senderId,
+          newMessages: 1,
+          messages: [
+            {
+              content: message,
+              date: Date.now()
+            }
+          ]
+        });
+      } else {
+        messages.newMessages = messages.newMessages + 1;
+        messages.messages.push({ date: Date.now(), content: message });
+      }
+
+      await messages.save();
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
   initConnection() {
     this.io.on("connection", socket => {
-      socket.on("message", ({ message, recipentId, senderId }) => {
-        console.log("jest message");
-        console.log(message, recipentId, senderId);
-        // console.log(message);
-        // console.log(recipientId);
-        // console.log(senderId);
-        const recipient = this.activeUsers.filter(
-          ({ userId, socketId }) => userId === recipentId && senderId !== userId
-        );
-        console.log(this.activeUsers);
+      socket.on(
+        "message",
+        async ({ message, recipentId, senderId, accountType }) => {
+          try {
+            const success = await this.addMessageToDatabase(
+              message,
+              recipentId,
+              senderId,
+              accountType
+            );
 
-        console.log(recipient);
-        if (recipient.length) {
-          this.io.to(recipient[0]["socketId"]).emit("message", { message });
+            const recipent = this.activeUsers.filter(
+              ({ userId, socketId }) =>
+                userId === recipentId && senderId !== userId
+            );
+            if (recipent.length) {
+              if (!success) message = "Nie udało sie wysłać Wiadomości";
+              this.io.to(recipent[0]["socketId"]).emit("message", { message, senderId });
+            }
+          } catch (e) {}
         }
-      });
+      );
 
       socket.on("disconnect", () => {
         this.activeUsers = this.activeUsers.filter(

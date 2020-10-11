@@ -16,8 +16,7 @@ const MainLayout = props => {
     auth: { token, isAuthenticated, isFetching, errors },
     user: {
       isFetching: isFetchingUser,
-      data: { accountType },
-      _id
+      data: { accountType, _id }
     }
   } = props;
 

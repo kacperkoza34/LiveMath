@@ -47,6 +47,8 @@ app.use("/api/tasks", require("./routes/api/tasks"));
 
 app.use("/api/class", require("./routes/api/class"));
 
+app.use("/api/chat", require("./routes/api/chat"));
+
 // Server static assets in production
 
 if (process.env.NODE_ENV === "production") {

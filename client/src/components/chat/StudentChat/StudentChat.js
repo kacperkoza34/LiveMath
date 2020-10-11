@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChatWindow from "../ChatWindow/ChatWindow";
 import TeacherIcon from "./TeacherIcon";
 
-const StudentChat = ({ users: { _id, name, active }, sendMessageSocket }) => {
+const StudentChat = ({ teacher: { _id, name, active }, sendMessageSocket }) => {
   const [chatWindowActive, setChatWindow] = useState(false);
   const styles = chatWindowActive ? "0 50px" : "50px";
   const displayChat = () => {

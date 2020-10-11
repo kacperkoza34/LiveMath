@@ -10,7 +10,8 @@ const ChatWindow = ({
   active,
   toggleChat,
   sendMessageSocket,
-  senderId
+  senderId,
+  accountType
 }) => {
   const [message, setMessage] = useState("");
 
@@ -18,7 +19,7 @@ const ChatWindow = ({
     e.preventDefault();
     if (message) {
       setMessage("");
-      sendMessageSocket(message, id, senderId);
+      sendMessageSocket(message, id, senderId, accountType);
     }
   };
   return (
@@ -47,6 +48,7 @@ const ChatWindow = ({
   );
 };
 const mapStateToProps = state => ({
-  senderId: state.user.data._id
+  senderId: state.user.data._id,
+  accountType: state.user.data.accountType
 });
 export default connect(mapStateToProps)(ChatWindow);

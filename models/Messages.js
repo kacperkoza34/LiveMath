@@ -18,7 +18,7 @@ const MessagesSchema = new mongoose.Schema({
     refPath: "recipentAccountType"
   },
   newMessages: {
-    type: Boolean,
+    type: Number,
     default: 0
   },
   messages: [
@@ -33,7 +33,7 @@ const MessagesSchema = new mongoose.Schema({
       },
       author: {
         type: mongoose.Schema.Types.ObjectId,
-        refPath: "sender"
+        refPath: "senderId"
       }
     }
   ]
