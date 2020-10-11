@@ -49,15 +49,11 @@ module.exports = class Chat {
         user: teacher.teacher
       }).select("name user");
 
-      const isTeacherActive = this.activeUsers.some(
-        ({ userId }) => teacher.user == userId
-      );
-
       const response = [
         {
           name: teacher.name,
           _id: teacher.user,
-          active: isTeacherActive
+          active: this.activeUsers.some(({ userId }) => teacher.user == userId)
         }
       ];
       return response;
