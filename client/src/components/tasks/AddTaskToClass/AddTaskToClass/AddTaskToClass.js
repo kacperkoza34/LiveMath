@@ -50,7 +50,7 @@ const AddTaskToClass = ({
     const errors = [];
 
     if (!deadLine.length) errors.push("Wybierz termin wykonania");
-    if (!startDate.length) setStartDate(new Date());
+    if (!startDate.length) errors.push("Wybierz termin rozpoczęcia");
     if (!classes.length) errors.push("Wybierz klasy");
     if (Date.parse(startDate) >= Date.parse(deadLine))
       errors.push("Startowa data musi być mniejsza niż termin wykonania");
