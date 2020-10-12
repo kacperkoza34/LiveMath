@@ -82,7 +82,13 @@ const OpenTaskDumm = ({
           ></TextareaAutosize>
           <div className={styles.answer}>
             <h4>Odpowiedź:</h4>
-            <input onChange={e => setAnswer(e.target.value)} value={answer} />
+            <input
+              onChange={e => {
+                check(false);
+                setAnswer(e.target.value);
+              }}
+              value={answer}
+            />
           </div>
           <div className={styles.answer}>
             <h4>Twoja odpowiedź:</h4>

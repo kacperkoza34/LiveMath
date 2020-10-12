@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import StudentChat from "./StudentChat/StudentChat";
+import TeacherChat from "./TeacherChat/TeacherChat";
 import socketIOClient from "socket.io-client";
-import { setChatUsers, updateUserState, chatError } from "../../redux/actions/chat";
+import {
+  setChatUsers,
+  updateUserState,
+  chatError
+} from "../../redux/actions/chat";
 import { connect } from "react-redux";
 import styles from "./index.module.scss";
 
@@ -49,10 +54,13 @@ const Chat = ({
 
   const displayChatList = () => {
     if (data.length) {
-      if (accountType === "teacher") return <>nauczyciel</>;
+      if (accountType === "teacher")
+        return (
+          <TeacherChat users={data} sendMessageSocket={sendMessageSocket} />
+        );
       else {
         return (
-          <StudentChat teacher={data[0]} sendMessageSocket={sendMessageSocket} />
+          <StudentChat users={data[0]} sendMessageSocket={sendMessageSocket} />
         );
       }
     } else return null;
@@ -70,4 +78,6 @@ const mapStateToProps = state => ({
   isWindowChatOpen: !!state.chat.currentChat.senderId
 });
 
-export default connect(mapStateToProps, { setChatUsers, updateUserState })(Chat);
+export default connect(mapStateToProps, { setChatUsers, updateUserState })(
+  Chat
+);
