@@ -144,7 +144,13 @@ module.exports = class Chat {
     this.activeUsers = [...this.activeUsers, ...updatedUsers];
   }
 
-  async addMessageToDatabase(message, recipentId, senderId, accountType) {
+  async addMessageToDatabase(
+    message,
+    recipentId,
+    senderId,
+    accountType,
+    socketId
+  ) {
     try {
       let messages = await Messages.findOne({
         recipentId: recipentId,
@@ -153,7 +159,7 @@ module.exports = class Chat {
       if (!messages) {
         let senderAccountType;
         let recipentAccountType;
-        if (accountType === "teacher") {
+        if (accountType == "teacher") {
           senderAccountType = "teacher";
           recipentAccountType = "student";
         } else {
@@ -169,17 +175,23 @@ module.exports = class Chat {
           messages: [
             {
               content: message,
-              date: Date.now()
+              date: Date.now(),
+              author: senderId
             }
           ]
         });
       } else {
         messages.newMessages = messages.newMessages + 1;
-        messages.messages.push({ date: Date.now(), content: message });
+        messages.messages.push({
+          date: Date.now(),
+          content: message,
+          author: senderId
+        });
       }
 
       await messages.save();
-      return true;
+
+      return { date: Date.now(), content: message, author: senderId };
     } catch (e) {
       console.log(e);
       return false;
@@ -196,16 +208,31 @@ module.exports = class Chat {
               message,
               recipentId,
               senderId,
-              accountType
+              accountType,
+              socket.id
             );
 
             const recipent = this.activeUsers.filter(
               ({ userId, socketId }) =>
                 userId === recipentId && senderId !== userId
             );
+            const sender = this.activeUsers.filter(
+              ({ userId }) => senderId === userId
+            );
+
             if (recipent.length) {
-              if (!success) message = "Nie udało sie wysłać Wiadomości";
-              this.io.to(recipent[0]["socketId"]).emit("message", { message, senderId });
+              const recipentsSocket = recipent[0]["socketId"];
+              if (!success) {
+                success = {
+                  content: "Coś poszło nie tak",
+                  date: Date.now(),
+                  author: senderId
+                };
+                recipentsSocket = socket.id;
+              } else {
+                this.io.to(sender[0]["socketId"]).emit("messageSaved", success);
+              }
+              this.io.to(recipentsSocket).emit("message", success);
             }
           } catch (e) {}
         }

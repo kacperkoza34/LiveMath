@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import ChatWindow from "../ChatWindow/ChatWindow";
 import TeacherIcon from "./TeacherIcon";
+import { setSenderAndRecipent } from "../../../redux/actions/chat";
+import { connect } from "react-redux";
 
-const StudentChat = ({ users: { _id, name, active }, sendMessageSocket }) => {
-  const [chatWindowActive, setChatWindow] = useState(false);
-  const styles = chatWindowActive ? "0 50px" : "50px";
+const StudentChat = ({
+  users: { _id: recipentId, name, active, newMessages },
+  senderId,
+  sendMessageSocket,
+  stateRecipentId,
+  stateSenderId,
+  setSenderAndRecipent
+}) => {
   const displayChat = () => {
-    if (chatWindowActive)
+    if (stateRecipentId && stateSenderId)
       return (
         <ChatWindow
-          toggleChat={setChatWindow}
-          id={_id}
           name={name}
-          active={active}
           sendMessageSocket={sendMessageSocket}
+          marginLeft={"50px"}
+          closeChat={setSenderAndRecipent}
         />
       );
-    else return <TeacherIcon toggleChat={setChatWindow} active={active} />;
+    else
+      return (
+        <TeacherIcon
+          newMessages={newMessages}
+          onClick={() => setSenderAndRecipent({ recipentId, senderId })}
+          active={active}
+        />
+      );
   };
-  return <div style={{ margin: styles }}>{displayChat()}</div>;
+  return <div>{displayChat()}</div>;
 };
 
-export default StudentChat;
+const mapStateToProps = state => ({
+  stateRecipentId: state.chat.currentChat.recipentId,
+  stateSenderId: state.chat.currentChat.senderId
+});
+
+export default connect(mapStateToProps, { setSenderAndRecipent })(StudentChat);

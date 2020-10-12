@@ -1,6 +1,8 @@
 @import "../../../styles/settings.scss";
 
 .root {
+  margin-left: 50px;
+  margin-bottom: 50px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -27,8 +29,22 @@
   .disactive {
     background: $color-dark;
   }
-}
 
+  .newMessages {
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0% {
+      color: inherit;
+    }
+    50% {
+      color: rgba($color-primary, 0.8);
+    }
+    100% {
+      color: inherit;
+    }
+  }
+}
 .root {
   cursor: pointer;
 }

@@ -5,6 +5,7 @@ import socketIOClient from "socket.io-client";
 import {
   setChatUsers,
   updateUserState,
+  addSingleMessage,
   chatError
 } from "../../redux/actions/chat";
 import { connect } from "react-redux";
@@ -16,7 +17,9 @@ const Chat = ({
   accountType,
   chatUsers,
   setChatUsers,
-  updateUserState
+  addSingleMessage,
+  updateUserState,
+  currentChat: { senderId, recipentId }
 }) => {
   const { data, isFetching, isError } = chatUsers;
 
@@ -35,10 +38,10 @@ const Chat = ({
     socket.on("authSuccess", ({ users }) => {
       setChatUsers(users, id);
       socket.on("markAsNotActive", ({ _id }) => {
-        updateUserState(_id);
+        updateUserState({ _id, param: "active" });
       });
       socket.on("markAsActive", ({ _id }) => {
-        updateUserState(_id);
+        updateUserState({ _id, param: "active" });
       });
     });
 
@@ -47,7 +50,14 @@ const Chat = ({
       chatError();
     });
 
-    socket.on("message", ({ message }) => console.log(message));
+    socket.on("message", message => {
+      console.log(message);
+      const { author } = message;
+      if (author !== senderId && message !== recipentId)
+        updateUserState({ _id: author, param: "newMessages" });
+      else addSingleMessage(message);
+    });
+    socket.on("messageSaved", message => addSingleMessage(message));
 
     return () => socket.disconnect();
   }, []);
@@ -56,11 +66,19 @@ const Chat = ({
     if (data.length) {
       if (accountType === "teacher")
         return (
-          <TeacherChat users={data} sendMessageSocket={sendMessageSocket} />
+          <TeacherChat
+            senderId={id}
+            users={data}
+            sendMessageSocket={sendMessageSocket}
+          />
         );
       else {
         return (
-          <StudentChat users={data[0]} sendMessageSocket={sendMessageSocket} />
+          <StudentChat
+            senderId={id}
+            users={data[0]}
+            sendMessageSocket={sendMessageSocket}
+          />
         );
       }
     } else return null;
@@ -75,9 +93,11 @@ const Chat = ({
 
 const mapStateToProps = state => ({
   chatUsers: state.chat.chatUsers,
-  isWindowChatOpen: !!state.chat.currentChat.senderId
+  currentChat: state.chat.currentChat
 });
 
-export default connect(mapStateToProps, { setChatUsers, updateUserState })(
-  Chat
-);
+export default connect(mapStateToProps, {
+  setChatUsers,
+  updateUserState,
+  addSingleMessage
+})(Chat);

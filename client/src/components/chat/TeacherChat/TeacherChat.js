@@ -1,13 +1,24 @@
 import React, { useState } from "react";
+import ChatWindow from "../ChatWindow/ChatWindow";
 import styles from "./TeacherChat.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { setSenderAndRecipent } from "../../../redux/actions/chat";
+import { connect } from "react-redux";
 import {
   faAngleDown,
   faAngleUp,
   faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
 
-const TeacherChat = ({ users }) => {
+const TeacherChat = ({
+  users,
+  sendMessageSocket,
+  senderId,
+  setSenderAndRecipent,
+  stateRecipentId,
+  stateSenderId
+}) => {
+  const [selectedUserName, setSelectedUserName] = useState("");
   const [displayList, setDisplayList] = useState(false);
 
   const compareActive = (a, b) => {
@@ -33,44 +44,70 @@ const TeacherChat = ({ users }) => {
       );
   };
 
-  return (
-    <div className={styles.root}>
-      <div
-        onClick={() => setDisplayList(state => !state)}
-        className={styles.header}
-      >
-        <div className={styles.title}>
-          <h3>Chat </h3>
-          {displayMessageIcon()}
-        </div>{" "}
-        {displayList ? (
-          <FontAwesomeIcon icon={faAngleDown} />
-        ) : (
-          <FontAwesomeIcon icon={faAngleUp} />
+  const displayChatList = () => {
+    return (
+      <div className={styles.root}>
+        <div
+          onClick={() => setDisplayList(state => !state)}
+          className={styles.header}
+        >
+          <div className={styles.title}>
+            <h3>Chat </h3>
+            {displayMessageIcon()}
+          </div>{" "}
+          {displayList ? (
+            <FontAwesomeIcon icon={faAngleDown} />
+          ) : (
+            <FontAwesomeIcon icon={faAngleUp} />
+          )}
+        </div>
+        {displayList && (
+          <ul>
+            {sortUsers(users).map(({ name, _id, active, newMessages }) => {
+              return (
+                <li
+                  key={_id}
+                  onClick={() => {
+                    setSelectedUserName(name);
+                    setSenderAndRecipent({ recipentId: _id, senderId });
+                  }}
+                >
+                  <span
+                    className={active ? styles.active : styles.disactive}
+                  ></span>
+                  {name}
+                  {newMessages && (
+                    <FontAwesomeIcon
+                      className={newMessages ? styles.newMessage : undefined}
+                      icon={faEnvelope}
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
-      {displayList && (
-        <ul>
-          {sortUsers(users).map(({ name, _id, active, newMessages }) => {
-            return (
-              <li>
-                <span
-                  className={active ? styles.active : styles.disactive}
-                ></span>
-                {name}
-                {newMessages && (
-                  <FontAwesomeIcon
-                    className={newMessages ? styles.newMessage : undefined}
-                    icon={faEnvelope}
-                  />
-                )}
-              </li>
-            );
-          })}
-        </ul>
+    );
+  };
+
+  return (
+    <>
+      {stateRecipentId && stateSenderId ? (
+        <ChatWindow
+          name={selectedUserName}
+          sendMessageSocket={sendMessageSocket}
+          marginLeft={"0"}
+          closeChat={setSenderAndRecipent}
+        />
+      ) : (
+        displayChatList()
       )}
-    </div>
+    </>
   );
 };
-
-export default TeacherChat;
+const mapStateToProps = state => ({
+  stateRecipentId: state.chat.currentChat.recipentId,
+  stateSenderId: state.chat.currentChat.senderId
+});
+export default connect(mapStateToProps, { setSenderAndRecipent })(TeacherChat);

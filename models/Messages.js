@@ -33,7 +33,7 @@ const MessagesSchema = new mongoose.Schema({
       },
       author: {
         type: mongoose.Schema.Types.ObjectId,
-        refPath: "senderId"
+        refPath: "senderAccountType"
       }
     }
   ]
