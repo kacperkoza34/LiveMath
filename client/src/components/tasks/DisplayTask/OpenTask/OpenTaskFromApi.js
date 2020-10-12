@@ -125,7 +125,10 @@ const OpenTask = ({
             <div className={styles.answer}>
               <h4>Odpowiedź:</h4>
               <input
-                onChange={e => updateAnswer(e.target.value)}
+                onChange={e => {
+                  check(false);
+                  updateAnswer(e.target.value);
+                }}
                 value={answer}
                 name="onlyString"
               />
