@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import StudentChat from "./StudentChat/StudentChat";
 import TeacherChat from "./TeacherChat/TeacherChat";
 import socketIOClient from "socket.io-client";
+import { addSingleMessage } from "../../redux/actions/chatWindow";
+
 import {
   setChatUsers,
   updateUserState,
-  addSingleMessage,
   chatError
-} from "../../redux/actions/chat";
+} from "../../redux/actions/chatUsers";
+
 import { connect } from "react-redux";
 import styles from "./index.module.scss";
 
@@ -15,13 +17,14 @@ const Chat = ({
   token,
   id,
   accountType,
-  chatUsers,
   setChatUsers,
   addSingleMessage,
   updateUserState,
-  currentChat: { senderId, recipentId }
+  chatUsers: { data, isFetching, isError },
+  stateRecipentId,
+  stateSenderId
 }) => {
-  const { data, isFetching, isError } = chatUsers;
+  const [isAuth, setAuth] = useState(false);
 
   const PORT =
     process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
@@ -38,10 +41,10 @@ const Chat = ({
     socket.on("authSuccess", ({ users }) => {
       setChatUsers(users, id);
       socket.on("markAsNotActive", ({ _id }) => {
-        updateUserState({ _id, param: "active" });
+        updateUserState({ _id, newState: false, param: "active" });
       });
       socket.on("markAsActive", ({ _id }) => {
-        updateUserState({ _id, param: "active" });
+        updateUserState({ _id, newState: true, param: "active" });
       });
     });
 
@@ -51,16 +54,21 @@ const Chat = ({
     });
 
     socket.on("message", message => {
-      console.log(message);
       const { author } = message;
-      if (author !== senderId && message !== recipentId)
-        updateUserState({ _id: author, param: "newMessages" });
-      else addSingleMessage(message);
+      if (author !== stateRecipentId) {
+        updateUserState({ _id: author, newState: true, param: "newMessages" });
+      } else addSingleMessage(message);
     });
-    socket.on("messageSaved", message => addSingleMessage(message));
+
+    socket.on("messageSaved", message => {
+      if (stateRecipentId && stateSenderId) addSingleMessage(message);
+    });
 
     return () => socket.disconnect();
-  }, []);
+  }, [
+    stateRecipentId,
+    stateSenderId
+  ]);
 
   const displayChatList = () => {
     if (data.length) {
@@ -92,8 +100,9 @@ const Chat = ({
 };
 
 const mapStateToProps = state => ({
-  chatUsers: state.chat.chatUsers,
-  currentChat: state.chat.currentChat
+  chatUsers: state.chatUsers,
+  stateRecipentId: state.chatWindow.recipentId,
+  stateSenderId: state.chatWindow.senderId
 });
 
 export default connect(mapStateToProps, {

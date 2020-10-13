@@ -149,7 +149,7 @@ module.exports = class Chat {
     recipentId,
     senderId,
     accountType,
-    socketId
+    hasRecipenOpenWindow
   ) {
     try {
       let messages = await Messages.findOne({
@@ -181,7 +181,7 @@ module.exports = class Chat {
           ]
         });
       } else {
-        messages.newMessages = messages.newMessages + 1;
+        messages.newMessages = 1;
         messages.messages.push({
           date: Date.now(),
           content: message,
@@ -204,14 +204,6 @@ module.exports = class Chat {
         "message",
         async ({ message, recipentId, senderId, accountType }) => {
           try {
-            const success = await this.addMessageToDatabase(
-              message,
-              recipentId,
-              senderId,
-              accountType,
-              socket.id
-            );
-
             const recipent = this.activeUsers.filter(
               ({ userId, socketId }) =>
                 userId === recipentId && senderId !== userId
@@ -220,21 +212,40 @@ module.exports = class Chat {
               ({ userId }) => senderId === userId
             );
 
-            if (recipent.length) {
-              const recipentsSocket = recipent[0]["socketId"];
-              if (!success) {
-                success = {
+            let recipentSocketId = null;
+            let senderSocketId = null;
+
+            if (recipent.length) recipentSocketId = recipent[0]["socketId"];
+            if (sender.length) senderSocketId = sender[0]["socketId"];
+
+            let success;
+
+            if (sender.length) {
+              success = await this.addMessageToDatabase(
+                message,
+                recipentId,
+                senderId,
+                accountType
+              );
+            }
+            if (success) {
+              if (recipentSocketId && sender.length) {
+                this.io.to(recipentSocketId).emit("message", success);
+              }
+              if (senderSocketId) {
+                this.io.to(senderSocketId).emit("messageSaved", success);
+              }
+            } else {
+              if (senderSocketId)
+                this.io.to(senderSocketId).emit("messageSaved", {
                   content: "Coś poszło nie tak",
                   date: Date.now(),
                   author: senderId
-                };
-                recipentsSocket = socket.id;
-              } else {
-                this.io.to(sender[0]["socketId"]).emit("messageSaved", success);
-              }
-              this.io.to(recipentsSocket).emit("message", success);
+                });
             }
-          } catch (e) {}
+          } catch (e) {
+            console.log(e);
+          }
         }
       );
 

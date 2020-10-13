@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ChatWindow from "../ChatWindow/ChatWindow";
 import TeacherIcon from "./TeacherIcon";
-import { setSenderAndRecipent } from "../../../redux/actions/chat";
+import { setSenderAndRecipent } from "../../../redux/actions/chatWindow";
 import { connect } from "react-redux";
 
 const StudentChat = ({
@@ -35,8 +35,8 @@ const StudentChat = ({
 };
 
 const mapStateToProps = state => ({
-  stateRecipentId: state.chat.currentChat.recipentId,
-  stateSenderId: state.chat.currentChat.senderId
+  stateRecipentId: state.chatWindow.recipentId,
+  stateSenderId: state.chatWindow.senderId
 });
 
 export default connect(mapStateToProps, { setSenderAndRecipent })(StudentChat);

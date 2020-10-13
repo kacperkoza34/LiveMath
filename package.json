@@ -33,6 +33,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemailer-mailgun-transport": "^2.0.0",
     "rc-progress": "^2.5.3",
+    "react-addons-update": "^15.6.2",
     "react-html-parser": "^2.0.2",
     "react-html5-camera-photo": "^1.5.4",
     "react-spinners": "^0.8.1",

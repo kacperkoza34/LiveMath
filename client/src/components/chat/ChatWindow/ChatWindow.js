@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MessagesList from "../MessagesList/MessagesList";
 import BeatLoader from "react-spinners/BeatLoader";
 import Moment from "react-moment";
@@ -6,18 +6,23 @@ import styles from "./ChatWindow.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
+import { updateUserState } from "../../../redux/actions/chatUsers";
 
 const ChatWindow = ({
   name,
   sendMessageSocket,
   accountType,
-  currentChat,
+  chatWindow,
   marginLeft,
-  closeChat
+  closeChat,
+  updateUserState
 }) => {
-  const { senderId, recipentId, messages, isFetching } = currentChat;
-
+  const { senderId, recipentId, messages, isFetching } = chatWindow;
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    updateUserState({ _id: recipentId, newState: false, param: "newMessages" });
+  }, [isFetching, recipentId, updateUserState]);
 
   const sendMessage = e => {
     e.preventDefault();
@@ -55,6 +60,7 @@ const ChatWindow = ({
               onChange={e => setMessage(e.target.value)}
               placeholder="Wiadomość"
               name="message"
+              autoComplete="off"
             />
             <button>Wyślij</button>
           </form>
@@ -64,7 +70,7 @@ const ChatWindow = ({
   );
 };
 const mapStateToProps = state => ({
-  currentChat: state.chat.currentChat,
+  chatWindow: state.chatWindow,
   accountType: state.user.data.accountType
 });
-export default connect(mapStateToProps)(ChatWindow);
+export default connect(mapStateToProps, { updateUserState })(ChatWindow);
