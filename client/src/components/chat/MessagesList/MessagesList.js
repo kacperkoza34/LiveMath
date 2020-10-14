@@ -8,7 +8,8 @@ const MessagesList = ({ messages, isFetching, senderId }) => {
   const [displayDate, setDisplayDate] = useState(false);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+    if (!displayDate)
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
   };
 
   useEffect(() => {
@@ -16,34 +17,36 @@ const MessagesList = ({ messages, isFetching, senderId }) => {
   }, [isFetching, scrollToBottom]);
 
   return (
-    <div className={styles.messages}>
-      {messages.length ? (
-        messages.map(({ content, author, date }, key) => {
-          return (
-            <div
-              onClick={() =>
-                setDisplayDate(state => (key === state ? true : key))
-              }
-              key={key}
-              className={
-                senderId == author
-                  ? styles.self + " " + styles.message
-                  : styles.message
-              }
-            >
-              {displayDate === key && (
-                <div className={styles.date}>
-                  <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>{" "}
-                </div>
-              )}
-              {content}
-            </div>
-          );
-        })
-      ) : (
-        <>Wyślij pierwszą wiadomość</>
-      )}
-      <div ref={messagesEndRef} />
+    <div className={styles.root}>
+      <div className={styles.messages}>
+        {messages.length ? (
+          messages.map(({ content, author, date }, key) => {
+            return (
+              <div
+                onClick={() =>
+                  setDisplayDate(state => (key + 1 === state ? true : key + 1))
+                }
+                key={key}
+                className={
+                  senderId == author
+                    ? styles.self + " " + styles.message
+                    : styles.message
+                }
+              >
+                {displayDate === key + 1 && (
+                  <div className={styles.date}>
+                    <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>{" "}
+                  </div>
+                )}
+                {content}
+              </div>
+            );
+          })
+        ) : (
+          <>Wyślij pierwszą wiadomość</>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
     </div>
   );
 };

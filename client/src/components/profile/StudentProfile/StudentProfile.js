@@ -55,7 +55,7 @@ const StudentProfile = ({
 StudentProfile.propTypes = {
   id: PropTypes.string,
   student: PropTypes.object.isRequired,
-  user: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
   getStudent: PropTypes.func.isRequired,
   match: PropTypes.object
 };

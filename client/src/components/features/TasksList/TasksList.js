@@ -69,6 +69,7 @@ const TasksList = ({
           if (item.taskType === "taskClose" || item.taskType === "closeTask")
             return (
               <CloseTaskView
+                key={index}
                 accountType={accountType}
                 onlyName={onlyName}
                 data={item}
@@ -80,6 +81,7 @@ const TasksList = ({
           if (item.taskType === "taskOpen" || item.taskType === "openTask")
             return (
               <OpenTaskView
+                key={index}
                 accountType={accountType}
                 onlyName={onlyName}
                 data={item}
@@ -94,6 +96,7 @@ const TasksList = ({
           )
             return (
               <BooleanTaskView
+                key={index}
                 accountType={accountType}
                 onlyName={onlyName}
                 data={item}

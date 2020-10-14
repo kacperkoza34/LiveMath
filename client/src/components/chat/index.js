@@ -37,38 +37,44 @@ const Chat = ({
   };
 
   useEffect(() => {
+
     socket.emit("auth", { token });
     socket.on("authSuccess", ({ users }) => {
-      setChatUsers(users, id);
-      socket.on("markAsNotActive", ({ _id }) => {
-        updateUserState({ _id, newState: false, param: "active" });
-      });
-      socket.on("markAsActive", ({ _id }) => {
-        updateUserState({ _id, newState: true, param: "active" });
-      });
+      if (!isAuth) setChatUsers(users, id);
+      setAuth(true);
     });
 
-    socket.on("error", ({ error }) => {
-      socket.disconnect();
-      chatError();
+    socket.on("markAsNotActive", ({ _id }) => {
+      if (!isAuth)  updateUserState({ _id, newState: false, param: "active" });
+    });
+    socket.on("markAsActive", ({ _id }) => {
+      if (!isAuth)  updateUserState({ _id, newState: true, param: "active" });
     });
 
     socket.on("message", message => {
       const { author } = message;
+      console.log("message recived");
       if (author !== stateRecipentId) {
-        updateUserState({ _id: author, newState: true, param: "newMessages" });
+        updateUserState({
+          _id: author,
+          newState: true,
+          param: "newMessages"
+        });
       } else addSingleMessage(message);
     });
 
     socket.on("messageSaved", message => {
+      console.log("message svaed");
       if (stateRecipentId && stateSenderId) addSingleMessage(message);
     });
 
+    socket.on("error", ({ error }) => {
+      console.log("errr");
+      socket.disconnect();
+      chatError();
+    });
     return () => socket.disconnect();
-  }, [
-    stateRecipentId,
-    stateSenderId
-  ]);
+  }, [ stateRecipentId, stateSenderId ]);
 
   const displayChatList = () => {
     if (data.length) {

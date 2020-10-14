@@ -267,15 +267,15 @@ router.get("/search/:class/:section", authTeacher, async (req, res) => {
     let taskClose = await TaskClose.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
     let taskOpen = await TaskOpen.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
     let taskBoolean = await TaskBoolean.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
 
     function compare(a, b) {
       return a.date.getTime() - b.date.getTime();

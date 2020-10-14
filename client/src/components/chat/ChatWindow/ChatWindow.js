@@ -53,19 +53,21 @@ const ChatWindow = ({
           />
         )}
 
-        <div className={styles.sendBox}>
-          <form onSubmit={sendMessage}>
-            <input
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-              placeholder="Wiadomość"
-              name="message"
-              autoComplete="off"
-            />
-            <button>Wyślij</button>
-          </form>
-        </div>
       </div>
+
+      <div className={styles.sendBox}>
+        <form onSubmit={sendMessage}>
+          <input
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+            placeholder="Wiadomość"
+            name="message"
+            autoComplete="off"
+          />
+          <button>Wyślij</button>
+        </form>
+      </div>
+
     </div>
   );
 };
