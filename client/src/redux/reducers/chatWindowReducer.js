@@ -3,7 +3,8 @@ import {
   SET_MESSAGES_IN_WINDOW,
   MARK_MESSAGE_AS_VIEWED,
   MESSAGES_ERROR,
-  ADD_SINGLE_MESSAGE
+  ADD_SINGLE_MESSAGE,
+  CLEAR_CHAT_WINDOW
 } from "../actions/chatWindow";
 
 export default function reducer(statePart = [], action = {}) {
@@ -13,19 +14,24 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         isFetching: !statePart.isFetching,
-        recipentId:  recipentId,
-        senderId:  senderId
+        recipentId: recipentId,
+        senderId: senderId
       };
     case SET_MESSAGES_IN_WINDOW:
       return {
         ...statePart,
         isFetching: false,
-        messages: action.payload
+        messages: [...action.payload, ...statePart.messages]
       };
     case ADD_SINGLE_MESSAGE:
       return {
         ...statePart,
         messages: [...statePart.messages, action.payload]
+      };
+    case CLEAR_CHAT_WINDOW:
+      return {
+        ...statePart,
+        messages: []
       };
     case MESSAGES_ERROR:
       return {

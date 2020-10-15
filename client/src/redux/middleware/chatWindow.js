@@ -1,5 +1,7 @@
 import {
   SET_SENDER_AND_RECIPENT,
+  LOAD_NEW_MESSAGES,
+  clearChatWindow,
   setMessagesInWindow,
   messagesError
 } from "../actions/chatWindow";
@@ -14,14 +16,28 @@ const chatWindow = ({ dispatch }) => next => action => {
       dispatch(
         apiRequest(
           "GET",
-          `/api/chat/loadAllMessages/${senderId}/${recipentId}`,
+          `/api/chat/loadAllMessages/${senderId}/${recipentId}/0/12`,
           setMessagesInWindow,
           messagesError,
           null,
           null
         )
       );
-    } else dispatch(setMessagesInWindow([]));
+    } else dispatch(clearChatWindow());
+  }
+  if (action.type === LOAD_NEW_MESSAGES) {
+    const { senderId, recipentId, messagesAmount } = action.payload;
+    dispatch(
+      apiRequest(
+        "GET",
+        `/api/chat/loadAllMessages/${senderId}/${recipentId}/${messagesAmount}/${messagesAmount +
+          12}`,
+        setMessagesInWindow,
+        messagesError,
+        null,
+        null
+      )
+    );
   }
 };
 

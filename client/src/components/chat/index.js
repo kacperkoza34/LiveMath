@@ -45,31 +45,31 @@ const Chat = ({
     });
 
     socket.on("markAsNotActive", ({ _id }) => {
-      if (!isAuth)  updateUserState({ _id, newState: false, param: "active" });
+      if (!isAuth) updateUserState({ _id, newState: false, param: "active" });
     });
     socket.on("markAsActive", ({ _id }) => {
-      if (!isAuth)  updateUserState({ _id, newState: true, param: "active" });
+      if (!isAuth) updateUserState({ _id, newState: true, param: "active" });
     });
 
     socket.on("message", message => {
       const { author } = message;
-      console.log("message recived");
       if (author !== stateRecipentId) {
         updateUserState({
           _id: author,
           newState: true,
           param: "newMessages"
         });
-      } else addSingleMessage(message);
+      } else {
+        socket.emit('messageRecived', ({ recipentId: id, senderId: author }));
+        addSingleMessage(message);
+      }
     });
 
     socket.on("messageSaved", message => {
-      console.log("message svaed");
       if (stateRecipentId && stateSenderId) addSingleMessage(message);
     });
 
     socket.on("error", ({ error }) => {
-      console.log("errr");
       socket.disconnect();
       chatError();
     });

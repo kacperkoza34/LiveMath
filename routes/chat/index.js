@@ -86,18 +86,20 @@ module.exports = class Chat {
             ({ userId }) => userId === decoded.user.id
           );
 
-          this.activeUsers.push({
-            name: user.name,
-            socketId: socket.id,
-            userId: decoded.user.id,
-            accountType: decoded.user.accountType,
-            friends
-          });
+          if (!isAlredyActive) {
+            this.activeUsers.push({
+              name: user.name,
+              socketId: socket.id,
+              userId: decoded.user.id,
+              accountType: decoded.user.accountType,
+              friends
+            });
 
-          this.updateUsers(friends, decoded.user.id, "markAsActive", true);
-          this.io.to(socket.id).emit("authSuccess", {
-            users: friends
-          });
+            this.updateUsers(friends, decoded.user.id, "markAsActive", true);
+            this.io.to(socket.id).emit("authSuccess", {
+              users: friends
+            });
+          }
         } catch (e) {
           console.log(e);
           this.io.to(socket.id).emit("error", { error: "No authorization" });
@@ -198,6 +200,17 @@ module.exports = class Chat {
     }
   }
 
+  async markMessageAsRecived(recipentId, senderId) {
+    try {
+      await Messages.findOneAndUpdate(
+        { recipentId: recipentId, senderId: senderId },
+        { newMessages: 0 }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   initConnection() {
     this.io.on("connection", socket => {
       socket.on(
@@ -248,6 +261,14 @@ module.exports = class Chat {
           }
         }
       );
+
+      socket.on("messageRecived", async ({ recipentId, senderId }) => {
+        try {
+          await this.markMessageAsRecived(recipentId, senderId);
+        } catch (e) {
+          console.log(e);
+        }
+      });
 
       socket.on("disconnect", () => {
         this.activeUsers = this.activeUsers.filter(

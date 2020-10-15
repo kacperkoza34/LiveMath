@@ -3,8 +3,16 @@ import BeatLoader from "react-spinners/BeatLoader";
 import Moment from "react-moment";
 import styles from "./MessagesList.module.scss";
 
-const MessagesList = ({ messages, isFetching, senderId }) => {
+const MessagesList = ({
+  messages,
+  isFetching,
+  senderId,
+  recipentId,
+  loadNewMessages
+}) => {
   const messagesEndRef = useRef(null);
+  const messagesView = useRef(null);
+  const [isOnBottom, setBottom] = useState(false);
   const [displayDate, setDisplayDate] = useState(false);
 
   const scrollToBottom = () => {
@@ -13,11 +21,32 @@ const MessagesList = ({ messages, isFetching, senderId }) => {
   };
 
   useEffect(() => {
-    if (!isFetching) scrollToBottom();
-  }, [isFetching, scrollToBottom]);
+    if (!isFetching && !isOnBottom) {
+      setBottom(true);
+      scrollToBottom();
+    }
+
+    messagesView.current.onscroll = e => {
+      if (e.srcElement.scrollTop === 0 && !isFetching)
+        loadNewMessages({
+          senderId,
+          recipentId,
+          messagesAmount: messages.length
+        });
+    };
+  }, [
+    isFetching,
+    isOnBottom,
+    loadNewMessages,
+    messages.length,
+    recipentId,
+    scrollToBottom,
+    senderId,
+    setBottom
+  ]);
 
   return (
-    <div className={styles.root}>
+    <div ref={messagesView} className={styles.root}>
       <div className={styles.messages}>
         {messages.length ? (
           messages.map(({ content, author, date }, key) => {

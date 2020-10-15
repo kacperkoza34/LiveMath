@@ -31,10 +31,12 @@
     }
 
     .date {
-      position: absolute;
-      top: 0;
-      left: 0;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // transform: translateY(-100%);
       font-size: 14px;
+      border-bottom: 1px solid $color-dark;
     }
 
     .self {

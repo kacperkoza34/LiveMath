@@ -20,46 +20,70 @@ router.get("/getNewMessages/:id", auth, async (req, res) => {
   }
 });
 
-router.get("/loadAllMessages/:senderId/:recipentId", auth, async (req, res) => {
-  try {
-    let messagesBySender = await Messages.findOne({
-      recipentId: req.params.recipentId,
-      senderId: req.params.senderId
-    });
+router.get(
+  "/loadAllMessages/:senderId/:recipentId/:startRange/:endRange",
+  auth,
+  async (req, res) => {
+    const { senderId, recipentId, startRange, endRange } = req.params;
+    try {
+      let messagesBySender = await Messages.findOne({
+        recipentId: recipentId,
+        senderId: senderId
+      });
 
-    let messagesByRecipent = await Messages.findOne({
-      recipentId: req.params.senderId,
-      senderId: req.params.recipentId
-    });
+      let messagesByRecipent = await Messages.findOne({
+        recipentId: senderId,
+        senderId: recipentId
+      });
 
-    let recipentMessages;
-    let senderMessages;
+      let recipentMessages;
+      let senderMessages;
 
-    if (messagesByRecipent) {
-      recipentMessages = messagesByRecipent.messages;
-      messagesByRecipent.newMessages = 0;
-      await messagesByRecipent.save();
-    } else recipentMessages = [];
+      if (messagesByRecipent) {
+        recipentMessages = messagesByRecipent.messages;
+        messagesByRecipent.newMessages = 0;
+        await messagesByRecipent.save();
+      } else recipentMessages = [];
 
-    if (messagesBySender) {
-      senderMessages = messagesBySender.messages;
-    } else senderMessages = [];
+      if (messagesBySender) {
+        senderMessages = messagesBySender.messages;
+      } else senderMessages = [];
 
-    const compare = (a, b) => {
-      return Date.parse(a.date) - Date.parse(b.date);
-    };
+      const compare = (a, b) => {
+        return Date.parse(a.date) - Date.parse(b.date);
+      };
 
-    const response = [...recipentMessages, ...senderMessages].sort(compare);
+      const allMessages = [...recipentMessages, ...senderMessages].sort(
+        compare
+      );
 
-    res.json(response);
-  } catch (err) {
-    console.error(err.message);
-    res
-      .status(500)
-      .send([
-        { content: "Błąd czatu", date: Date.now(), author: req.params.senderId }
+      console.log("endRange: ", endRange);
+      console.log("startRange: ", startRange);
+      console.log("allMessages.length: ", allMessages.length);
+
+      let finalEndRange = endRange;
+
+      while (finalEndRange > allMessages.length) {
+        finalEndRange--;
+      }
+
+      const response = allMessages.slice(
+        allMessages.length - finalEndRange,
+        allMessages.length - startRange
+      );
+
+      res.json(response);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send([
+        {
+          content: "Błąd czatu",
+          date: Date.now(),
+          author: req.params.senderId
+        }
       ]);
+    }
   }
-});
+);
 
 module.exports = router;

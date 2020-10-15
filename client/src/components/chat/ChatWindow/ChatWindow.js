@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { updateUserState } from "../../../redux/actions/chatUsers";
+import { loadNewMessages } from "../../../redux/actions/chatWindow";
 
 const ChatWindow = ({
   name,
@@ -15,7 +16,8 @@ const ChatWindow = ({
   chatWindow,
   marginLeft,
   closeChat,
-  updateUserState
+  updateUserState,
+  loadNewMessages
 }) => {
   const { senderId, recipentId, messages, isFetching } = chatWindow;
   const [message, setMessage] = useState("");
@@ -50,9 +52,10 @@ const ChatWindow = ({
             messages={messages}
             isFetching={isFetching}
             senderId={senderId}
+            recipentId={recipentId}
+            loadNewMessages={loadNewMessages}
           />
         )}
-
       </div>
 
       <div className={styles.sendBox}>
@@ -67,7 +70,6 @@ const ChatWindow = ({
           <button>Wyślij</button>
         </form>
       </div>
-
     </div>
   );
 };
@@ -75,4 +77,6 @@ const mapStateToProps = state => ({
   chatWindow: state.chatWindow,
   accountType: state.user.data.accountType
 });
-export default connect(mapStateToProps, { updateUserState })(ChatWindow);
+export default connect(mapStateToProps, { updateUserState, loadNewMessages })(
+  ChatWindow
+);
