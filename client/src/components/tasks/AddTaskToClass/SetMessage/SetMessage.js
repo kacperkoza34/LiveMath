@@ -14,8 +14,7 @@ const SetDescription = ({ setMessage }) => {
         <h4>Dodatkowy opis zadania</h4>
         <TextareaAutosize
           styles="white-space: pre-line;"
-          onChange={(e) => {
-            console.log(e);
+          onChange={e => {
             setFormData(e.target.value);
             setMessage(e.target.value);
           }}
@@ -26,7 +25,7 @@ const SetDescription = ({ setMessage }) => {
 };
 
 SetDescription.propTypes = {
-  setMessage: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired
 };
 
 export default connect(null, { setMessage })(SetDescription);

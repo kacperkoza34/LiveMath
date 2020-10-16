@@ -16,6 +16,8 @@ import studentReducer from "./reducers/studentReducer";
 import tasksReducer from "./reducers/tasksReducer";
 import newTasksReducer from "./reducers/newTasksReducer";
 import taskToClassReducer from "./reducers/taskToClassReducer";
+import chatUsersReducer from "./reducers/chatUsersReducer";
+import chatWindowReducer from "./reducers/chatWindowReducer";
 
 /// applyMiddleware
 import auth from "./middleware/auth";
@@ -28,6 +30,8 @@ import tasks from "./middleware/tasks";
 import newTask from "./middleware/newTask";
 import taskToClass from "./middleware/taskToClass";
 import resolveTask from "./middleware/resolveTask";
+import chatUsers from "./middleware/chatUsers";
+import chatWindow from "./middleware/chatWindow";
 import apiRequest from "./middleware/apiRequest";
 
 const initialState = {
@@ -99,6 +103,18 @@ const initialState = {
     isFetching: false,
     errors: false,
     success: false
+  },
+  chatUsers: {
+    isFetching: false,
+    isError: false,
+    data: []
+  },
+  chatWindow: {
+    isFetching: false,
+    isError: false,
+    recipentId: null,
+    senderId: null,
+    messages: []
   }
 };
 
@@ -112,7 +128,9 @@ const reducers = {
   student: studentReducer,
   tasks: tasksReducer,
   newTask: newTasksReducer,
-  addTaskToClass: taskToClassReducer
+  addTaskToClass: taskToClassReducer,
+  chatUsers: chatUsersReducer,
+  chatWindow: chatWindowReducer
 };
 
 const combinedReducers = combineReducers(reducers);
@@ -135,6 +153,8 @@ const store = createStore(
       newTask,
       taskToClass,
       resolveTask,
+      chatUsers,
+      chatWindow,
       apiRequest
     )
   )

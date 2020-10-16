@@ -1,0 +1,77 @@
+@import "../../../styles/settings.scss";
+.root {
+  width: 260px;
+  max-height: 400px;
+  background: $color-light;
+  border: 1px solid $color-dark;
+  overflow-y: auto;
+
+  .header {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
+    font-size: 18px;
+    background: $color-primary;
+  }
+
+  .header {
+    cursor: pointer;
+  }
+
+  .newMessage {
+    animation: pulse 1.5s infinite;
+  }
+
+  li {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    margin: 10px 5px;
+    background: $color-contrast-list;
+
+    span {
+      display: inline-block;
+      margin: 0 5px;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+    }
+
+    .active {
+      background: $color-success;
+    }
+
+    .disactive {
+      background: $color-dark;
+    }
+  }
+
+  li:hover {
+    cursor: pointer;
+    background: $color-background;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      margin-right: 10px;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      color: inherit;
+    }
+    50% {
+      color: rgba($color-primary, 0.8);
+    }
+    100% {
+      color: inherit;
+    }
+  }
+}

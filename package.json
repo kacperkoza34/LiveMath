@@ -33,13 +33,15 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemailer-mailgun-transport": "^2.0.0",
     "rc-progress": "^2.5.3",
+    "react-addons-update": "^15.6.2",
     "react-html-parser": "^2.0.2",
     "react-html5-camera-photo": "^1.5.4",
     "react-spinners": "^0.8.1",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.2",
     "request": "^2.88.2",
-    "sanitize-html": "^1.23.0"
+    "sanitize-html": "^1.23.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",

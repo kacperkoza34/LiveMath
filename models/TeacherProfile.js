@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TeacherProfileSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'teacher'
+    ref: "teacher"
   },
   name: {
     type: String,
@@ -12,13 +12,13 @@ const TeacherProfileSchema = new Schema({
   },
   inviter: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'teacher'
+    ref: "teacher"
   },
   invitedByMe: [
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'teacher'
+        ref: "teacher"
       }
     }
   ],
@@ -26,7 +26,7 @@ const TeacherProfileSchema = new Schema({
     {
       class: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'class'
+        ref: "class"
       }
     }
   ],
@@ -34,10 +34,13 @@ const TeacherProfileSchema = new Schema({
     {
       student: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'student'
+        ref: "student"
       }
     }
   ]
 });
 
-module.exports = TeacherProfile = mongoose.model('teacherProfile', TeacherProfileSchema);
+module.exports = TeacherProfile = mongoose.model(
+  "teacherProfile",
+  TeacherProfileSchema
+);

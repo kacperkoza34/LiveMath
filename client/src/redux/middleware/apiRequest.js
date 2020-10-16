@@ -4,7 +4,7 @@ import Axios from "axios";
 const PORT =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
 
-const apiRequest = ({ dispatch }) => (next) => (action) => {
+const apiRequest = ({ dispatch }) => next => action => {
   next(action);
   if (action.type === API_REQUEST) {
     const { method, url, onSucces, onError, body, config } = action.meta;
@@ -13,7 +13,7 @@ const apiRequest = ({ dispatch }) => (next) => (action) => {
       url: url,
       data: body,
       config: config,
-      baseURL: PORT,
+      baseURL: PORT
     })
       .then(({ data }) => {
         dispatch(onSucces(data));

@@ -48,7 +48,6 @@ const AddTaskToClass = ({
   const validator = requiredFields => {
     const { deadLine, classes, startDate } = requiredFields;
     const errors = [];
-
     if (!deadLine.length) errors.push("Wybierz termin wykonania");
     if (!startDate.length) errors.push("Wybierz termin rozpoczęcia");
     if (!classes.length) errors.push("Wybierz klasy");

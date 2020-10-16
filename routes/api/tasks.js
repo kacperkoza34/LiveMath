@@ -267,15 +267,15 @@ router.get("/search/:class/:section", authTeacher, async (req, res) => {
     let taskClose = await TaskClose.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
     let taskOpen = await TaskOpen.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
     let taskBoolean = await TaskBoolean.find({
       class: req.params.class,
       section: req.params.section
-    }).select("-data");
+    });
 
     function compare(a, b) {
       return a.date.getTime() - b.date.getTime();
@@ -302,7 +302,10 @@ router.post(
       check("taskId", "Nie wybrano zadania!")
         .not()
         .isEmpty(),
-      check("deadLine", "Nie wybrano daty!")
+      check("deadLine", "Nie wybrano daty zakończenia!")
+        .not()
+        .isEmpty(),
+      check("startDate", "Nie wybrano daty rozpoczęcia!")
         .not()
         .isEmpty(),
       check("promptsAllowed", "Ustal status podpowiedzi!")
@@ -318,7 +321,7 @@ router.post(
     if (!erros.isEmpty()) {
       return res.status(400).json({ errors: erros.array() });
     }
-
+    console.log(req.body);
     try {
       let teacher = await Teacher.findOne({ _id: req.user.id });
       let task = await TaskOpen.findOne({ _id: req.body.taskId });
