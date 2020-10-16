@@ -72,6 +72,9 @@ router.get(
         allMessages.length - startRange
       );
 
+      //if(finalEndRange !== 12) response.push({author: 'chatBoot', content:'wszystko'});
+      //if(!allMessages.length) response.push({author: 'chatBoot', content:'Napisz pierwszą Wiadomość'});
+
       res.json(response);
     } catch (err) {
       console.error(err.message);

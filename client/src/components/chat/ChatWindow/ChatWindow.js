@@ -54,6 +54,7 @@ const ChatWindow = ({
             senderId={senderId}
             recipentId={recipentId}
             loadNewMessages={loadNewMessages}
+            detectTyping={message}
           />
         )}
       </div>
