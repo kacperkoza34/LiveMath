@@ -14,8 +14,7 @@
     padding: 15px;
 
     .message {
-      position: relative;
-      margin: 4px 2px;
+      margin: 2px 0;
       padding: 3px 5px;
       border-radius: 5px;
       text-overflow: ellipsis;
@@ -24,14 +23,21 @@
       max-width: 180px;
       white-space: wrap;
       background: rgba($color-dark, 0.3);
+      word-break: break-word;
     }
 
+    .center-loader {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .message:hover {
       cursor: pointer;
     }
 
-    .chatBoot{
+    .chatBoot {
       width: 100%;
       text-align: center;
     }

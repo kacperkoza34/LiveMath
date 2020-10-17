@@ -4,7 +4,9 @@ import {
   MARK_MESSAGE_AS_VIEWED,
   MESSAGES_ERROR,
   ADD_SINGLE_MESSAGE,
-  CLEAR_CHAT_WINDOW
+  CLEAR_CHAT_WINDOW,
+  SCROLL_DOWN,
+  LOAD_NEW_MESSAGES
 } from "../actions/chatWindow";
 
 export default function reducer(statePart = [], action = {}) {
@@ -21,7 +23,8 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         isFetching: false,
-        messages: [...action.payload, ...statePart.messages]
+        messages: [...action.payload, ...statePart.messages],
+        loadingNewMessages: false
       };
     case ADD_SINGLE_MESSAGE:
       return {
@@ -32,6 +35,16 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         messages: []
+      };
+    case SCROLL_DOWN:
+      return {
+        ...statePart,
+        scrollDown: action.payload
+      };
+    case LOAD_NEW_MESSAGES:
+      return {
+        ...statePart,
+        loadingNewMessages: true
       };
     case MESSAGES_ERROR:
       return {

@@ -114,7 +114,9 @@ const initialState = {
     isError: false,
     recipentId: null,
     senderId: null,
-    messages: []
+    messages: [],
+    scrollDown: false,
+    loadingNewMessages: false
   }
 };
 

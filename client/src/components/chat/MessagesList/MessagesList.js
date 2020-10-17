@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import BeatLoader from "react-spinners/BeatLoader";
 import Moment from "react-moment";
+import BeatLoader from "react-spinners/BeatLoader";
+import { scrollDown } from "../../../redux/actions/chatWindow";
+import { connect } from "react-redux";
 import styles from "./MessagesList.module.scss";
 
 const MessagesList = ({
@@ -9,11 +11,12 @@ const MessagesList = ({
   senderId,
   recipentId,
   loadNewMessages,
-  detectTyping
+  scrollDown,
+  shouldScrollDown,
+  loadingNewMessages
 }) => {
   const messagesEndRef = useRef(null);
   const messagesView = useRef(null);
-  const [isOnBottom, setBottom] = useState(true);
   const [displayDateIndex, setDisplayDate] = useState(false);
 
   const scrollToBottom = () => {
@@ -26,8 +29,11 @@ const MessagesList = ({
   };
 
   useEffect(() => {
-    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
-  }, [detectTyping]);
+    if (shouldScrollDown) {
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+      scrollDown(false);
+    }
+  }, [scrollDown, shouldScrollDown]);
 
   useEffect(() => {
     if (!isFetching) scrollToBottom();
@@ -41,47 +47,52 @@ const MessagesList = ({
         });
       }
     };
-    return () => setBottom(state =>true);
   }, [
     isFetching,
-    isOnBottom,
     loadNewMessages,
     messages.length,
     recipentId,
     scrollToBottom,
-    senderId,
-    setBottom
+    senderId
   ]);
 
   return (
     <div ref={messagesView} className={styles.root}>
       <div className={styles.messages}>
-        {messages.length > 0  &&  messages.map(({ content, author, date }, i) => {
-          if(author === 'chatBoot') return <div className={styles.chatBoot}>{content}</div>
-          else return (
-              <div
-                onClick={() => displayDate(i)}
-                key={i}
-                className={
-                  senderId == author
-                    ? styles.self + " " + styles.message
-                    : styles.message
-                }
-              >
-                {displayDateIndex === i + 1 && (
-                  <div className={styles.date}>
-                    <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>{" "}
-                  </div>
-                )}
-                {content}
-              </div>
-            );
-          })
-        }
+        {loadingNewMessages && <BeatLoader size={10} />}
+        {messages.length > 0 &&
+          messages.map(({ content, author, date }, i) => {
+            if (author === "chatBoot")
+              return <div className={styles.chatBoot}>{content}</div>;
+            else
+              return (
+                <div
+                  onClick={() => displayDate(i)}
+                  key={i}
+                  className={
+                    senderId == author
+                      ? styles.self + " " + styles.message
+                      : styles.message
+                  }
+                >
+                  {displayDateIndex === i + 1 && (
+                    <div className={styles.date}>
+                      <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>{" "}
+                    </div>
+                  )}
+                  {content}
+                </div>
+              );
+          })}
         <div ref={messagesEndRef} />
       </div>
     </div>
   );
 };
 
-export default MessagesList;
+const mapStateToProps = state => ({
+  shouldScrollDown: state.chatWindow.scrollDown,
+  loadingNewMessages: state.chatWindow.loadingNewMessages
+});
+
+export default connect(mapStateToProps, { scrollDown })(MessagesList);

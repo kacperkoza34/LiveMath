@@ -1,8 +1,11 @@
 import {
   SET_SENDER_AND_RECIPENT,
   LOAD_NEW_MESSAGES,
+  SET_MESSAGES_IN_WINDOW,
+  ADD_SINGLE_MESSAGE,
   clearChatWindow,
   setMessagesInWindow,
+  scrollDown,
   messagesError
 } from "../actions/chatWindow";
 
@@ -38,6 +41,10 @@ const chatWindow = ({ dispatch }) => next => action => {
         null
       )
     );
+  }
+
+  if (action.type === ADD_SINGLE_MESSAGE) {
+    dispatch(scrollDown(true));
   }
 };
 
