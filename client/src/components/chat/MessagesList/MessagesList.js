@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Moment from "react-moment";
 import BeatLoader from "react-spinners/BeatLoader";
+import MathJax from "../../tasks/MathJax";
 import { scrollDown } from "../../../redux/actions/chatWindow";
 import { connect } from "react-redux";
 import styles from "./MessagesList.module.scss";
@@ -15,13 +16,18 @@ const MessagesList = ({
   shouldScrollDown,
   loadingNewMessages
 }) => {
+  const messagesStartRef = useRef(null);
   const messagesEndRef = useRef(null);
   const messagesView = useRef(null);
   const [displayDateIndex, setDisplayDate] = useState(false);
 
+  const scrollDownOnLoadRef = () => {
+    return <div ref={messagesStartRef} />;
+  };
+
   const scrollToBottom = () => {
     if (messages.length <= 12)
-      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const displayDate = key => {
@@ -29,8 +35,14 @@ const MessagesList = ({
   };
 
   useEffect(() => {
+    if (!loadingNewMessages && messagesStartRef.current) {
+      messagesStartRef.current.scrollIntoView({ behavior: "auto" });
+    }
+  }, [loadingNewMessages]);
+
+  useEffect(() => {
     if (shouldScrollDown) {
-      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
       scrollDown(false);
     }
   }, [scrollDown, shouldScrollDown]);
@@ -80,7 +92,8 @@ const MessagesList = ({
                       <Moment format="YYYY/MM/DD HH:mm">{date}</Moment>{" "}
                     </div>
                   )}
-                  {content}
+                  {i === 8 && <>{scrollDownOnLoadRef()}</>}
+                  <MathJax content={content} />
                 </div>
               );
           })}

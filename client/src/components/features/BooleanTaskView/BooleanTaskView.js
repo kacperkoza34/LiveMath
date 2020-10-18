@@ -10,7 +10,8 @@ const BooleanTaskView = ({
   index,
   clearTasks,
   setTaskConfig,
-  accountType
+  accountType,
+  displayContent
 }) => {
   if (typeof data.task === "undefined") {
     data["task"] = { name: data.name, _id: data._id };
@@ -19,6 +20,12 @@ const BooleanTaskView = ({
   const { task, date, deadLine, resolved, result, answer, _id, name } = data;
 
   const allowToDisplay = accountType === "teacher" && !setTaskConfig;
+
+  const displayContentView = () => {
+    return data.data.map((item, i) => (
+      <div>{`${i + 1}).  ${item.content}`}</div>
+    ));
+  };
 
   const displayTaskView = () => {
     if (Date.parse(date) > Date.now())
@@ -94,6 +101,7 @@ const BooleanTaskView = ({
             to={`/display/booleanTask/${task._id}`}
           >
             <div className={styles.name}>{task.name}</div>
+            {displayContent && <>{displayContentView()}</>}
           </Link>
         </div>
       ) : (

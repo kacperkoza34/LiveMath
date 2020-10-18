@@ -10,6 +10,13 @@
     justify-content: center;
     align-items: center;
   }
+
+  .contentView {
+    margin: 5px;
+    div {
+      display: inline;
+    }
+  }
 }
 .root:hover {
   background: lighten($color-close-task, 5%);

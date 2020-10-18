@@ -36,6 +36,7 @@ const TasksList = ({
                     tasks={data}
                     taskFromApi={false}
                     onlyName={true}
+                    displayContent={true}
                   />
                 ) : (
                   "Nie ma zadań z tego działu"

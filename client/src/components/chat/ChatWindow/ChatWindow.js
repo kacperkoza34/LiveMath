@@ -33,6 +33,19 @@ const ChatWindow = ({
       sendMessageSocket(message, recipentId, senderId, accountType);
     }
   };
+
+  const displayMessagesList = () =>{
+    if(isFetching) return <BeatLoader size={10} />;
+    else return <MessagesList
+        messages={messages}
+        isFetching={isFetching}
+        senderId={senderId}
+        recipentId={recipentId}
+        loadNewMessages={loadNewMessages}
+        detectTyping={message}
+      />
+  };
+
   return (
     <div style={{ marginLeft: marginLeft }} className={styles.root}>
       <div className={styles.topBar}>
@@ -45,18 +58,7 @@ const ChatWindow = ({
         </div>
       </div>
       <div className={styles.messagesBox}>
-        {isFetching ? (
-          <BeatLoader size={10} />
-        ) : (
-          <MessagesList
-            messages={messages}
-            isFetching={isFetching}
-            senderId={senderId}
-            recipentId={recipentId}
-            loadNewMessages={loadNewMessages}
-            detectTyping={message}
-          />
-        )}
+        {displayMessagesList()}
       </div>
 
       <div className={styles.sendBox}>

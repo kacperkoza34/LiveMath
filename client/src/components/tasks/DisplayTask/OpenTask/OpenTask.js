@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import OpenTaskDumm from "./OpenTaskDumm";
 import OpenTaskFromApi from "./OpenTaskFromApi";
@@ -10,7 +10,9 @@ import { connect } from "react-redux";
 
 const OpenTask = ({ match, tasks }) => {
   const { taskConfig } = tasks;
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.root}>
       <>
@@ -30,11 +32,11 @@ const OpenTask = ({ match, tasks }) => {
 
 OpenTask.propTypes = {
   match: PropTypes.object.isRequired,
-  tasks: PropTypes.object.isRequired,
+  tasks: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  tasks: state.tasks,
+const mapStateToProps = state => ({
+  tasks: state.tasks
 });
 
 export default connect(mapStateToProps)(OpenTask);

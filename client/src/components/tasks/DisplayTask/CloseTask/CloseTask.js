@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./CloseTask.module.scss";
 import CloseTaskFromApi from "./CloseTaskFromApi";
@@ -11,6 +11,9 @@ const CloseTask = ({
   match,
   tasks: { data, isFetching, errors, taskConfig }
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.root}>
       <div className={styles.spaceBetween}>

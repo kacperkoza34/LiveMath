@@ -14,7 +14,8 @@ const TasksList = ({
   tasks,
   taskFromApi,
   onlyName,
-  accountType
+  accountType,
+  displayContent
 }) => {
   const [tasksRange, setRange] = useState({
     start: 0,
@@ -76,6 +77,7 @@ const TasksList = ({
                 index={index}
                 clearTasks={clearTasks}
                 setTaskConfig={taskFromApi ? setTaskConfig : null}
+                displayContent={displayContent}
               />
             );
           if (item.taskType === "taskOpen" || item.taskType === "openTask")
@@ -88,6 +90,7 @@ const TasksList = ({
                 index={index}
                 clearTasks={clearTasks}
                 setTaskConfig={taskFromApi ? setTaskConfig : null}
+                displayContent={displayContent}
               />
             );
           if (
@@ -103,6 +106,7 @@ const TasksList = ({
                 index={index}
                 clearTasks={clearTasks}
                 setTaskConfig={taskFromApi ? setTaskConfig : null}
+                displayContent={displayContent}
               />
             );
           else return <>Brak zadań</>;

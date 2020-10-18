@@ -57,10 +57,6 @@ router.get(
         compare
       );
 
-      console.log("endRange: ", endRange);
-      console.log("startRange: ", startRange);
-      console.log("allMessages.length: ", allMessages.length);
-
       let finalEndRange = endRange;
 
       while (finalEndRange > allMessages.length) {

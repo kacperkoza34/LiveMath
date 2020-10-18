@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./BooleanTask.module.scss";
 import BooleanTaskDumm from "./BooleanTaskDumm";
@@ -10,8 +10,12 @@ import { connect } from "react-redux";
 
 const BooleanTask = ({
   match,
-  tasks: { data, isFetching, errors, taskConfig },
+  tasks: { data, isFetching, errors, taskConfig }
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles.root}>
       <div className={styles.spaceBetween}>
@@ -29,11 +33,11 @@ const BooleanTask = ({
 
 BooleanTask.propTypes = {
   match: PropTypes.object.isRequired,
-  task: PropTypes.object,
+  task: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  tasks: state.tasks,
+const mapStateToProps = state => ({
+  tasks: state.tasks
 });
 
 export default connect(mapStateToProps)(BooleanTask);

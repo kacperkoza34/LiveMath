@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import PromptsStatus from "../PromptsStatus/PromptsStatus";
 import TaskStatus from "../TaskStatus/TaskStatus";
+import DisplayContent from "../../tasks/DisplayTask/OpenTask/DisplayContent/DisplayContent";
 
 const OpenTaskView = ({
   onlyName,
@@ -11,7 +12,8 @@ const OpenTaskView = ({
   index,
   clearTasks,
   setTaskConfig,
-  accountType
+  accountType,
+  displayContent
 }) => {
   if (typeof data.task === "undefined") {
     data["task"] = { name: data.name, _id: data._id };
@@ -36,6 +38,19 @@ const OpenTaskView = ({
   } = data;
 
   const allowToDisplay = accountType === "teacher" && !setTaskConfig;
+
+  const displayContentView = () => {
+    const {
+      data: { groups, variables, content }
+    } = data;
+    return (
+      <DisplayContent
+        content={content}
+        variables={variables}
+        group={groups[0]}
+      />
+    );
+  };
 
   const displayTaskView = () => {
     if (Date.parse(date) > Date.now())
@@ -141,6 +156,7 @@ const OpenTaskView = ({
             to={`/display/openTask/${task._id}`}
           >
             <div className={styles.name}>{task.name}</div>
+            {displayContent && <>{displayContentView()}</>}
           </Link>
         </div>
       ) : (

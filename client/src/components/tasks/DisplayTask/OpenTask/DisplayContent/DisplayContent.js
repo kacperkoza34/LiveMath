@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 import MathJax from "../../../MathJax";
 
 const DisplayContent = ({ content, variables, group }) => {
-  const contentCopy = content;
-  const variablesCopy = variables;
-  const groupCopy = group;
-
   const displayContent = (content, variables, group) => {
     for (let i in variables) {
       const currentVar = variables[i].variable;
@@ -20,13 +16,13 @@ const DisplayContent = ({ content, variables, group }) => {
     );
   };
 
-  return <>{displayContent(contentCopy, variablesCopy, groupCopy)}</>;
+  return <>{displayContent(content, variables, group)}</>;
 };
 
 DisplayContent.propTypes = {
   content: PropTypes.string.isRequired,
   variables: PropTypes.array.isRequired,
-  group: PropTypes.object,
+  group: PropTypes.object
 };
 
 export default DisplayContent;
