@@ -35,10 +35,14 @@ const MessagesList = ({
   };
 
   useEffect(() => {
-    if (!loadingNewMessages && messagesStartRef.current) {
+    if (
+      !loadingNewMessages &&
+      messagesStartRef.current &&
+      messages.length > 12
+    ) {
       messagesStartRef.current.scrollIntoView({ behavior: "auto" });
     }
-  }, [loadingNewMessages]);
+  }, [loadingNewMessages, messages.length]);
 
   useEffect(() => {
     if (shouldScrollDown) {
@@ -49,7 +53,6 @@ const MessagesList = ({
 
   useEffect(() => {
     if (!isFetching) scrollToBottom();
-
     messagesView.current.onscroll = e => {
       if (e.srcElement.scrollTop === 0 && !isFetching) {
         loadNewMessages({
@@ -93,7 +96,11 @@ const MessagesList = ({
                     </div>
                   )}
                   {i === 8 && <>{scrollDownOnLoadRef()}</>}
-                  <MathJax content={content} />
+                  {content.includes("`") ? (
+                    <MathJax content={content} />
+                  ) : (
+                    <>{content}</>
+                  )}
                 </div>
               );
           })}

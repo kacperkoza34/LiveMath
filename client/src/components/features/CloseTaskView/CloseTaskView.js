@@ -35,12 +35,16 @@ const CloseTaskView = ({
   const allowToDisplay = accountType === "teacher" && !setTaskConfig;
 
   const displayContentView = () => {
-    return data.data.map((item, i) => (
-      <div className={styles.contentView}>
-        <span>{`${i + 1}). `}</span>
-        <MathJax content={"`" + item.content + "`"} />
+    return (
+      <div className={styles.closeTaskContent}>
+        {data.data.map((item, i) => (
+          <div className={styles.contentView}>
+            <span>{`${i + 1}). `}</span>
+            <MathJax content={"`" + item.content + "`"} />
+          </div>
+        ))}
       </div>
-    ));
+    );
   };
 
   const displayTaskView = () => {
